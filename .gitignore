@@ -148,6 +148,9 @@ Temporary Items
 # Auto-generated files
 MemStat/Version.swift
 
+# Distribution files
+dist/
+
 # AI Config
 CLAUDE.md
 .claude/
