@@ -1,0 +1,59 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="circleGradient" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" style="stop-color:#8FC3E8;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#7FB8E5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5A9BD4;stop-opacity:1" />
+    </radialGradient>
+    <linearGradient id="chipGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A7BA7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2E5C8A;stop-opacity:1" />
+    </linearGradient>
+    <filter id="dropshadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Outer circle with inner margin -->
+  <circle cx="256" cy="256" r="224" fill="url(#circleGradient)" stroke="#4A90C2" stroke-width="4"/>
+  
+  <!-- Memory chip body (rectangular, medium height, 3/4 width, centered) -->
+  <rect x="162" y="80" width="189" height="352" rx="12" ry="12" fill="url(#chipGradient)" filter="url(#dropshadow)"/>
+  
+  <!-- Memory chip pins (left side) -->
+  <rect x="132" y="110" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="132" y="135" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="132" y="160" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="132" y="185" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="132" y="210" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="132" y="235" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="132" y="260" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="132" y="285" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="132" y="310" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="132" y="335" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="132" y="360" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="132" y="385" width="30" height="12" fill="#1E3A5F"/>
+  
+  <!-- Memory chip pins (right side) -->
+  <rect x="351" y="110" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="351" y="135" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="351" y="160" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="351" y="185" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="351" y="210" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="351" y="235" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="351" y="260" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="351" y="285" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="351" y="310" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="351" y="335" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="351" y="360" width="30" height="12" fill="#1E3A5F"/>
+  <rect x="351" y="385" width="30" height="12" fill="#1E3A5F"/>
+  
+  <!-- Memory chip label area (adjusted for medium chip) -->
+  <rect x="208" y="240" width="96" height="32" rx="4" ry="4" fill="#FFFFFF" opacity="0.9"/>
+  
+  <!-- Memory chip text (only MEMORY) -->
+  <text x="256" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2E5C8A">MEMORY</text>
+  
+  <!-- Memory chip notch (adjusted for medium chip) -->
+  <rect x="242" y="80" width="39" height="12" rx="6" ry="6" fill="#1E3A5F"/>
+</svg>
