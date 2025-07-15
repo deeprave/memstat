@@ -125,7 +125,7 @@ class MenuBarController: NSObject {
         
         let alert = NSAlert()
         alert.messageText = "MemStat"
-        alert.informativeText = "Version 1.0\nDavid Nugent\nCompiled: \(getCompilationDate())\n\nA simple memory statistics monitor for macOS."
+        alert.informativeText = "Version \(AppVersion.displayVersion)\nDavid Nugent\nBuild: \(AppVersion.buildNumber)\nCompiled: \(getCompilationDate())\n\nA simple memory statistics monitor for macOS."
         alert.addButton(withTitle: "OK")
         
         alert.icon = createAboutIcon()

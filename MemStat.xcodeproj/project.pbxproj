@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		103ACD51B219408CA222AC382B4D64EF /* MemoryMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F58170FA9444305AC782A0919AEE23A /* MemoryMonitor.swift */; };
+		79C10A722E260CD900A5D8EA /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C10A712E260CD900A5D8EA /* Version.swift */; };
+		79C10A732E260CD900A5D8EA /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C10A712E260CD900A5D8EA /* Version.swift */; };
 		79F9FE8E2E253A7000223DB8 /* FormatUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F9FE8D2E253A6300223DB8 /* FormatUtilities.swift */; };
 		950CCE1ED19B42FDA7B85BA2428EF490 /* LoginItemsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9598E85B5CD943C3BA0C3A3B40E40A1B /* LoginItemsManager.swift */; };
 		BC91B92471E54BECAD37311A5C96BC2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB4B2A514054C4F93C4A8B03C535F88 /* AppDelegate.swift */; };
@@ -15,14 +17,12 @@
 		D7C0C56444584D47AF8190574F162899 /* MenuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A196A6C2D92A454782E75C07D1173C5E /* MenuBarController.swift */; };
 		E4A8B1C74F6D4A5B9E3C8D2F01234567 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B7C3D85E2A4B6C9F1A0E8D4C293847 /* main.swift */; };
 		F357572923874F39AE7C0C699A05C69B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F357572923874F39AE7C0C699A05C69A /* Assets.xcassets */; };
-		/* Test files */
 		TEST001 /* FormatUtilitiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE001 /* FormatUtilitiesTests.swift */; };
 		TEST002 /* MemoryMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE002 /* MemoryMonitorTests.swift */; };
 		TEST003 /* TableSectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE003 /* TableSectionTests.swift */; };
 		TEST004 /* MenuBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE004 /* MenuBarControllerTests.swift */; };
 		TEST005 /* StatsWindowControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE005 /* StatsWindowControllerTests.swift */; };
 		TEST006 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE006 /* TestHelpers.swift */; };
-		/* App target in test target */
 		TESTAPP001 /* MemStat.app in Frameworks */ = {isa = PBXBuildFile; fileRef = 019A60B755834539846281592A3987F4 /* MemStat.app */; };
 /* End PBXBuildFile section */
 
@@ -41,14 +41,13 @@
 		2EB4B2A514054C4F93C4A8B03C535F88 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F58170FA9444305AC782A0919AEE23A /* MemoryMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryMonitor.swift; sourceTree = "<group>"; };
 		75EC40C6BB064D6A8B1D20DD28D10233 /* StatsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsWindowController.swift; sourceTree = "<group>"; };
+		79C10A712E260CD900A5D8EA /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		79F9FE8D2E253A6300223DB8 /* FormatUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatUtilities.swift; sourceTree = "<group>"; };
 		9598E85B5CD943C3BA0C3A3B40E40A1B /* LoginItemsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemsManager.swift; sourceTree = "<group>"; };
 		A196A6C2D92A454782E75C07D1173C5E /* MenuBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarController.swift; sourceTree = "<group>"; };
 		C36C4A9C9C5246948423432FB4F57666 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F357572923874F39AE7C0C699A05C69A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F9B7C3D85E2A4B6C9F1A0E8D4C293847 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		/* Test files */
-		TESTTARGET001 /* MemStatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MemStatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		TESTFILE001 /* FormatUtilitiesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatUtilitiesTests.swift; sourceTree = "<group>"; };
 		TESTFILE002 /* MemoryMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryMonitorTests.swift; sourceTree = "<group>"; };
 		TESTFILE003 /* TableSectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSectionTests.swift; sourceTree = "<group>"; };
@@ -56,6 +55,7 @@
 		TESTFILE005 /* StatsWindowControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsWindowControllerTests.swift; sourceTree = "<group>"; };
 		TESTFILE006 /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		TESTINFO001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		TESTTARGET001 /* MemStatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MemStatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				F9B7C3D85E2A4B6C9F1A0E8D4C293847 /* main.swift */,
+				79C10A712E260CD900A5D8EA /* Version.swift */,
 				2EB4B2A514054C4F93C4A8B03C535F88 /* AppDelegate.swift */,
 				A196A6C2D92A454782E75C07D1173C5E /* MenuBarController.swift */,
 				75EC40C6BB064D6A8B1D20DD28D10233 /* StatsWindowController.swift */,
@@ -91,20 +92,6 @@
 				C36C4A9C9C5246948423432FB4F57666 /* Info.plist */,
 			);
 			path = MemStat;
-			sourceTree = "<group>";
-		};
-		TESTGROUP001 /* MemStatTests */ = {
-			isa = PBXGroup;
-			children = (
-				TESTFILE001 /* FormatUtilitiesTests.swift */,
-				TESTFILE002 /* MemoryMonitorTests.swift */,
-				TESTFILE003 /* TableSectionTests.swift */,
-				TESTFILE004 /* MenuBarControllerTests.swift */,
-				TESTFILE005 /* StatsWindowControllerTests.swift */,
-				TESTFILE006 /* TestHelpers.swift */,
-				TESTINFO001 /* Info.plist */,
-			);
-			path = MemStatTests;
 			sourceTree = "<group>";
 		};
 		7171E2334720441B8F1C3339FA40893D = {
@@ -123,6 +110,20 @@
 				TESTTARGET001 /* MemStatTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		TESTGROUP001 /* MemStatTests */ = {
+			isa = PBXGroup;
+			children = (
+				TESTFILE001 /* FormatUtilitiesTests.swift */,
+				TESTFILE002 /* MemoryMonitorTests.swift */,
+				TESTFILE003 /* TableSectionTests.swift */,
+				TESTFILE004 /* MenuBarControllerTests.swift */,
+				TESTFILE005 /* StatsWindowControllerTests.swift */,
+				TESTFILE006 /* TestHelpers.swift */,
+				TESTINFO001 /* Info.plist */,
+			);
+			path = MemStatTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,6 +231,7 @@
 				D7C0C56444584D47AF8190574F162899 /* MenuBarController.swift in Sources */,
 				D151BFF9FC174C9A8CE621AD2016E85D /* StatsWindowController.swift in Sources */,
 				103ACD51B219408CA222AC382B4D64EF /* MemoryMonitor.swift in Sources */,
+				79C10A732E260CD900A5D8EA /* Version.swift in Sources */,
 				950CCE1ED19B42FDA7B85BA2428EF490 /* LoginItemsManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -242,6 +244,7 @@
 				TEST002 /* MemoryMonitorTests.swift in Sources */,
 				TEST003 /* TableSectionTests.swift in Sources */,
 				TEST004 /* MenuBarControllerTests.swift in Sources */,
+				79C10A722E260CD900A5D8EA /* Version.swift in Sources */,
 				TEST005 /* StatsWindowControllerTests.swift in Sources */,
 				TEST006 /* TestHelpers.swift in Sources */,
 			);

@@ -145,6 +145,9 @@ Temporary Items
 *.zip
 *.dmg
 
+# Auto-generated files
+MemStat/Version.swift
+
 # AI Config
 CLAUDE.md
 .claude/
