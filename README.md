@@ -59,6 +59,9 @@ open MemStat.xcodeproj
 
 # Or build from command line
 xcodebuild -project MemStat.xcodeproj -scheme MemStat -configuration Release build
+
+# To run unit tests against the debug build
+xcodebuild test -scheme MemStat -destination 'platform=macOS,arch=arm64' -configuration Debug
 ```
 
 For development builds without code signing:
