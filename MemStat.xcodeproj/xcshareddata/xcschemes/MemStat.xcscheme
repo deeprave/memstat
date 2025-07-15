@@ -40,6 +40,15 @@
             </BuildableReference>
          </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "307CD7CE92734EBA924B205BACD98C31"
+            BuildableName = "MemStat.app"
+            BlueprintName = "MemStat"
+            ReferencedContainer = "container:MemStat.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"

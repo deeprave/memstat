@@ -118,6 +118,11 @@ class MenuBarController: NSObject {
     }
     
     @objc private func showAbout() {
+        // Don't show modal dialogs during testing
+        if isRunningTests() {
+            return
+        }
+        
         let alert = NSAlert()
         alert.messageText = "MemStat"
         alert.informativeText = "Version 1.0\nDavid Nugent\nCompiled: \(getCompilationDate())\n\nA simple memory statistics monitor for macOS."
@@ -142,7 +147,15 @@ class MenuBarController: NSObject {
     }
     
     @objc private func quitApp() {
+        // Don't terminate during testing
+        if isRunningTests() {
+            return
+        }
         NSApplication.shared.terminate(nil)
+    }
+    
+    private func isRunningTests() -> Bool {
+        return NSClassFromString("XCTestCase") != nil
     }
     
     @objc private func setAppearanceAuto() {

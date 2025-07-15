@@ -11,13 +11,14 @@ struct FormatUtilities {
     
     private static let byteFormatter: ByteCountFormatter = {
         let formatter = ByteCountFormatter()
-        formatter.allowedUnits = [.useGB, .useMB]
+        formatter.allowedUnits = [.useGB, .useMB, .useKB, .useBytes]
         formatter.countStyle = .memory
         return formatter
     }()
     
     static func formatBytes(_ bytes: UInt64) -> String {
-        return byteFormatter.string(fromByteCount: Int64(bytes))
+        let formatted = byteFormatter.string(fromByteCount: Int64(bytes))
+        return formatted.replacingOccurrences(of: " bytes", with: " b")
     }
     
     static func separateValueAndUnit(_ formattedString: String) -> (value: String, unit: String) {

@@ -32,11 +32,12 @@ extension XCTestCase {
 
 struct TestDataGenerator {
     
-    static func mockMemoryStats(pressure: MemoryPressure = .normal) -> MemoryStats {
+    static func mockMemoryStats(pressure: String = "Normal") -> MemoryStats {
         return MemoryStats(
             totalMemory: 17_179_869_184, // 16 GB
             usedMemory: 10_737_418_240,  // 10 GB
             freeMemory: 6_442_450_944,   // 6 GB
+            memoryPressure: pressure,
             activeMemory: 4_294_967_296,  // 4 GB
             inactiveMemory: 2_147_483_648, // 2 GB
             wiredMemory: 3_221_225_472,   // 3 GB
@@ -44,21 +45,27 @@ struct TestDataGenerator {
             swapTotalMemory: 2_147_483_648,  // 2 GB
             swapUsedMemory: 536_870_912,     // 512 MB
             swapFreeMemory: 1_610_612_736,   // 1.5 GB
+            swapUtilization: 25.0,
             swapIns: 1234567,
             swapOuts: 987654,
-            pressure: pressure
+            topProcesses: []
         )
     }
     
-    static func mockProcessInfo(count: Int = 5) -> [ProcessInfo] {
+    static func mockProcessInfo(count: Int = 5) -> [MemStat.ProcessInfo] {
         return (0..<count).map { index in
-            ProcessInfo(
+            let memoryPercent = Double(20 - index * 2)
+            let memoryBytes = UInt64(memoryPercent) * 100_000_000
+            let virtualMemoryBytes = UInt64(memoryPercent) * 200_000_000
+            let cpuPercent = Double(index * 5)
+            
+            return MemStat.ProcessInfo(
                 pid: Int32(1000 + index),
-                command: "TestProcess\(index)",
-                memoryPercent: Double(20 - index * 2),
-                memoryBytes: UInt64((20 - index * 2)) * 100_000_000,
-                virtualMemoryBytes: UInt64((20 - index * 2)) * 200_000_000,
-                cpuPercent: Double(index * 5)
+                memoryPercent: memoryPercent,
+                memoryBytes: memoryBytes,
+                virtualMemoryBytes: virtualMemoryBytes,
+                cpuPercent: cpuPercent,
+                command: "TestProcess\(index)"
             )
         }
     }
