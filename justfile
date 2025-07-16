@@ -22,7 +22,7 @@ debug: version
 # Build release version
 release: version
 	@echo "Building MemStat (Release)..."
-	xcodebuild -scheme MemStat -configuration Release build
+	xcodebuild -scheme MemStat -configuration Release -derivedDataPath build build
 
 # Run tests
 test: version
@@ -38,7 +38,7 @@ clean:
 # Archive for distribution
 archive: version
 	@echo "Creating archive..."
-	xcodebuild -scheme MemStat -configuration Release archive
+	xcodebuild -scheme MemStat -configuration Release -derivedDataPath build archive
 
 # Show current version
 show-version:

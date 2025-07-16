@@ -117,7 +117,7 @@ esac
 echo ""
 echo "✅ All done!"
 echo ""
-echo "Release build location: build/Release/${APP_NAME}.app"
+echo "Release build location: build/Build/Products/Release/${APP_NAME}.app"
 if [ -d "dist" ]; then
     echo "Distribution packages: dist/"
     ls -la dist/
