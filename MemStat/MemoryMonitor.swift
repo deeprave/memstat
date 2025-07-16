@@ -43,41 +43,11 @@ func proc_pidpath(_ pid: Int32, _ buffer: UnsafeMutableRawPointer, _ buffersize:
 @_silgen_name("sysctl")
 func sysctl(_ name: UnsafeMutablePointer<Int32>, _ namelen: UInt32, _ oldp: UnsafeMutableRawPointer?, _ oldlenp: UnsafeMutablePointer<Int>?, _ newp: UnsafeMutableRawPointer?, _ newlen: Int) -> Int32
 
-enum ProcessSortColumn {
-    case pid, memoryPercent, memoryBytes, virtualMemory, cpuPercent, command
-}
 
-struct ProcessInfo {
-    let pid: Int32
-    let memoryPercent: Double
-    let memoryBytes: UInt64
-    let virtualMemoryBytes: UInt64
-    let cpuPercent: Double
-    let command: String
-}
-
-struct MemoryStats {
-    let totalMemory: UInt64
-    let usedMemory: UInt64
-    let freeMemory: UInt64
-    let memoryPressure: String
-    let activeMemory: UInt64
-    let inactiveMemory: UInt64
-    let wiredMemory: UInt64
-    let compressedMemory: UInt64
-    let swapTotalMemory: UInt64
-    let swapUsedMemory: UInt64
-    let swapFreeMemory: UInt64
-    let swapUtilization: Double
-    let swapIns: UInt64
-    let swapOuts: UInt64
-    let topProcesses: [ProcessInfo]
-}
-
-class MemoryMonitor {
+open class MemoryMonitor {
     
     private var previousCPUData: [Int32: (totalTime: UInt64, timestamp: TimeInterval)] = [:]
-    private static let maxCPUDataEntries = 500 // Limit to prevent unbounded growth
+    private static let maxCPUDataEntries = 500
     
     private static let cpuCoreCount: Int = {
         var coreCount: Int = 0
@@ -92,7 +62,7 @@ class MemoryMonitor {
         return info
     }()
     
-    func getMemoryStats(sortBy: ProcessSortColumn = .memoryPercent, sortDescending: Bool = true) -> MemoryStats {
+    open func getMemoryStats(sortBy: ProcessSortColumn = .memoryPercent, sortDescending: Bool = true) -> MemoryStats {
         var info = mach_task_basic_info()
         var count = mach_msg_type_number_t(MemoryLayout<mach_task_basic_info>.size)/4
         
@@ -145,6 +115,18 @@ class MemoryMonitor {
         let swapStats = getSwapStats()
         let topProcesses = getTopProcesses(totalMemory: totalMemory, sortBy: sortBy, sortDescending: sortDescending)
         
+        let appPhysicalMemory = topProcesses.reduce(0) { $0 + $1.memoryBytes }
+        let appVirtualMemory = topProcesses.reduce(0) { $0 + $1.virtualMemoryBytes }
+        
+        // Calculate anonymous and file-backed memory
+        // Anonymous memory: memory not backed by files (heap, stack, etc.)
+        // File-backed memory: memory backed by files (cached files, libraries, etc.)
+        // For now, we'll use reasonable approximations:
+        // Anonymous ≈ Active + Inactive (simplified)
+        // File-backed ≈ Total used memory - Anonymous (simplified)
+        let anonymousMemory = activeMemory + inactiveMemory
+        let fileBackedMemory = (usedMemory > anonymousMemory) ? (usedMemory - anonymousMemory) : 0
+        
         return MemoryStats(
             totalMemory: totalMemory,
             usedMemory: usedMemory,
@@ -154,6 +136,10 @@ class MemoryMonitor {
             inactiveMemory: inactiveMemory,
             wiredMemory: wiredMemory,
             compressedMemory: compressedMemory,
+            appPhysicalMemory: appPhysicalMemory,
+            appVirtualMemory: appVirtualMemory,
+            anonymousMemory: anonymousMemory,
+            fileBackedMemory: fileBackedMemory,
             swapTotalMemory: swapUsage.total,
             swapUsedMemory: swapUsage.used,
             swapFreeMemory: swapUsage.free,
@@ -268,7 +254,6 @@ class MemoryMonitor {
             previousCPUData.removeValue(forKey: oldPid)
         }
         
-        // Enforce size limit on previousCPUData
         if previousCPUData.count > Self.maxCPUDataEntries {
             let sortedByTimestamp = previousCPUData.sorted { $0.value.timestamp < $1.value.timestamp }
             let entriesToRemove = sortedByTimestamp.prefix(previousCPUData.count - Self.maxCPUDataEntries)
@@ -277,7 +262,6 @@ class MemoryMonitor {
             }
         }
         
-        // If sorting by memory percentage descending, we can optimize by avoiding double sort
         if sortBy == .memoryPercent && sortDescending {
             let topMemoryProcesses = processes.sorted { first, second in
                 return first.memoryPercent > second.memoryPercent
@@ -285,7 +269,6 @@ class MemoryMonitor {
             return Array(topMemoryProcesses.prefix(20))
         }
         
-        // For other sort columns, first get top 20 by memory, then sort by requested column
         let topMemoryProcesses = processes.sorted { first, second in
             return first.memoryPercent > second.memoryPercent
         }
@@ -300,6 +283,8 @@ class MemoryMonitor {
             case .memoryBytes:
                 return first.memoryBytes < second.memoryBytes
             case .virtualMemory:
+                return first.virtualMemoryBytes < second.virtualMemoryBytes
+            case .virtualMemoryBytes:
                 return first.virtualMemoryBytes < second.virtualMemoryBytes
             case .cpuPercent:
                 return first.cpuPercent < second.cpuPercent
@@ -448,8 +433,6 @@ class MemoryMonitor {
         
         if let lastSlash = cleanCommand.lastIndex(of: "/") {
             let executablePart = String(cleanCommand[cleanCommand.index(after: lastSlash)...])
-            // For executable paths, only split if we detect command arguments (starting with -)
-            // Otherwise preserve the full executable name
             let parts = executablePart.split(separator: " ", maxSplits: 1)
             if parts.count > 1 && String(parts[1]).hasPrefix("-") {
                 return String(parts[0])

@@ -2,13 +2,9 @@ import XCTest
 import Cocoa
 @testable import MemStat
 
-// Mock delegate for testing
-class MockTableSectionDelegate: TableSectionDelegate {
+class MockLabelFactory: LabelFactory {
     var headerLabelsCreated = 0
     var dataLabelsCreated = 0
-    var backgroundsAdded = 0
-    var lastSortColumn: ProcessSortColumn?
-    var lastSortDescending: Bool?
     
     func createHeaderLabel(_ text: String, frame: NSRect, isDarkBackground: Bool, sortColumn: ProcessSortColumn?, fontSize: CGFloat, alignment: NSTextAlignment) -> NSTextField {
         headerLabelsCreated += 1
@@ -26,14 +22,51 @@ class MockTableSectionDelegate: TableSectionDelegate {
         label.alignment = alignment
         return label
     }
+}
+
+class MockBackgroundStylist: BackgroundStylist {
+    var backgroundsAdded = 0
     
     func addTableBackground(to section: NSView, padding: CGFloat) {
         backgroundsAdded += 1
     }
+}
+
+class MockSortHandler: SortHandler {
+    var lastSortColumn: ProcessSortColumn?
+    var lastSortDescending: Bool?
     
     func updateSortingAndRefresh(sortColumn: ProcessSortColumn, sortDescending: Bool) {
         lastSortColumn = sortColumn
         lastSortDescending = sortDescending
+    }
+}
+
+class MockTableSectionDelegate: TableSectionDelegate {
+    let labelFactory = MockLabelFactory()
+    let backgroundStylist = MockBackgroundStylist()
+    let sortHandler = MockSortHandler()
+    
+    var headerLabelsCreated: Int { labelFactory.headerLabelsCreated }
+    var dataLabelsCreated: Int { labelFactory.dataLabelsCreated }
+    var backgroundsAdded: Int { backgroundStylist.backgroundsAdded }
+    var lastSortColumn: ProcessSortColumn? { sortHandler.lastSortColumn }
+    var lastSortDescending: Bool? { sortHandler.lastSortDescending }
+    
+    func createHeaderLabel(_ text: String, frame: NSRect, isDarkBackground: Bool, sortColumn: ProcessSortColumn?, fontSize: CGFloat, alignment: NSTextAlignment) -> NSTextField {
+        return labelFactory.createHeaderLabel(text, frame: frame, isDarkBackground: isDarkBackground, sortColumn: sortColumn, fontSize: fontSize, alignment: alignment)
+    }
+    
+    func createDataLabel(text: String, frame: NSRect, alignment: NSTextAlignment, useMonospacedFont: Bool) -> NSTextField {
+        return labelFactory.createDataLabel(text: text, frame: frame, alignment: alignment, useMonospacedFont: useMonospacedFont)
+    }
+    
+    func addTableBackground(to section: NSView, padding: CGFloat) {
+        backgroundStylist.addTableBackground(to: section, padding: padding)
+    }
+    
+    func updateSortingAndRefresh(sortColumn: ProcessSortColumn, sortDescending: Bool) {
+        sortHandler.updateSortingAndRefresh(sortColumn: sortColumn, sortDescending: sortDescending)
     }
 }
 
@@ -56,10 +89,10 @@ class TableSectionTests: XCTestCase {
         section.setupSection(in: NSView(frame: NSRect(x: 0, y: 0, width: 800, height: 600)), delegate: mockDelegate)
         
         XCTAssertEqual(section.yPosition, 100)
-        XCTAssertEqual(section.height, 50)
+        XCTAssertEqual(section.height, VerticalTableLayout.calculateTableHeight(for: 7))
         
-        XCTAssertEqual(mockDelegate.headerLabelsCreated, 4) // Total, Used, Free, Pressure
-        XCTAssertEqual(mockDelegate.dataLabelsCreated, 7) // 3 values + 3 units + 1 pressure label
+        XCTAssertEqual(mockDelegate.headerLabelsCreated, 0)
+        XCTAssertEqual(mockDelegate.dataLabelsCreated, 13)
         XCTAssertEqual(mockDelegate.backgroundsAdded, 1)
         
         guard let sectionView = section.sectionView else {
@@ -75,14 +108,18 @@ class TableSectionTests: XCTestCase {
         section.setupSection(in: NSView(frame: NSRect(x: 0, y: 0, width: 800, height: 600)), delegate: mockDelegate)
         
         let stats = MemoryStats(
-            totalMemory: 17_179_869_184, // 16 GB
-            usedMemory: 12_884_901_888,  // 12 GB
-            freeMemory: 4_294_967_296,   // 4 GB
+            totalMemory: 17_179_869_184,
+            usedMemory: 12_884_901_888,
+            freeMemory: 4_294_967_296,
             memoryPressure: "Normal",
             activeMemory: 4_294_967_296,
             inactiveMemory: 2_147_483_648,
             wiredMemory: 4_294_967_296,
             compressedMemory: 2_147_483_648,
+            appPhysicalMemory: 2_147_483_648,
+            appVirtualMemory: 8_589_934_592,
+            anonymousMemory: 3_221_225_472,
+            fileBackedMemory: 1_073_741_824,
             swapTotalMemory: 0,
             swapUsedMemory: 0,
             swapFreeMemory: 0,
@@ -111,10 +148,10 @@ class TableSectionTests: XCTestCase {
         section.setupSection(in: NSView(frame: NSRect(x: 0, y: 0, width: 800, height: 600)), delegate: mockDelegate)
         
         XCTAssertEqual(section.yPosition, 200)
-        XCTAssertEqual(section.height, 50)
+        XCTAssertEqual(section.height, VerticalTableLayout.calculateTableHeight(for: 7))
         
-        XCTAssertEqual(mockDelegate.headerLabelsCreated, 4) // Active, Inactive, Wired, Compressed
-        XCTAssertEqual(mockDelegate.dataLabelsCreated, 8) // 4 values + 4 units
+        XCTAssertEqual(mockDelegate.headerLabelsCreated, 0)
+        XCTAssertEqual(mockDelegate.dataLabelsCreated, 14)
         
         guard let sectionView = section.sectionView else {
             XCTFail("Section view not created")
@@ -129,10 +166,10 @@ class TableSectionTests: XCTestCase {
         section.setupSection(in: NSView(frame: NSRect(x: 0, y: 0, width: 800, height: 600)), delegate: mockDelegate)
         
         XCTAssertEqual(section.yPosition, 300)
-        XCTAssertEqual(section.height, 75)
+        XCTAssertEqual(section.height, VerticalTableLayout.calculateTableHeight(for: 7))
         
-        XCTAssertEqual(mockDelegate.headerLabelsCreated, 6) // Total, Used, Free, Swap Usage, Swap Ins, Swap Outs
-        XCTAssertEqual(mockDelegate.dataLabelsCreated, 9) // 3 values + 3 units + 1 separator + 2 counts
+        XCTAssertEqual(mockDelegate.headerLabelsCreated, 0)
+        XCTAssertEqual(mockDelegate.dataLabelsCreated, 10)
     }
     
     func testProcessTableSectionCreation() {
@@ -140,9 +177,9 @@ class TableSectionTests: XCTestCase {
         section.setupSection(in: NSView(frame: NSRect(x: 0, y: 0, width: 800, height: 600)), delegate: mockDelegate)
         
         XCTAssertEqual(section.yPosition, 400)
-        XCTAssertEqual(section.height, 452)
+        XCTAssertEqual(section.height, VerticalTableLayout.processTableHeight)
         
-        XCTAssertEqual(mockDelegate.headerLabelsCreated, 6) // PID, Memory %, Memory, Virtual, CPU %, Command
+        XCTAssertEqual(mockDelegate.headerLabelsCreated, 6)
         
         guard let sectionView = section.sectionView else {
             XCTFail("Section view not created")
@@ -174,6 +211,10 @@ class TableSectionTests: XCTestCase {
             inactiveMemory: 2_147_483_648,
             wiredMemory: 4_294_967_296,
             compressedMemory: 2_147_483_648,
+            appPhysicalMemory: 2_147_483_648,
+            appVirtualMemory: 8_589_934_592,
+            anonymousMemory: 3_221_225_472,
+            fileBackedMemory: 1_073_741_824,
             swapTotalMemory: 0,
             swapUsedMemory: 0,
             swapFreeMemory: 0,

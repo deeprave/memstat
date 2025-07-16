@@ -86,10 +86,7 @@ class MenuBarControllerTests: XCTestCase {
         let initialStatusItem = menuBarController.statusItem
         XCTAssertNotNil(initialStatusItem)
         
-        // Test persistence immediately - no need for async dispatch
         XCTAssertEqual(menuBarController.statusItem, initialStatusItem)
-        
-        // Verify it's still the same after accessing it multiple times
         let secondAccess = menuBarController.statusItem
         XCTAssertEqual(secondAccess, initialStatusItem)
     }

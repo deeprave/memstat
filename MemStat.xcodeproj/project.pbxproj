@@ -10,6 +10,23 @@
 		103ACD51B219408CA222AC382B4D64EF /* MemoryMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F58170FA9444305AC782A0919AEE23A /* MemoryMonitor.swift */; };
 		79C10A722E260CD900A5D8EA /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C10A712E260CD900A5D8EA /* Version.swift */; };
 		79C10A732E260CD900A5D8EA /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C10A712E260CD900A5D8EA /* Version.swift */; };
+		79CA34122E2681E9003ABE85 /* StatsDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA340D2E2681E9003ABE85 /* StatsDataService.swift */; };
+		79CA34132E2681E9003ABE85 /* TableLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA34102E2681E9003ABE85 /* TableLayoutManager.swift */; };
+		79CA34142E2681E9003ABE85 /* StatsThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA340E2E2681E9003ABE85 /* StatsThemeManager.swift */; };
+		79CA34152E2681E9003ABE85 /* TableFieldFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA340F2E2681E9003ABE85 /* TableFieldFactory.swift */; };
+		79CA34162E2681E9003ABE85 /* UIComponentFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA34112E2681E9003ABE85 /* UIComponentFactory.swift */; };
+		79CA34172E2681E9003ABE85 /* StatsDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA340D2E2681E9003ABE85 /* StatsDataService.swift */; };
+		79CA34182E2681E9003ABE85 /* TableLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA34102E2681E9003ABE85 /* TableLayoutManager.swift */; };
+		79CA34192E2681E9003ABE85 /* StatsThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA340E2E2681E9003ABE85 /* StatsThemeManager.swift */; };
+		79CA341A2E2681E9003ABE85 /* TableFieldFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA340F2E2681E9003ABE85 /* TableFieldFactory.swift */; };
+		79CA341B2E2681E9003ABE85 /* UIComponentFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA34112E2681E9003ABE85 /* UIComponentFactory.swift */; };
+		79CA34352E271891003ABE85 /* UIComponentFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA34342E271891003ABE85 /* UIComponentFactoryTests.swift */; };
+		79CA34362E271891003ABE85 /* TableLayoutManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA34332E271891003ABE85 /* TableLayoutManagerTests.swift */; };
+		79CA34372E271891003ABE85 /* StatsDataServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA34302E271891003ABE85 /* StatsDataServiceTests.swift */; };
+		79CA34382E271891003ABE85 /* StatsThemeManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA34312E271891003ABE85 /* StatsThemeManagerTests.swift */; };
+		79CA34392E271891003ABE85 /* TableFieldFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA34322E271891003ABE85 /* TableFieldFactoryTests.swift */; };
+		79CA343B2E27295C003ABE85 /* CommonTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA343A2E2727B7003ABE85 /* CommonTypes.swift */; };
+		79CA343C2E27295C003ABE85 /* CommonTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA343A2E2727B7003ABE85 /* CommonTypes.swift */; };
 		79F9FE8E2E253A7000223DB8 /* FormatUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F9FE8D2E253A6300223DB8 /* FormatUtilities.swift */; };
 		950CCE1ED19B42FDA7B85BA2428EF490 /* LoginItemsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9598E85B5CD943C3BA0C3A3B40E40A1B /* LoginItemsManager.swift */; };
 		BC91B92471E54BECAD37311A5C96BC2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB4B2A514054C4F93C4A8B03C535F88 /* AppDelegate.swift */; };
@@ -42,6 +59,17 @@
 		5F58170FA9444305AC782A0919AEE23A /* MemoryMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryMonitor.swift; sourceTree = "<group>"; };
 		75EC40C6BB064D6A8B1D20DD28D10233 /* StatsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsWindowController.swift; sourceTree = "<group>"; };
 		79C10A712E260CD900A5D8EA /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
+		79CA340D2E2681E9003ABE85 /* StatsDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsDataService.swift; sourceTree = "<group>"; };
+		79CA340E2E2681E9003ABE85 /* StatsThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsThemeManager.swift; sourceTree = "<group>"; };
+		79CA340F2E2681E9003ABE85 /* TableFieldFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableFieldFactory.swift; sourceTree = "<group>"; };
+		79CA34102E2681E9003ABE85 /* TableLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableLayoutManager.swift; sourceTree = "<group>"; };
+		79CA34112E2681E9003ABE85 /* UIComponentFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIComponentFactory.swift; sourceTree = "<group>"; };
+		79CA34302E271891003ABE85 /* StatsDataServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsDataServiceTests.swift; sourceTree = "<group>"; };
+		79CA34312E271891003ABE85 /* StatsThemeManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsThemeManagerTests.swift; sourceTree = "<group>"; };
+		79CA34322E271891003ABE85 /* TableFieldFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableFieldFactoryTests.swift; sourceTree = "<group>"; };
+		79CA34332E271891003ABE85 /* TableLayoutManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableLayoutManagerTests.swift; sourceTree = "<group>"; };
+		79CA34342E271891003ABE85 /* UIComponentFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIComponentFactoryTests.swift; sourceTree = "<group>"; };
+		79CA343A2E2727B7003ABE85 /* CommonTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTypes.swift; sourceTree = "<group>"; };
 		79F9FE8D2E253A6300223DB8 /* FormatUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatUtilities.swift; sourceTree = "<group>"; };
 		9598E85B5CD943C3BA0C3A3B40E40A1B /* LoginItemsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemsManager.swift; sourceTree = "<group>"; };
 		A196A6C2D92A454782E75C07D1173C5E /* MenuBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarController.swift; sourceTree = "<group>"; };
@@ -81,13 +109,19 @@
 			isa = PBXGroup;
 			children = (
 				F9B7C3D85E2A4B6C9F1A0E8D4C293847 /* main.swift */,
-				79C10A712E260CD900A5D8EA /* Version.swift */,
+				79CA343A2E2727B7003ABE85 /* CommonTypes.swift */,
 				2EB4B2A514054C4F93C4A8B03C535F88 /* AppDelegate.swift */,
+				79F9FE8D2E253A6300223DB8 /* FormatUtilities.swift */,
+				9598E85B5CD943C3BA0C3A3B40E40A1B /* LoginItemsManager.swift */,
+				5F58170FA9444305AC782A0919AEE23A /* MemoryMonitor.swift */,
 				A196A6C2D92A454782E75C07D1173C5E /* MenuBarController.swift */,
 				75EC40C6BB064D6A8B1D20DD28D10233 /* StatsWindowController.swift */,
-				79F9FE8D2E253A6300223DB8 /* FormatUtilities.swift */,
-				5F58170FA9444305AC782A0919AEE23A /* MemoryMonitor.swift */,
-				9598E85B5CD943C3BA0C3A3B40E40A1B /* LoginItemsManager.swift */,
+				79CA340D2E2681E9003ABE85 /* StatsDataService.swift */,
+				79CA340E2E2681E9003ABE85 /* StatsThemeManager.swift */,
+				79CA340F2E2681E9003ABE85 /* TableFieldFactory.swift */,
+				79CA34102E2681E9003ABE85 /* TableLayoutManager.swift */,
+				79CA34112E2681E9003ABE85 /* UIComponentFactory.swift */,
+				79C10A712E260CD900A5D8EA /* Version.swift */,
 				F357572923874F39AE7C0C699A05C69A /* Assets.xcassets */,
 				C36C4A9C9C5246948423432FB4F57666 /* Info.plist */,
 			);
@@ -115,6 +149,11 @@
 		TESTGROUP001 /* MemStatTests */ = {
 			isa = PBXGroup;
 			children = (
+				79CA34302E271891003ABE85 /* StatsDataServiceTests.swift */,
+				79CA34312E271891003ABE85 /* StatsThemeManagerTests.swift */,
+				79CA34322E271891003ABE85 /* TableFieldFactoryTests.swift */,
+				79CA34332E271891003ABE85 /* TableLayoutManagerTests.swift */,
+				79CA34342E271891003ABE85 /* UIComponentFactoryTests.swift */,
 				TESTFILE001 /* FormatUtilitiesTests.swift */,
 				TESTFILE002 /* MemoryMonitorTests.swift */,
 				TESTFILE003 /* TableSectionTests.swift */,
@@ -133,6 +172,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 15A2904EFFCF487C8EB8DE1BDF7C0FD6 /* Build configuration list for PBXNativeTarget "MemStat" */;
 			buildPhases = (
+				79CA343D2E278F41003ABE85 /* Generate Version Info */,
 				E4437F7620A3475495DB54F29C38A5BE /* Sources */,
 				41C07DEEA366428DACBC29AD19976185 /* Frameworks */,
 				123456789ABCDEF012345678RESOURCE /* Resources */,
@@ -220,6 +260,30 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		79CA343D2E278F41003ABE85 /* Generate Version Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(PROJECT_DIR)/.git/HEAD",
+				"$(PROJECT_DIR)/.git/index",
+			);
+			name = "Generate Version Info";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(PROJECT_DIR)/MemStat/Version.swift",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "#!/bin/bash\n\n# Get the directory of this script\nSCRIPT_DIR=\"$( cd \"$( dirname \"${BASH_SOURCE[0]}\" )\" >/dev/null 2>&1 && pwd )\"\nPROJECT_DIR=\"$( cd \"$SCRIPT_DIR/..\" >/dev/null 2>&1 && pwd )\"\n\n# Change to project directory to ensure git commands work\ncd \"$PROJECT_DIR\"\n\n# Get version from git\n# git describe --tags will give us:\n# - v1.0.0 (if we're exactly on a tag)\n# - v1.0.0-5-g3a4b5c6 (5 commits after tag v1.0.0, commit hash 3a4b5c6)\n# - v1.0.0-5-g3a4b5c6-dirty (if working directory has uncommitted changes)\nGIT_VERSION=$(git describe --tags --always --dirty 2>/dev/null || echo \"v0.0.0\")\n\n# Get the commit count for build number\nBUILD_NUMBER=$(git rev-list --count HEAD 2>/dev/null || echo \"0\")\n\n# Get the short commit hash\nCOMMIT_HASH=$(git rev-parse --short HEAD 2>/dev/null || echo \"unknown\")\n\n# Generate the Swift file\ncat > \"$PROJECT_DIR/MemStat/Version.swift\" << EOF\n//\n//  Version.swift\n//  MemStat\n//\n//  Auto-generated file - DO NOT EDIT\n//  Generated on $(date)\n//\n\nstruct AppVersion {\n    /// Full version string from git describe (e.g., \"v1.0.0-5-g3a4b5c6-dirty\")\n    static let gitVersion = \"$GIT_VERSION\"\n\n    /// Build number (total commit count)\n    static let buildNumber = \"$BUILD_NUMBER\"\n\n    /// Short commit hash\n    static let commitHash = \"$COMMIT_HASH\"\n\n    /// User-friendly version string (strips the 'v' prefix)\n    static var displayVersion: String {\n        gitVersion.hasPrefix(\"v\") ? String(gitVersion.dropFirst()) : gitVersion\n    }\n}\nEOF\n\necho \"Generated Version.swift with version: $GIT_VERSION\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E4437F7620A3475495DB54F29C38A5BE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -229,6 +293,12 @@
 				E4A8B1C74F6D4A5B9E3C8D2F01234567 /* main.swift in Sources */,
 				BC91B92471E54BECAD37311A5C96BC2D /* AppDelegate.swift in Sources */,
 				D7C0C56444584D47AF8190574F162899 /* MenuBarController.swift in Sources */,
+				79CA34172E2681E9003ABE85 /* StatsDataService.swift in Sources */,
+				79CA34182E2681E9003ABE85 /* TableLayoutManager.swift in Sources */,
+				79CA34192E2681E9003ABE85 /* StatsThemeManager.swift in Sources */,
+				79CA341A2E2681E9003ABE85 /* TableFieldFactory.swift in Sources */,
+				79CA343B2E27295C003ABE85 /* CommonTypes.swift in Sources */,
+				79CA341B2E2681E9003ABE85 /* UIComponentFactory.swift in Sources */,
 				D151BFF9FC174C9A8CE621AD2016E85D /* StatsWindowController.swift in Sources */,
 				103ACD51B219408CA222AC382B4D64EF /* MemoryMonitor.swift in Sources */,
 				79C10A732E260CD900A5D8EA /* Version.swift in Sources */,
@@ -240,12 +310,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79CA34122E2681E9003ABE85 /* StatsDataService.swift in Sources */,
+				79CA34132E2681E9003ABE85 /* TableLayoutManager.swift in Sources */,
+				79CA34142E2681E9003ABE85 /* StatsThemeManager.swift in Sources */,
+				79CA34152E2681E9003ABE85 /* TableFieldFactory.swift in Sources */,
+				79CA34162E2681E9003ABE85 /* UIComponentFactory.swift in Sources */,
 				TEST001 /* FormatUtilitiesTests.swift in Sources */,
 				TEST002 /* MemoryMonitorTests.swift in Sources */,
 				TEST003 /* TableSectionTests.swift in Sources */,
 				TEST004 /* MenuBarControllerTests.swift in Sources */,
 				79C10A722E260CD900A5D8EA /* Version.swift in Sources */,
 				TEST005 /* StatsWindowControllerTests.swift in Sources */,
+				79CA34352E271891003ABE85 /* UIComponentFactoryTests.swift in Sources */,
+				79CA34362E271891003ABE85 /* TableLayoutManagerTests.swift in Sources */,
+				79CA34372E271891003ABE85 /* StatsDataServiceTests.swift in Sources */,
+				79CA343C2E27295C003ABE85 /* CommonTypes.swift in Sources */,
+				79CA34382E271891003ABE85 /* StatsThemeManagerTests.swift in Sources */,
+				79CA34392E271891003ABE85 /* TableFieldFactoryTests.swift in Sources */,
 				TEST006 /* TestHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -394,6 +475,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 46NFEC8EZ9;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -425,6 +507,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 46NFEC8EZ9;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;

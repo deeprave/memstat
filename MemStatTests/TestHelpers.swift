@@ -2,11 +2,8 @@ import Foundation
 import XCTest
 @testable import MemStat
 
-// Test helper extensions and utilities
-
 extension XCTestCase {
     
-    /// Wait for a condition to become true within a timeout period
     func waitForCondition(timeout: TimeInterval = 5.0, condition: () -> Bool) -> Bool {
         let startTime = Date()
         while Date().timeIntervalSince(startTime) < timeout {
@@ -18,7 +15,6 @@ extension XCTestCase {
         return false
     }
     
-    /// Assert that a value is within a percentage tolerance of an expected value
     func XCTAssertWithinTolerance(_ value: Double, expected: Double, tolerance: Double, file: StaticString = #file, line: UInt = #line) {
         let difference = abs(value - expected)
         let toleranceAmount = expected * tolerance
@@ -28,23 +24,25 @@ extension XCTestCase {
     }
 }
 
-// Mock data generators for testing
-
 struct TestDataGenerator {
     
     static func mockMemoryStats(pressure: String = "Normal") -> MemoryStats {
         return MemoryStats(
-            totalMemory: 17_179_869_184, // 16 GB
-            usedMemory: 10_737_418_240,  // 10 GB
-            freeMemory: 6_442_450_944,   // 6 GB
+            totalMemory: 17_179_869_184,
+            usedMemory: 10_737_418_240,
+            freeMemory: 6_442_450_944,
             memoryPressure: pressure,
-            activeMemory: 4_294_967_296,  // 4 GB
-            inactiveMemory: 2_147_483_648, // 2 GB
-            wiredMemory: 3_221_225_472,   // 3 GB
-            compressedMemory: 1_073_741_824, // 1 GB
-            swapTotalMemory: 2_147_483_648,  // 2 GB
-            swapUsedMemory: 536_870_912,     // 512 MB
-            swapFreeMemory: 1_610_612_736,   // 1.5 GB
+            activeMemory: 4_294_967_296,
+            inactiveMemory: 2_147_483_648,
+            wiredMemory: 3_221_225_472,
+            compressedMemory: 1_073_741_824,
+            appPhysicalMemory: 2_147_483_648,
+            appVirtualMemory: 8_589_934_592,
+            anonymousMemory: 3_221_225_472,
+            fileBackedMemory: 1_073_741_824,
+            swapTotalMemory: 2_147_483_648,
+            swapUsedMemory: 536_870_912,
+            swapFreeMemory: 1_610_612_736,
             swapUtilization: 25.0,
             swapIns: 1234567,
             swapOuts: 987654,

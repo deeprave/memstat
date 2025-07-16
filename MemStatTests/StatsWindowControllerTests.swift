@@ -6,14 +6,13 @@ class StatsWindowControllerTests: XCTestCase {
     
     var statsWindowController: StatsWindowController!
     
-    // Helper method for condition-based waiting instead of arbitrary delays
     private func waitForCondition(description: String, timeout: TimeInterval = 3.0, condition: () -> Bool) -> Bool {
         let startTime = Date()
         while Date().timeIntervalSince(startTime) < timeout {
             if condition() {
                 return true
             }
-            RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.01)) // Small polling interval
+            RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.01))
         }
         return false
     }
@@ -24,10 +23,8 @@ class StatsWindowControllerTests: XCTestCase {
     }
     
     override func tearDown() {
-        // Ensure window is properly hidden and cleaned up
         if let window = statsWindowController?.window, window.isVisible {
             statsWindowController?.hideWindow()
-            // Wait for window to actually be hidden using condition-based waiting
             let _ = waitForCondition(description: "Window hidden", timeout: 1.0) {
                 !window.isVisible
             }
@@ -93,7 +90,6 @@ class StatsWindowControllerTests: XCTestCase {
     }
     
     func testHeaderLabelCreation() {
-        // Ensure window is initialized to avoid interference issues
         _ = statsWindowController.window
         
         let frame = NSRect(x: 0, y: 0, width: 100, height: 20)
@@ -114,7 +110,6 @@ class StatsWindowControllerTests: XCTestCase {
     }
     
     func testDataLabelCreation() {
-        // Ensure window is initialized to avoid interference issues
         _ = statsWindowController.window
         
         let frame = NSRect(x: 0, y: 0, width: 100, height: 20)
@@ -209,7 +204,6 @@ class StatsWindowControllerTests: XCTestCase {
             return textFields
         }
         
-        // Wait for labels to be created and populated using condition-based polling
         let conditionMet = waitForCondition(description: "UI labels populated") {
             let labels = findTextFields(in: contentView)
             let nonEmptyLabels = labels.filter { !$0.stringValue.isEmpty }
@@ -218,7 +212,6 @@ class StatsWindowControllerTests: XCTestCase {
         
         XCTAssertTrue(conditionMet, "UI should be populated within reasonable time")
         
-        // Verify final state
         let labels = findTextFields(in: contentView)
         let nonEmptyLabels = labels.filter { !$0.stringValue.isEmpty }
         

@@ -22,25 +22,11 @@ COMMIT_HASH=$(git rev-parse --short HEAD 2>/dev/null || echo "unknown")
 
 # Generate the Swift file
 cat > "$PROJECT_DIR/MemStat/Version.swift" << EOF
-//
-//  Version.swift
-//  MemStat
-//
-//  Auto-generated file - DO NOT EDIT
-//  Generated on $(date)
-//
-
 struct AppVersion {
-    /// Full version string from git describe (e.g., "v1.0.0-5-g3a4b5c6-dirty")
     static let gitVersion = "$GIT_VERSION"
-    
-    /// Build number (total commit count)
     static let buildNumber = "$BUILD_NUMBER"
-    
-    /// Short commit hash
     static let commitHash = "$COMMIT_HASH"
     
-    /// User-friendly version string (strips the 'v' prefix)
     static var displayVersion: String {
         gitVersion.hasPrefix("v") ? String(gitVersion.dropFirst()) : gitVersion
     }

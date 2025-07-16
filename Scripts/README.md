@@ -2,9 +2,11 @@
 
 ## Setting up automatic version generation
 
-To automatically generate version information from git tags on each build, add a Run Script Build Phase to your Xcode project:
+To automatically generate version information from git tags on each build, you have several options:
 
-### Steps to add the Run Script Phase:
+### Option 1: Xcode Build Phase (Recommended)
+
+Add a Run Script Build Phase to your Xcode project:
 
 1. Open MemStat.xcodeproj in Xcode
 2. Select the MemStat target
@@ -16,7 +18,32 @@ To automatically generate version information from git tags on each build, add a
    ```bash
    "${PROJECT_DIR}/Scripts/generate_version.sh"
    ```
-8. Uncheck "Based on dependency analysis" (to ensure it runs every build)
+8. Configure Input/Output Files for build optimization:
+   - Input Files: `$(PROJECT_DIR)/.git/HEAD`, `$(PROJECT_DIR)/.git/index`
+   - Output Files: `$(PROJECT_DIR)/MemStat/Version.swift`
+
+### Option 2: Using Make
+
+A Makefile is provided for building with automatic version generation:
+
+```bash
+make              # Build debug version
+make release      # Build release version
+make test         # Run tests
+make clean        # Clean build artifacts
+make show-version # Display current version info
+```
+
+### Option 3: Using the Build Script
+
+Use the provided build script that always updates the version:
+
+```bash
+./Scripts/build.sh                          # Build debug version
+./Scripts/build.sh -c Release               # Build release version
+./Scripts/build.sh -a test                  # Run tests
+./Scripts/build.sh -c Release -a archive    # Create archive
+```
 
 ### How it works:
 

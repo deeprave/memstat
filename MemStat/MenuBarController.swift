@@ -1,6 +1,6 @@
 import Cocoa
 
-class MenuBarController: NSObject {
+class MenuBarController: NSObject, StatsWindowDelegate {
     
     var statusItem: NSStatusItem!
     private var statsWindowController: StatsWindowController!
@@ -78,9 +78,10 @@ class MenuBarController: NSObject {
     
     private func setupStatsWindow() {
         statsWindowController = StatsWindowController()
+        statsWindowController.delegate = self
         
         NSEvent.addGlobalMonitorForEvents(matching: .leftMouseDown) { [weak self] event in
-            if self?.isWindowVisible == true {
+            if self?.isWindowVisible == true && !(self?.statsWindowController.isPinnedWindow() ?? false) {
                 self?.hideWindow()
             }
         }
@@ -117,8 +118,11 @@ class MenuBarController: NSObject {
         isWindowVisible = false
     }
     
+    func windowWasClosed() {
+        isWindowVisible = false
+    }
+    
     @objc private func showAbout() {
-        // Don't show modal dialogs during testing
         if isRunningTests() {
             return
         }
@@ -147,7 +151,6 @@ class MenuBarController: NSObject {
     }
     
     @objc private func quitApp() {
-        // Don't terminate during testing
         if isRunningTests() {
             return
         }
@@ -215,7 +218,7 @@ class MenuBarController: NSObject {
             NSApp.appearance = NSAppearance(named: .aqua)
         case "dark":
             NSApp.appearance = NSAppearance(named: .darkAqua)
-        default: // "auto"
+        default:
             NSApp.appearance = nil
         }
     }

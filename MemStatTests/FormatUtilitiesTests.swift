@@ -1,4 +1,5 @@
 import XCTest
+import Cocoa
 @testable import MemStat
 
 class FormatUtilitiesTests: XCTestCase {
@@ -79,5 +80,27 @@ class FormatUtilitiesTests: XCTestCase {
         XCTAssertEqual(FormatUtilities.formatCount(999_999_999), "1000.0M")
         
         XCTAssertEqual(FormatUtilities.formatCount(1_234_567_890), "1234.6M")
+    }
+    
+    func testCreatePinIcon() {
+        let lightAppearance = NSAppearance(named: .aqua)!
+        let darkAppearance = NSAppearance(named: .darkAqua)!
+        
+        let lightIcon = FormatUtilities.createPinIcon(appearance: lightAppearance)
+        let darkIcon = FormatUtilities.createPinIcon(appearance: darkAppearance)
+        
+        XCTAssertEqual(lightIcon.size, NSSize(width: 22, height: 22))
+        XCTAssertEqual(darkIcon.size, NSSize(width: 22, height: 22))
+    }
+    
+    func testCreateCloseIcon() {
+        let lightAppearance = NSAppearance(named: .aqua)!
+        let darkAppearance = NSAppearance(named: .darkAqua)!
+        
+        let lightIcon = FormatUtilities.createCloseIcon(appearance: lightAppearance)
+        let darkIcon = FormatUtilities.createCloseIcon(appearance: darkAppearance)
+        
+        XCTAssertEqual(lightIcon.size, NSSize(width: 22, height: 22))
+        XCTAssertEqual(darkIcon.size, NSSize(width: 22, height: 22))
     }
 }

@@ -148,6 +148,12 @@ Temporary Items
 # Auto-generated files
 MemStat/Version.swift
 
+# LLVM Code Coverage
+*.profraw
+*.profdata
+default.profraw
+Coverage.profdata
+
 # Distribution files
 dist/
 
