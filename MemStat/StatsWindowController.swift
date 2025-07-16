@@ -699,7 +699,7 @@ protocol StatsWindowDelegate: AnyObject {
     func windowWasClosed()
 }
 
-class StatsWindowController: NSWindowController, SortHandler, TableSectionDelegate {
+class StatsWindowController: NSWindowController, NSWindowDelegate, SortHandler, TableSectionDelegate {
     
     weak var delegate: StatsWindowDelegate?
     
@@ -739,6 +739,7 @@ class StatsWindowController: NSWindowController, SortHandler, TableSectionDelega
     private func setupWindow() {
         guard let window = window else { return }
         
+        window.delegate = self
         window.level = .floating
         window.backgroundColor = NSColor.controlBackgroundColor
         window.hasShadow = true
@@ -912,6 +913,14 @@ class StatsWindowController: NSWindowController, SortHandler, TableSectionDelega
                 window.titleVisibility = .hidden
             }
         }
+    }
+    
+    // MARK: - NSWindowDelegate
+    
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
+        hideWindow()
+        delegate?.windowWasClosed()
+        return false
     }
     
     func isPinnedWindow() -> Bool {

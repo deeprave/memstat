@@ -40,6 +40,20 @@ archive: version
 	@echo "Creating archive..."
 	xcodebuild -scheme MemStat -configuration Release -derivedDataPath build archive
 
+# Create ZIP distribution
+zip: release
+	@echo "Creating ZIP distribution..."
+	@./Scripts/package_zip.sh
+
+# Create DMG distribution
+dmg: release
+	@echo "Creating DMG distribution..."
+	@./Scripts/package_dmg_styled.sh
+
+# Create both ZIP and DMG distributions
+dist: zip dmg
+	@echo "All distribution packages created!"
+
 # Show current version
 show-version:
 	@echo "Current version info:"
@@ -58,6 +72,9 @@ help:
 	@echo "  just test    - Run tests"
 	@echo "  just clean   - Clean build artifacts"
 	@echo "  just archive - Create release archive"
+	@echo "  just zip     - Create ZIP distribution"
+	@echo "  just dmg     - Create DMG distribution"
+	@echo "  just dist    - Create both ZIP and DMG distributions"
 	@echo "  just version - Generate Version.swift only"
 	@echo "  just show-version - Display current version info"
 	@echo "  just help    - Show this help message"
