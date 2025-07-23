@@ -8,10 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- **Critical Memory Leak**: Fixed UpdateCoordinator timer not being invalidated in deinit
+  - Added deinit method to UpdateCoordinator to properly invalidate timer
+  - Prevents crashes when UpdateCoordinator is deallocated without explicit stopUpdating() call
+  - Ensures proper cleanup of system resources and prevents memory leaks
 - **Memory Info Architecture**: Refactored memory information structs for better organization and reduced boilerplate
   - Moved BasicMemoryInfo, DetailedMemoryInfo, AppMemoryInfo, and SwapInfo as nested types within MemoryStats
   - Added static factory methods (mock()) to each nested type for simplified test data generation
-  - Added backward compatibility type aliases with deprecation warnings
+  - Removed deprecated type aliases after migrating all code to use nested types
   - Reduced test boilerplate by utilizing factory methods instead of manual struct instantiation
 - **UpdateCoordinator Threading**: Fixed timer thread safety for UI interactions
   - Added explicit RunLoop.main scheduling with .common mode for timer callbacks
@@ -22,14 +26,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - All appearance menus now automatically reflect the current mode selection with proper checkmarks
 
 ### Added
-- **Test Coverage**: Added comprehensive test suites for core components
-  - AppearanceManagerTests: Complete test coverage for appearance management functionality
-  - UpdateCoordinatorTests: Extensive testing of timer behavior, memory management, and error handling
-  - Enhanced existing test files with better organization and reduced verbosity
+- **Comprehensive Test Coverage**: Added extensive test suites for critical system integration points
+  - LoginItemsManagerTests: 17 tests covering cross-platform compatibility, error handling, and concurrent access
+  - MainTests: 22 tests for multiple instance detection logic and NSWorkspace integration
+  - AppDelegateCommandLineTests: 22 tests for command line parsing and application restart mechanisms
+  - UpdateCoordinatorTests: Enhanced testing of timer behavior, memory management, and error handling
+  - Overall test coverage improved from 75.21% to 75.87% (2261/2980 lines covered)
 
 ### Changed
 - **Code Organization**: Improved namespace organization by moving memory info structs as nested types
-- **Testing Strategy**: Simplified test data creation through factory methods rather than manual instantiation
+- **Testing Strategy**: Implemented comprehensive testing strategy for all low-coverage system integration areas
 
 ### Security
 - **UpdateCoordinator Validation**: Added minimum interval validation to prevent timer flooding
@@ -38,9 +44,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Memory Management**: Fixed potential memory leaks in AppearanceManager
   - Implemented weak reference pattern for menu tracking to prevent retain cycles
   - Automatic cleanup of deallocated menus to maintain proper memory hygiene
-- **Type Safety**: Enhanced deprecated type aliases with version removal plan
-  - Clear deprecation path documented for v2.0.0 to eliminate type ambiguity
-  - Prevents potential confusion between top-level and nested type definitions
 
 ### Improved
 - **Resource Management**: Enhanced component lifecycle management for better reliability

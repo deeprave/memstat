@@ -28,8 +28,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return currentMode == .window
     }
     
-    // MARK: - Command Line Parsing
-    
     private func parseCommandLineMode() -> AppMode? {
         let arguments = CommandLine.arguments
         
@@ -70,8 +68,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
           MemStat -w            # Start in window mode
         """)
     }
-    
-    // MARK: - Mode Management
     
     private func startInMode(_ mode: AppMode) {
         currentMode = mode

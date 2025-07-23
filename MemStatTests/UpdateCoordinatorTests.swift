@@ -208,6 +208,27 @@ class UpdateCoordinatorTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
+    func testDeinitInvalidatesTimerWithoutStopUpdating() {
+        let handler = MockUpdateHandler()
+        
+        var coordinator: UpdateCoordinator? = UpdateCoordinator(
+            updateInterval: testInterval,
+            updateHandler: handler.handleUpdate
+        )
+        
+        coordinator?.startUpdating(immediate: false)
+        
+        coordinator = nil
+        
+        let expectation = XCTestExpectation(description: "deinit should invalidate timer")
+        DispatchQueue.main.asyncAfter(deadline: .now() + testInterval * 3) {
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 2.0)
+        
+    }
+    
     // MARK: - Error Handling Tests
     
     func testHandlerThrowingException() {

@@ -71,8 +71,6 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
         }
     }
     
-    // MARK: - NSWindowDelegate
-    
     func windowWillClose(_ notification: Notification) {
         statsWindowController?.hideWindow()
         NSApp.terminate(nil)

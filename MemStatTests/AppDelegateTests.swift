@@ -10,17 +10,14 @@ class AppDelegateTests: XCTestCase {
         super.setUp()
         appDelegate = AppDelegate()
         
-        // Clear any saved preferences for clean testing
         UserDefaults.standard.removeObject(forKey: "AppMode")
     }
     
     override func tearDown() {
-        // Clean up any created controllers
         appDelegate.mainWindowController?.close()
         appDelegate.mainWindowController = nil
         appDelegate.menuBarController = nil
         
-        // Clear test preferences
         UserDefaults.standard.removeObject(forKey: "AppMode")
         
         appDelegate = nil
@@ -38,7 +35,6 @@ class AppDelegateTests: XCTestCase {
     // MARK: - Default Mode Tests
     
     func testDefaultModeIsWindow() {
-        // Test that default mode is window when no preference is saved
         let savedMode = UserDefaults.standard.string(forKey: "AppMode") ?? AppMode.window.rawValue
         let currentMode = AppMode(rawValue: savedMode) ?? .window
         
@@ -46,7 +42,6 @@ class AppDelegateTests: XCTestCase {
     }
     
     func testSavedPreferenceIsRespected() {
-        // Save menubar preference
         UserDefaults.standard.set(AppMode.menubar.rawValue, forKey: "AppMode")
         
         let savedMode = UserDefaults.standard.string(forKey: "AppMode") ?? AppMode.window.rawValue
@@ -54,7 +49,6 @@ class AppDelegateTests: XCTestCase {
         
         XCTAssertEqual(currentMode, .menubar, "Should respect saved menubar preference")
         
-        // Test window preference
         UserDefaults.standard.set(AppMode.window.rawValue, forKey: "AppMode")
         
         let savedMode2 = UserDefaults.standard.string(forKey: "AppMode") ?? AppMode.window.rawValue
@@ -64,7 +58,6 @@ class AppDelegateTests: XCTestCase {
     }
     
     func testInvalidSavedPreferenceFallsBackToWindow() {
-        // Save invalid preference
         UserDefaults.standard.set("invalid_mode", forKey: "AppMode")
         
         let savedMode = UserDefaults.standard.string(forKey: "AppMode") ?? AppMode.window.rawValue
@@ -76,7 +69,6 @@ class AppDelegateTests: XCTestCase {
     // MARK: - Command Line Parsing Tests
     
     func testCommandLineParsingLogic() {
-        // Test the parsing logic conceptually since we can't modify CommandLine.arguments
         let testArgs = ["MemStat"]
         let hasMenubarFlag = testArgs.contains("--menubar") || testArgs.contains("-m")
         let hasWindowFlag = testArgs.contains("--window") || testArgs.contains("-w")
@@ -86,21 +78,18 @@ class AppDelegateTests: XCTestCase {
     }
     
     func testCommandLineFlagDetection() {
-        // Test menubar flags
         let menubarLongArgs = ["MemStat", "--menubar"]
         let menubarShortArgs = ["MemStat", "-m"]
         
         XCTAssertTrue(menubarLongArgs.contains("--menubar"), "Should detect --menubar flag")
         XCTAssertTrue(menubarShortArgs.contains("-m"), "Should detect -m flag")
         
-        // Test window flags
         let windowLongArgs = ["MemStat", "--window"]
         let windowShortArgs = ["MemStat", "-w"]
         
         XCTAssertTrue(windowLongArgs.contains("--window"), "Should detect --window flag")
         XCTAssertTrue(windowShortArgs.contains("-w"), "Should detect -w flag")
         
-        // Test help flags
         let helpLongArgs = ["MemStat", "--help"]
         let helpShortArgs = ["MemStat", "-h"]
         
@@ -111,17 +100,12 @@ class AppDelegateTests: XCTestCase {
     // MARK: - Mode Switching Tests
     
     func testSwitchToModeUpdatesPref() {
-        // Start with window mode
         UserDefaults.standard.set(AppMode.window.rawValue, forKey: "AppMode")
         
-        // Mock the restart dialog to always cancel
-        // In real implementation, this would show a dialog
-        // For testing, we'll test the preference saving logic
         
         let initialMode = AppMode.window
         let targetMode = AppMode.menubar
         
-        // Simulate saving preference (without the dialog)
         UserDefaults.standard.set(targetMode.rawValue, forKey: "AppMode")
         
         let savedMode = UserDefaults.standard.string(forKey: "AppMode")
@@ -132,19 +116,13 @@ class AppDelegateTests: XCTestCase {
         let currentMode = AppMode.window
         let targetMode = AppMode.window
         
-        // Should not change anything when switching to same mode
         XCTAssertEqual(currentMode, targetMode, "Switching to same mode should be no-op")
     }
     
     // MARK: - Application Lifecycle Tests
     
     func testApplicationShouldTerminateAfterLastWindowClosed() {
-        // Test window mode - should terminate
         let windowModeResult = appDelegate.applicationShouldTerminateAfterLastWindowClosed(NSApp)
-        // Note: This will depend on the current mode of the app delegate
-        // In a real test, we'd set up the mode first
-        
-        // Test that the method exists and returns a boolean
         XCTAssertTrue(windowModeResult is Bool, "Should return a boolean value")
     }
     
@@ -156,17 +134,12 @@ class AppDelegateTests: XCTestCase {
     // MARK: - Menu Setup Tests
     
     func testAboutDialogCreation() {
-        // Test that the app delegate can create an about dialog
-        // We can't directly test the dialog, but we can verify the app delegate exists
         XCTAssertNotNil(appDelegate)
     }
     
     func testAppearanceMethodsExist() {
-        // Test that the app delegate can handle appearance settings
-        // We can't directly test the menu items, but we can verify the app delegate exists
         XCTAssertNotNil(appDelegate)
         
-        // Check that UserDefaults can store appearance settings
         UserDefaults.standard.set("auto", forKey: "AppearanceMode")
         let savedMode = UserDefaults.standard.string(forKey: "AppearanceMode")
         XCTAssertEqual(savedMode, "auto", "Should be able to save appearance mode")
@@ -177,8 +150,6 @@ class AppDelegateTests: XCTestCase {
 
 extension AppDelegateTests {
     
-    /// Helper method to simulate command line arguments
-    /// Note: CommandLine.arguments is read-only, so this is for documentation
     private func simulateCommandLineArgs(_ args: [String]) -> AppMode? {
         if args.contains("--menubar") || args.contains("-m") {
             return .menubar

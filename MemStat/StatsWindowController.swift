@@ -265,8 +265,6 @@ class StatsWindowController: NSWindowController, NSWindowDelegate, SortHandler, 
         window?.orderOut(nil)
     }
     
-    // MARK: - NSWindowDelegate
-    
     func windowShouldClose(_ sender: NSWindow) -> Bool {
         hideWindow()
         delegate?.windowWasClosed()
