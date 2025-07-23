@@ -30,6 +30,7 @@ class AppearanceManager {
     static let shared = AppearanceManager()
     
     private let userDefaultsKey = "AppearanceMode"
+    private var registeredMenus: [(menu: NSMenu, updateHandler: () -> Void)] = []
     
     private init() {}
     
@@ -46,6 +47,7 @@ class AppearanceManager {
     func setAppearance(_ mode: AppearanceMode) {
         currentMode = mode
         NSApp.appearance = mode.nsAppearance
+        updateAllAppearanceMenus()
     }
     
     func createAppearanceMenu(target: AnyObject, updateHandler: Selector) -> NSMenuItem {
@@ -65,6 +67,25 @@ class AppearanceManager {
         appearanceItem.submenu = appearanceSubmenu
         
         return appearanceItem
+    }
+    
+    func registerMenuForUpdates(_ menu: NSMenu, target: AnyObject, updateHandler: Selector) {
+        let updateClosure = { [weak target] in
+            if let target = target {
+                _ = target.perform(updateHandler)
+            }
+        }
+        registeredMenus.append((menu: menu, updateHandler: updateClosure))
+    }
+    
+    private func updateAllAppearanceMenus() {
+        // Clean up any menus that have been deallocated
+        registeredMenus = registeredMenus.filter { $0.menu.supermenu != nil || $0.menu.numberOfItems > 0 }
+        
+        // Update all registered menus
+        for (_, updateHandler) in registeredMenus {
+            updateHandler()
+        }
     }
     
     func restoreAppearanceMode() {

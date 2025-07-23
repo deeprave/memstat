@@ -149,6 +149,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let appearanceItem = AppearanceManager.shared.createAppearanceMenu(target: self, updateHandler: #selector(updateAppearanceMenu))
         appMenu.addItem(appearanceItem)
         
+        AppearanceManager.shared.registerMenuForUpdates(mainMenu, target: self, updateHandler: #selector(updateAppearanceMenu))
+        
         appMenu.addItem(NSMenuItem.separator())
         
         let modeItem = NSMenuItem(title: "Mode", action: nil, keyEquivalent: "")

@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **AppearanceManager Menu Updates**: Fixed bug where `setAppearance()` did not update appearance menus after changing mode
+  - Added menu registration system to AppearanceManager for automatic menu updates when appearance changes
+  - Registered appearance menus in both AppDelegate (window mode) and MenuBarController (menu bar mode)
+  - All appearance menus now automatically reflect the current mode selection with proper checkmarks
+
 ## [1.2.3] - 2025-07-23
 
 ### Fixed
