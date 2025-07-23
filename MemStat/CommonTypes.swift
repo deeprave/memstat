@@ -168,20 +168,6 @@ public struct MemoryStats {
     public var swapOuts: UInt64 { swap.swapOuts }
 }
 
-// MARK: - Type Aliases for Backward Compatibility
-// TODO: Remove these typealiases in version 2.0.0 to eliminate ambiguity
-
-@available(*, deprecated, renamed: "MemoryStats.BasicMemoryInfo", message: "Use MemoryStats.BasicMemoryInfo instead. These top-level typealiases will be removed in v2.0.0")
-public typealias BasicMemoryInfo = MemoryStats.BasicMemoryInfo
-
-@available(*, deprecated, renamed: "MemoryStats.DetailedMemoryInfo", message: "Use MemoryStats.DetailedMemoryInfo instead. These top-level typealiases will be removed in v2.0.0")
-public typealias DetailedMemoryInfo = MemoryStats.DetailedMemoryInfo
-
-@available(*, deprecated, renamed: "MemoryStats.AppMemoryInfo", message: "Use MemoryStats.AppMemoryInfo instead. These top-level typealiases will be removed in v2.0.0")
-public typealias AppMemoryInfo = MemoryStats.AppMemoryInfo
-
-@available(*, deprecated, renamed: "MemoryStats.SwapInfo", message: "Use MemoryStats.SwapInfo instead. These top-level typealiases will be removed in v2.0.0")
-public typealias SwapInfo = MemoryStats.SwapInfo
 
 
 public struct VerticalTableLayout {
