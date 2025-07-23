@@ -11,7 +11,7 @@ MemStat only reads system memory statistics and process information. It does not
 
 ## Folder Structure
 
-- `/MemStat`: Contains the source code for application.
+- `/MemStat`: Contains the source code for the application.
 - `/MemStatTests`: Contains the unit tests for the application code.
 - `/Scripts`: Contains scripts for building and testing the application.
 - `justfile`: Contains many targets used for development and testing.
