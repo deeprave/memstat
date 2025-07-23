@@ -76,10 +76,11 @@ jobs:
       with:
         xcode-version: latest-stable
     
+    - name: Install SwiftLint
+      run: brew install swiftlint
+    
     - name: Run SwiftLint
-      uses: norio-nomura/action-swiftlint@3.2.1
-      with:
-        args: --strict
+      run: swiftlint --strict
       continue-on-error: true
     
     - name: Xcode Analyze
@@ -88,5 +89,8 @@ jobs:
           -project MemStat.xcodeproj \
           -scheme MemStat \
           -configuration Debug \
-          ONLY_ACTIVE_ARCH=NO \
-          CODE_SIGNING_ALLOWED=NO
+          -destination "platform=macOS" \
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGNING_REQUIRED=NO \
+          CODE_SIGNING_ALLOWED=NO \
+          ONLY_ACTIVE_ARCH=NO
