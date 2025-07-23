@@ -10,19 +10,19 @@ version:
 	@./Scripts/generate_version.sh
 
 # Build debug version (default)
-build BUILD_ARGS="": version
+build: version
 	@echo "Building MemStat (Debug)..."
-	xcodebuild -scheme MemStat -configuration Debug -derivedDataPath build build {{BUILD_ARGS}}
+	xcodebuild -scheme MemStat -configuration Debug -derivedDataPath build build
 
 # Build debug version explicitly
-debug BUILD_ARGS="": version
+debug: version
 	@echo "Building MemStat (Debug)..."
-	xcodebuild -scheme MemStat -configuration Debug -derivedDataPath build build {{BUILD_ARGS}}
+	xcodebuild -scheme MemStat -configuration Debug -derivedDataPath build build
 
 # Build release version
-release BUILD_ARGS="": version
+release: version
 	@echo "Building MemStat (Release)..."
-	xcodebuild -scheme MemStat -configuration Release -derivedDataPath build build {{BUILD_ARGS}}
+	xcodebuild -scheme MemStat -configuration Release -derivedDataPath build build
 
 # Run tests (optionally specify test to run)
 test TEST_ID="": version

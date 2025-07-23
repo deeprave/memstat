@@ -36,16 +36,23 @@ jobs:
     - name: Generate version
       run: just version
     
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+    
     - name: Build Debug
       run: |
-        just build BUILD_ARGS='-destination "platform=macOS" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO'
+        export CODE_SIGN_IDENTITY=""
+        export CODE_SIGNING_REQUIRED=NO
+        just build
     
     - name: Run Tests
       run: just test
     
-    - name: Build Release
+    - name: Build Release  
       run: |
-        just release BUILD_ARGS='-destination "platform=macOS" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO'
+        export CODE_SIGN_IDENTITY=""
+        export CODE_SIGNING_REQUIRED=NO
+        just release
     
     - name: Upload Test Results
       if: always()
