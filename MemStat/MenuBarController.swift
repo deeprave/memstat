@@ -1,6 +1,6 @@
 import Cocoa
 
-class MenuBarController: NSObject, StatsWindowDelegate {
+class MenuBarController: NSObject, StatsWindowDelegate, AppearanceMenuUpdateDelegate {
     
     var statusItem: NSStatusItem!
     private var statsWindowController: StatsWindowController!
@@ -43,10 +43,10 @@ class MenuBarController: NSObject, StatsWindowDelegate {
         
         menu.addItem(NSMenuItem.separator())
         
-        let appearanceItem = AppearanceManager.shared.createAppearanceMenu(target: self, updateHandler: #selector(updateAppearanceMenu))
+        let appearanceItem = AppearanceManager.shared.createAppearanceMenu(delegate: self)
         menu.addItem(appearanceItem)
         
-        AppearanceManager.shared.registerMenuForUpdates(menu, target: self, updateHandler: #selector(updateAppearanceMenu))
+        AppearanceManager.shared.registerMenuForUpdates(menu, delegate: self)
         
         menu.addItem(NSMenuItem.separator())
         
@@ -170,7 +170,7 @@ class MenuBarController: NSObject, StatsWindowDelegate {
         }
     }
     
-    @objc private func updateAppearanceMenu() {
+    func updateAppearanceMenu() {
         AppearanceManager.shared.updateAppearanceMenu(contextMenu)
     }
     
@@ -276,6 +276,6 @@ class MenuBarController: NSObject, StatsWindowDelegate {
     }
     
     deinit {
-        AppearanceManager.shared.unregisterAllMenusForTarget(self)
+        AppearanceManager.shared.unregisterAllMenusForDelegate(self)
     }
 }

@@ -127,7 +127,7 @@ class TableFieldFactoryTests: XCTestCase {
             section: testSection
         )
         
-        let expectedY = VerticalTableLayout.rowY(rowIndex: rowIndex, sectionHeight: sectionHeight)
+        let expectedY = TableLayoutManager.VerticalTableLayout.rowY(rowIndex: rowIndex, sectionHeight: sectionHeight)
         
         let labelSubviews = testSection.subviews.compactMap { $0 as? NSTextField }
         let activeLabel = labelSubviews.first { $0.stringValue == "Active" }

@@ -27,11 +27,11 @@ class TableLayoutManagerTests: XCTestCase {
     
     func testCalculateWindowHeight() {
         let height = layoutManager.calculateWindowHeight()
-        let expectedHeight = VerticalTableLayout.topMargin + 
-                           VerticalTableLayout.calculateTableHeight(for: 7) + 
-                           VerticalTableLayout.tableProcessSpacing + 
-                           VerticalTableLayout.processTableHeight + 
-                           VerticalTableLayout.bottomMargin
+        let expectedHeight = TableLayoutManager.VerticalTableLayout.topMargin + 
+                           TableLayoutManager.VerticalTableLayout.calculateTableHeight(for: 7) + 
+                           TableLayoutManager.VerticalTableLayout.tableProcessSpacing + 
+                           TableLayoutManager.VerticalTableLayout.processTableHeight + 
+                           TableLayoutManager.VerticalTableLayout.bottomMargin
         XCTAssertEqual(height, expectedHeight)
     }
     
@@ -41,7 +41,7 @@ class TableLayoutManagerTests: XCTestCase {
         
         XCTAssertNotNil(section)
         XCTAssertEqual(section.yPosition, yPosition)
-        XCTAssertEqual(section.height, VerticalTableLayout.calculateTableHeight(for: 7))
+        XCTAssertEqual(section.height, TableLayoutManager.VerticalTableLayout.calculateTableHeight(for: 7))
     }
     
     func testCreateVirtualSection() {
@@ -50,7 +50,7 @@ class TableLayoutManagerTests: XCTestCase {
         
         XCTAssertNotNil(section)
         XCTAssertEqual(section.yPosition, yPosition)
-        XCTAssertEqual(section.height, VerticalTableLayout.calculateTableHeight(for: 7))
+        XCTAssertEqual(section.height, TableLayoutManager.VerticalTableLayout.calculateTableHeight(for: 7))
     }
     
     func testCreateSwapSection() {
@@ -59,7 +59,7 @@ class TableLayoutManagerTests: XCTestCase {
         
         XCTAssertNotNil(section)
         XCTAssertEqual(section.yPosition, yPosition)
-        XCTAssertEqual(section.height, VerticalTableLayout.calculateTableHeight(for: 7))
+        XCTAssertEqual(section.height, TableLayoutManager.VerticalTableLayout.calculateTableHeight(for: 7))
     }
     
     func testCreateProcessSection() {
@@ -68,14 +68,14 @@ class TableLayoutManagerTests: XCTestCase {
         
         XCTAssertNotNil(section)
         XCTAssertEqual(section.yPosition, yPosition)
-        XCTAssertEqual(section.height, VerticalTableLayout.processTableHeight)
+        XCTAssertEqual(section.height, TableLayoutManager.VerticalTableLayout.processTableHeight)
     }
     
     func testSectionPositioning() {
-        let memoryY = layoutManager.calculateWindowHeight() - VerticalTableLayout.topMargin - VerticalTableLayout.calculateTableHeight(for: 7)
-        let virtualY = memoryY - VerticalTableLayout.sectionSpacing - VerticalTableLayout.calculateTableHeight(for: 7)
-        let swapY = virtualY - VerticalTableLayout.sectionSpacing - VerticalTableLayout.calculateTableHeight(for: 7)
-        let processY = swapY - VerticalTableLayout.tableProcessSpacing - VerticalTableLayout.processTableHeight
+        let memoryY = layoutManager.calculateWindowHeight() - TableLayoutManager.VerticalTableLayout.topMargin - TableLayoutManager.VerticalTableLayout.calculateTableHeight(for: 7)
+        let virtualY = memoryY - TableLayoutManager.VerticalTableLayout.sectionSpacing - TableLayoutManager.VerticalTableLayout.calculateTableHeight(for: 7)
+        let swapY = virtualY - TableLayoutManager.VerticalTableLayout.sectionSpacing - TableLayoutManager.VerticalTableLayout.calculateTableHeight(for: 7)
+        let processY = swapY - TableLayoutManager.VerticalTableLayout.tableProcessSpacing - TableLayoutManager.VerticalTableLayout.processTableHeight
         
         let memorySection = layoutManager.createMemorySection(yPosition: memoryY, in: parentView)
         let virtualSection = layoutManager.createVirtualSection(yPosition: virtualY, in: parentView)

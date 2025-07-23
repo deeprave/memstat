@@ -68,6 +68,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced WeakTargetReference tracking to prevent unbounded closure accumulation
   - AppDelegate and MenuBarController now automatically unregister menus in deinit
   - Prevents memory leaks from accumulating appearance menu registrations
+- **Type Safety**: Replaced Objective-C perform() calls with Swift protocol interface in AppearanceManager
+  - Created AppearanceMenuUpdateDelegate protocol for type-safe menu update callbacks
+  - Eliminated runtime selector validation and improved compile-time error detection
+  - AppearanceMenuHandler now uses Swift delegate pattern instead of target-action with perform()
+  - Updated AppDelegate and MenuBarController to conform to new delegate protocol
+  - Enhanced memory management with proper weak delegate references
 
 ## [1.2.3] - 2025-07-23
 

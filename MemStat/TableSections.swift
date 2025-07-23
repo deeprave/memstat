@@ -45,15 +45,15 @@ fileprivate func createSortableHeaderText(_ text: String, sortColumn: ProcessSor
 class MemoryTableSection: BaseTableSection {
     
     init(yPosition: CGFloat) {
-        super.init(title: "Memory", height: VerticalTableLayout.calculateTableHeight(for: 7), yPosition: yPosition)
+        super.init(title: "Memory", height: TableLayoutManager.VerticalTableLayout.calculateTableHeight(for: 7), yPosition: yPosition)
     }
     
     override func setupSection(in containerView: NSView, delegate: TableSectionDelegate) {
         self.containerView = containerView
         self.delegate = delegate
         
-        let sectionWidth = VerticalTableLayout.memoryTableWidth
-        let xPosition = VerticalTableLayout.memoryTableX(containerWidth: containerView.bounds.width)
+        let sectionWidth = TableLayoutManager.VerticalTableLayout.memoryTableWidth
+        let xPosition = TableLayoutManager.VerticalTableLayout.memoryTableX(containerWidth: containerView.bounds.width)
         
         let section = NSView(frame: NSRect(x: xPosition, y: yPosition, width: sectionWidth, height: height))
         section.wantsLayer = true
@@ -70,7 +70,7 @@ class MemoryTableSection: BaseTableSection {
     }
     
     override func getTitleYPosition() -> CGFloat {
-        return VerticalTableLayout.sectionTitleY(sectionHeight: height)
+        return TableLayoutManager.VerticalTableLayout.sectionTitleY(sectionHeight: height)
     }
     
     override func createDataFields() {
@@ -141,15 +141,15 @@ class MemoryTableSection: BaseTableSection {
 class VirtualTableSection: BaseTableSection {
     
     init(yPosition: CGFloat) {
-        super.init(title: "Virtual", height: VerticalTableLayout.calculateTableHeight(for: 7), yPosition: yPosition)
+        super.init(title: "Virtual", height: TableLayoutManager.VerticalTableLayout.calculateTableHeight(for: 7), yPosition: yPosition)
     }
     
     override func setupSection(in containerView: NSView, delegate: TableSectionDelegate) {
         self.containerView = containerView
         self.delegate = delegate
         
-        let sectionWidth = VerticalTableLayout.virtualTableWidth
-        let xPosition = VerticalTableLayout.virtualTableX(containerWidth: containerView.bounds.width)
+        let sectionWidth = TableLayoutManager.VerticalTableLayout.virtualTableWidth
+        let xPosition = TableLayoutManager.VerticalTableLayout.virtualTableX(containerWidth: containerView.bounds.width)
         
         let section = NSView(frame: NSRect(x: xPosition, y: yPosition, width: sectionWidth, height: height))
         section.wantsLayer = true
@@ -166,7 +166,7 @@ class VirtualTableSection: BaseTableSection {
     }
     
     override func getTitleYPosition() -> CGFloat {
-        return VerticalTableLayout.sectionTitleY(sectionHeight: height)
+        return TableLayoutManager.VerticalTableLayout.sectionTitleY(sectionHeight: height)
     }
     
     override func createDataFields() {
@@ -185,36 +185,36 @@ class VirtualTableSection: BaseTableSection {
         let customLabelWidth: CGFloat = 105
         
         for (index, (label, hasUnits)) in metrics.enumerated() {
-            let rowY = VerticalTableLayout.rowY(rowIndex: index, sectionHeight: height)
+            let rowY = TableLayoutManager.VerticalTableLayout.rowY(rowIndex: index, sectionHeight: height)
             
             let labelView = delegate.createRowLabel(
                 text: label,
                 frame: NSRect(
-                    x: VerticalTableLayout.labelX(),
+                    x: TableLayoutManager.VerticalTableLayout.labelX(),
                     y: rowY,
                     width: customLabelWidth,
-                    height: VerticalTableLayout.rowHeight
+                    height: TableLayoutManager.VerticalTableLayout.rowHeight
                 ),
                 alignment: .right
             )
             section.addSubview(labelView)
             
             if hasUnits {
-                let customValueX = customLabelWidth + VerticalTableLayout.labelValueSpacing
+                let customValueX = customLabelWidth + TableLayoutManager.VerticalTableLayout.labelValueSpacing
                 
                 let valueLabel = delegate.createDataLabel(
                     text: "Loading...",
                     frame: NSRect(
                         x: customValueX,
                         y: rowY,
-                        width: VerticalTableLayout.valueWidth - VerticalTableLayout.unitWidth - 5 + 5,
-                        height: VerticalTableLayout.rowHeight
+                        width: TableLayoutManager.VerticalTableLayout.valueWidth - TableLayoutManager.VerticalTableLayout.unitWidth - 5 + 5,
+                        height: TableLayoutManager.VerticalTableLayout.rowHeight
                     ),
                     alignment: .right,
                     useMonospacedFont: false
                 )
                 
-                let customUnitX = customValueX + (VerticalTableLayout.valueWidth - VerticalTableLayout.unitWidth - 5 + 5)
+                let customUnitX = customValueX + (TableLayoutManager.VerticalTableLayout.valueWidth - TableLayoutManager.VerticalTableLayout.unitWidth - 5 + 5)
                 
                 let unitLabel = delegate.createDataLabel(
                     text: "",
@@ -222,7 +222,7 @@ class VirtualTableSection: BaseTableSection {
                         x: customUnitX,
                         y: rowY,
                         width: 26,
-                        height: VerticalTableLayout.rowHeight
+                        height: TableLayoutManager.VerticalTableLayout.rowHeight
                     ),
                     alignment: .right,
                     useMonospacedFont: false
@@ -263,15 +263,15 @@ class VirtualTableSection: BaseTableSection {
 class SwapTableSection: BaseTableSection {
     
     init(yPosition: CGFloat) {
-        super.init(title: "Swap", height: VerticalTableLayout.calculateTableHeight(for: 7), yPosition: yPosition)
+        super.init(title: "Swap", height: TableLayoutManager.VerticalTableLayout.calculateTableHeight(for: 7), yPosition: yPosition)
     }
     
     override func setupSection(in containerView: NSView, delegate: TableSectionDelegate) {
         self.containerView = containerView
         self.delegate = delegate
         
-        let sectionWidth = VerticalTableLayout.swapTableWidth
-        let xPosition = VerticalTableLayout.swapTableX(containerWidth: containerView.bounds.width)
+        let sectionWidth = TableLayoutManager.VerticalTableLayout.swapTableWidth
+        let xPosition = TableLayoutManager.VerticalTableLayout.swapTableX(containerWidth: containerView.bounds.width)
         
         let section = NSView(frame: NSRect(x: xPosition, y: yPosition, width: sectionWidth, height: height))
         section.wantsLayer = true
@@ -288,7 +288,7 @@ class SwapTableSection: BaseTableSection {
     }
     
     override func getTitleYPosition() -> CGFloat {
-        return VerticalTableLayout.sectionTitleY(sectionHeight: height)
+        return TableLayoutManager.VerticalTableLayout.sectionTitleY(sectionHeight: height)
     }
     
     override func createDataFields() {
@@ -305,15 +305,15 @@ class SwapTableSection: BaseTableSection {
         ]
         
         for (index, (label, hasUnits)) in metrics.enumerated() {
-            let rowY = VerticalTableLayout.rowY(rowIndex: index, sectionHeight: height)
+            let rowY = TableLayoutManager.VerticalTableLayout.rowY(rowIndex: index, sectionHeight: height)
             
             let labelView = delegate.createRowLabel(
                 text: label,
                 frame: NSRect(
-                    x: VerticalTableLayout.labelX(),
+                    x: TableLayoutManager.VerticalTableLayout.labelX(),
                     y: rowY,
-                    width: VerticalTableLayout.labelWidth,
-                    height: VerticalTableLayout.rowHeight
+                    width: TableLayoutManager.VerticalTableLayout.labelWidth,
+                    height: TableLayoutManager.VerticalTableLayout.rowHeight
                 ),
                 alignment: .right
             )
@@ -323,10 +323,10 @@ class SwapTableSection: BaseTableSection {
                 let valueLabel = delegate.createDataLabel(
                     text: "Loading...",
                     frame: NSRect(
-                        x: VerticalTableLayout.valueX(),
+                        x: TableLayoutManager.VerticalTableLayout.valueX(),
                         y: rowY,
-                        width: VerticalTableLayout.valueWidth - VerticalTableLayout.unitWidth - 5,
-                        height: VerticalTableLayout.rowHeight
+                        width: TableLayoutManager.VerticalTableLayout.valueWidth - TableLayoutManager.VerticalTableLayout.unitWidth - 5,
+                        height: TableLayoutManager.VerticalTableLayout.rowHeight
                     ),
                     alignment: .right,
                     useMonospacedFont: false
@@ -335,10 +335,10 @@ class SwapTableSection: BaseTableSection {
                 let unitLabel = delegate.createDataLabel(
                     text: "",
                     frame: NSRect(
-                        x: VerticalTableLayout.unitX(),
+                        x: TableLayoutManager.VerticalTableLayout.unitX(),
                         y: rowY,
                         width: 26,
-                        height: VerticalTableLayout.rowHeight
+                        height: TableLayoutManager.VerticalTableLayout.rowHeight
                     ),
                     alignment: .right,
                     useMonospacedFont: false
@@ -349,8 +349,8 @@ class SwapTableSection: BaseTableSection {
                 dataLabels.append(valueLabel)
                 dataLabels.append(unitLabel)
             } else {
-                let unitFieldRightEdge = VerticalTableLayout.unitX() + 26
-                let fieldWidth = VerticalTableLayout.valueWidth
+                let unitFieldRightEdge = TableLayoutManager.VerticalTableLayout.unitX() + 26
+                let fieldWidth = TableLayoutManager.VerticalTableLayout.valueWidth
                 let fieldX = unitFieldRightEdge - fieldWidth
                 
                 let valueLabel = delegate.createDataLabel(
@@ -359,7 +359,7 @@ class SwapTableSection: BaseTableSection {
                         x: fieldX,
                         y: rowY,
                         width: fieldWidth,
-                        height: VerticalTableLayout.rowHeight
+                        height: TableLayoutManager.VerticalTableLayout.rowHeight
                     ),
                     alignment: .right,
                     useMonospacedFont: false
@@ -411,7 +411,7 @@ class ProcessTableSection: BaseTableSection {
     private var processHeaderLabels: [ProcessSortColumn: NSTextField] = [:]
     
     init(yPosition: CGFloat) {
-        super.init(title: "Top Processes", height: VerticalTableLayout.processTableHeight, yPosition: yPosition)
+        super.init(title: "Top Processes", height: TableLayoutManager.VerticalTableLayout.processTableHeight, yPosition: yPosition)
     }
     
     override func setupSection(in containerView: NSView, delegate: TableSectionDelegate) {

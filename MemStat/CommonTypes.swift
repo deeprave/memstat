@@ -168,62 +168,6 @@ public struct MemoryStats {
 
 
 
-public struct VerticalTableLayout {
-    public static let memoryTableWidth: CGFloat = 229
-    public static let virtualTableWidth: CGFloat = 252
-    public static let swapTableWidth: CGFloat = 229
-    public static let tableSpacing: CGFloat = 20
-    public static let sectionTitleHeight: CGFloat = 26
-    public static let rowHeight: CGFloat = 22
-    public static let rowSpacing: CGFloat = 2
-    public static let labelWidth: CGFloat = 90
-    public static let valueWidth: CGFloat = 100
-    public static let unitWidth: CGFloat = 30
-    public static let leftMargin: CGFloat = 10
-    public static let rightMargin: CGFloat = 0
-    public static let labelValueSpacing: CGFloat = 20
-    public static let topMargin: CGFloat = rowHeight
-    public static let tableProcessSpacing: CGFloat = 25
-    public static let processTableHeight: CGFloat = 452
-    public static let bottomMargin: CGFloat = rowHeight
-    public static let sectionSpacing: CGFloat = 20
-    
-    public static func memoryTableX(containerWidth: CGFloat) -> CGFloat {
-        return (containerWidth - 750) / 2
-    }
-    
-    public static func virtualTableX(containerWidth: CGFloat) -> CGFloat {
-        return memoryTableX(containerWidth: containerWidth) + memoryTableWidth + tableSpacing
-    }
-    
-    public static func swapTableX(containerWidth: CGFloat) -> CGFloat {
-        return virtualTableX(containerWidth: containerWidth) + virtualTableWidth + tableSpacing
-    }
-    
-    public static func sectionTitleY(sectionHeight: CGFloat) -> CGFloat {
-        return sectionHeight - sectionTitleHeight
-    }
-    
-    public static func rowY(rowIndex: Int, sectionHeight: CGFloat) -> CGFloat {
-        return sectionHeight - sectionTitleHeight - CGFloat(rowIndex + 1) * (rowHeight + rowSpacing)
-    }
-    
-    public static func labelX() -> CGFloat {
-        return leftMargin
-    }
-    
-    public static func valueX() -> CGFloat {
-        return labelWidth + labelValueSpacing
-    }
-    
-    public static func unitX() -> CGFloat {
-        return valueX() + valueWidth - unitWidth
-    }
-    
-    public static func calculateTableHeight(for numberOfRows: Int) -> CGFloat {
-        return sectionTitleHeight + CGFloat(numberOfRows) * (rowHeight + rowSpacing) + rowSpacing
-    }
-}
 
 public protocol TableSectionDelegate: LabelFactory, BackgroundStylist, SortHandler {
     func getCurrentSortColumn() -> ProcessSortColumn
