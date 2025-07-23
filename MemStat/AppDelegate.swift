@@ -120,17 +120,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppearanceMenuUpdateDelegate
         // Get the app bundle path
         let bundlePath = Bundle.main.bundlePath
         
-        // Create a shell script that waits and then reopens the app
-        let script = """
-        #!/bin/bash
-        sleep 1
-        open -n "\(bundlePath)"
-        """
+        // Create a command that waits after termination and then reopens the app
+        let command = "sleep 1.5; /usr/bin/open -n \"\(bundlePath)\""
         
-        // Execute the script in the background
+        // Execute the command in the background
         let task = Process()
         task.launchPath = "/bin/bash"
-        task.arguments = ["-c", script]
+        task.arguments = ["-c", command]
         task.launch()
         
         // Terminate current instance
