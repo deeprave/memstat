@@ -46,6 +46,8 @@ class MenuBarController: NSObject, StatsWindowDelegate {
         let appearanceItem = AppearanceManager.shared.createAppearanceMenu(target: self, updateHandler: #selector(updateAppearanceMenu))
         menu.addItem(appearanceItem)
         
+        AppearanceManager.shared.registerMenuForUpdates(menu, target: self, updateHandler: #selector(updateAppearanceMenu))
+        
         menu.addItem(NSMenuItem.separator())
         
         let loginItem = NSMenuItem(title: "Open at Login", action: #selector(toggleLoginItem), keyEquivalent: "")
