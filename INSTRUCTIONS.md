@@ -20,3 +20,6 @@ This project is a macOS app that runs both in the macOS menu bar and as a regula
 
 ## Git Commit Policy
 - NEVER do git commit, even if asked for a commit message. I require signing of commits and commit signing does not currently work when claude attempts a git commit.
+
+## Changelog Management
+- Update the changelog whenever code is about to be committed (changelog will be requested before commit)
