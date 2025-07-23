@@ -13,6 +13,11 @@ This project is a macOS app that runs both in the macOS menu bar and as a regula
 - Only add comments to source code which explain non-obvious or complex logic
 - Never add comments which state the obvious or 'marker' style comments that have no practical value
 - Code should be self-documenting through clear naming and structure
+- Allowed comment types:
+  - MARK comments for code organization and navigation
+  - API documentation comments (///, /** */)
+  - Complex logic explanations that are not obvious from the code
+- Comment cleanup is performed as needed but is not worth mentioning in changelogs (it's routine maintenance)
 
 ## Steering
 - All new files created must be added to the Xcode project in order that xcodebuild works, including test files and other artifacts, as required

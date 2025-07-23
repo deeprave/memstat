@@ -26,11 +26,19 @@ enum AppearanceMode: String, CaseIterable {
     }
 }
 
+private class WeakMenuReference {
+    weak var menu: NSMenu?
+    
+    init(menu: NSMenu) {
+        self.menu = menu
+    }
+}
+
 class AppearanceManager {
     static let shared = AppearanceManager()
     
     private let userDefaultsKey = "AppearanceMode"
-    private var registeredMenus: [(menu: NSMenu, updateHandler: () -> Void)] = []
+    private var registeredMenus: [(weakMenu: WeakMenuReference, updateHandler: () -> Void)] = []
     
     private init() {}
     
@@ -75,14 +83,19 @@ class AppearanceManager {
                 _ = target.perform(updateHandler)
             }
         }
-        registeredMenus.append((menu: menu, updateHandler: updateClosure))
+        let weakMenuRef = WeakMenuReference(menu: menu)
+        registeredMenus.append((weakMenu: weakMenuRef, updateHandler: updateClosure))
     }
     
     private func updateAllAppearanceMenus() {
-        registeredMenus = registeredMenus.filter { $0.menu.supermenu != nil || $0.menu.numberOfItems > 0 }
+        registeredMenus = registeredMenus.compactMap { entry in
+            guard let menu = entry.weakMenu.menu else { return nil }
+            guard menu.supermenu != nil || menu.numberOfItems > 0 else { return nil }
+            return entry
+        }
         
-        for (_, updateHandler) in registeredMenus {
-            updateHandler()
+        for entry in registeredMenus {
+            entry.updateHandler()
         }
     }
     
