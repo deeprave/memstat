@@ -105,22 +105,22 @@ echo "This may take several minutes..."
 # Submit for notarization
 if [ -n "$PROFILE" ]; then
     # Use keychain profile
-    SUBMISSION_ID=$(xcrun notarytool submit "${NOTARIZE_ZIP}" \
+    echo "Submitting with keychain profile..."
+    xcrun notarytool submit "${NOTARIZE_ZIP}" \
         --keychain-profile "$PROFILE" \
-        --wait \
-        --output-format json | jq -r '.id')
+        --wait
 else
     # Use Apple ID credentials
-    SUBMISSION_ID=$(xcrun notarytool submit "${NOTARIZE_ZIP}" \
+    echo "Submitting with Apple ID credentials..."
+    xcrun notarytool submit "${NOTARIZE_ZIP}" \
         --apple-id "$NOTARIZE_APPLE_ID" \
         --password "$NOTARIZE_PASSWORD" \
         --team-id "$NOTARIZE_TEAM_ID" \
-        --wait \
-        --output-format json | jq -r '.id')
+        --wait
 fi
 
 echo ""
-echo "Notarization completed. Submission ID: $SUBMISSION_ID"
+echo "Notarization submission completed."
 
 # Staple the notarization ticket
 echo ""

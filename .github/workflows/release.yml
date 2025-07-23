@@ -57,19 +57,16 @@ jobs:
       env:
         CODESIGN_IDENTITY: ${{ secrets.CODESIGN_IDENTITY }}
       run: |
-        ./Scripts/codesign_app.sh "build/Build/Products/Release/MemStat.app" "$CODESIGN_IDENTITY"
+        ./Scripts/codesign_app.sh
     
     - name: Notarize Application
+      continue-on-error: true
       env:
-        NOTARIZATION_USERNAME: ${{ secrets.NOTARIZATION_USERNAME }}
-        NOTARIZATION_PASSWORD: ${{ secrets.NOTARIZATION_PASSWORD }}
-        NOTARIZATION_TEAM_ID: ${{ secrets.NOTARIZATION_TEAM_ID }}
+        NOTARIZE_APPLE_ID: ${{ secrets.NOTARIZATION_USERNAME }}
+        NOTARIZE_PASSWORD: ${{ secrets.NOTARIZATION_PASSWORD }}
+        NOTARIZE_TEAM_ID: ${{ secrets.NOTARIZATION_TEAM_ID }}
       run: |
-        ./Scripts/notarize_app.sh \
-          "build/Build/Products/Release/MemStat.app" \
-          "$NOTARIZATION_USERNAME" \
-          "$NOTARIZATION_PASSWORD" \
-          "$NOTARIZATION_TEAM_ID"
+        ./Scripts/notarize_app.sh --submit
     
     - name: Create DMG
       run: |
