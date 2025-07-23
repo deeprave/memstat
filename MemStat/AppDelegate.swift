@@ -103,9 +103,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppearanceMenuUpdateDelegate
         
         UserDefaults.standard.set(mode.rawValue, forKey: "AppMode")
         let alert = NSAlert()
-        alert.messageText = "Mode Change"
-        alert.informativeText = "MemStat will restart to switch to \(mode.displayName) mode."
-        alert.addButton(withTitle: "Restart Now")
+        alert.messageText = "Switch to \(mode.displayName) Mode"
+        alert.informativeText = "MemStat needs to restart to switch modes.\n\nThe app will close and reopen automatically."
+        alert.addButton(withTitle: "Restart App")
         alert.addButton(withTitle: "Cancel")
         
         let response = alert.runModal()
@@ -117,13 +117,23 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppearanceMenuUpdateDelegate
     }
     
     private func restartApplication() {
-        let url = URL(fileURLWithPath: Bundle.main.resourcePath!)
-        let path = url.deletingLastPathComponent().deletingLastPathComponent().absoluteString
+        // Get the app bundle path
+        let bundlePath = Bundle.main.bundlePath
+        
+        // Create a shell script that waits and then reopens the app
+        let script = """
+        #!/bin/bash
+        sleep 1
+        open -n "\(bundlePath)"
+        """
+        
+        // Execute the script in the background
         let task = Process()
-        task.launchPath = "/usr/bin/open"
-        task.arguments = [path]
+        task.launchPath = "/bin/bash"
+        task.arguments = ["-c", script]
         task.launch()
         
+        // Terminate current instance
         NSApp.terminate(nil)
     }
     

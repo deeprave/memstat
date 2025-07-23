@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- **Mode Switch Dialog**: Improved clarity of mode switch confirmation dialog
+  - Changed "Restart Now" to "Restart App" to clarify it's the app restarting, not the computer
+  - Updated message to explicitly state "The app will close and reopen automatically"
+  - Dialog title now shows target mode for better context
+- **App Restart Functionality**: Fixed app restart when switching from menubar to window mode
+  - Replaced broken file URL path construction with proper Bundle.main.bundlePath
+  - Added shell script wrapper to ensure app relaunches after termination
+  - Both mode switches (window→menubar and menubar→window) now work correctly
+
+## [1.3.0] - 2025-07-24
+
+### Fixed
 - **Process Table Headers**: Fixed headers not displaying sort indicators on initial load
   - Headers now correctly show sort arrows (▲/▼) and active column highlighting immediately
   - Previously required clicking a header to trigger proper display formatting
