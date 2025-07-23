@@ -4,16 +4,13 @@ on:
   push:
     tags:
       - 'v*'
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version number (e.g., 1.0.0)'
-        required: true
-        type: string
 
 env:
   DEVELOPER_DIR: /Applications/Xcode.app/Contents/Developer
   MD_APPLE_SDK_ROOT: /Applications/Xcode.app
+
+permissions:
+  contents: write
 
 jobs:
   create-release:
@@ -78,13 +75,13 @@ jobs:
       run: |
         ./Scripts/package_dmg_styled.sh \
           "build/Build/Products/Release/MemStat.app" \
-          "MemStat-${{ github.event.inputs.version || github.ref_name }}.dmg"
+          "MemStat-${{ github.ref_name }}.dmg"
     
     - name: Create ZIP
       run: |
         ./Scripts/package_zip.sh \
           "build/Build/Products/Release/MemStat.app" \
-          "MemStat-${{ github.event.inputs.version || github.ref_name }}.zip"
+          "MemStat-${{ github.ref_name }}.zip"
     
     - name: List artifacts
       run: ls -la dist/ || true
@@ -92,11 +89,12 @@ jobs:
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        name: MemStat ${{ github.event.inputs.version || github.ref_name }}
+        name: MemStat ${{ github.ref_name }}
         draft: false
         prerelease: false
         files: |
           dist/*.dmg
           dist/*.zip
         generate_release_notes: true
-        token: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
