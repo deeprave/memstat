@@ -49,6 +49,25 @@ class UpdateCoordinatorTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(mockUpdateHandler.callCount, 1)
     }
     
+    func testRepeatedStartUpdatingCallsIgnored() {
+        mockUpdateHandler.callCount = 0
+        
+        updateCoordinator.startUpdating(immediate: false)
+        updateCoordinator.startUpdating(immediate: false)
+        updateCoordinator.startUpdating(immediate: false)
+        
+        XCTAssertEqual(mockUpdateHandler.callCount, 0)
+        
+        let expectation = XCTestExpectation(description: "Timer should fire normally")
+        DispatchQueue.main.asyncAfter(deadline: .now() + testInterval + 0.05) {
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1.0)
+        XCTAssertGreaterThanOrEqual(mockUpdateHandler.callCount, 1)
+        XCTAssertLessThan(mockUpdateHandler.callCount, 4)
+    }
+    
     func testStartUpdatingWithImmediate() {
         mockUpdateHandler.callCount = 0
         
@@ -81,7 +100,7 @@ class UpdateCoordinatorTests: XCTestCase {
         updateCoordinator.startUpdating(immediate: true)
         updateCoordinator.startUpdating(immediate: true)
         
-        XCTAssertEqual(mockUpdateHandler.callCount, 3)
+        XCTAssertEqual(mockUpdateHandler.callCount, 1)
         
         let expectation = XCTestExpectation(description: "Timer should fire")
         DispatchQueue.main.asyncAfter(deadline: .now() + testInterval + 0.05) {
@@ -89,7 +108,7 @@ class UpdateCoordinatorTests: XCTestCase {
         }
         
         wait(for: [expectation], timeout: 1.0)
-        XCTAssertGreaterThanOrEqual(mockUpdateHandler.callCount, 4)
+        XCTAssertGreaterThanOrEqual(mockUpdateHandler.callCount, 2)
     }
     
     // MARK: - Stop Updating Tests

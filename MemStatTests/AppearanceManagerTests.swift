@@ -169,6 +169,52 @@ class AppearanceManagerTests: XCTestCase {
         XCTAssertEqual(secondTarget.updateCallCount, 1)
     }
     
+    func testUnregisterMenuForUpdates() {
+        appearanceManager.registerMenuForUpdates(testMenu, target: mockTarget, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
+        
+        appearanceManager.setAppearance(.dark)
+        XCTAssertEqual(mockTarget.updateCallCount, 1)
+        
+        appearanceManager.unregisterMenuForUpdates(testMenu)
+        mockTarget.updateCallCount = 0
+        
+        appearanceManager.setAppearance(.light)
+        XCTAssertEqual(mockTarget.updateCallCount, 0)
+    }
+    
+    func testUnregisterAllMenusForTarget() {
+        let secondMenu = NSMenu()
+        secondMenu.addItem(NSMenuItem(title: "Test2", action: nil, keyEquivalent: ""))
+        
+        appearanceManager.registerMenuForUpdates(testMenu, target: mockTarget, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
+        appearanceManager.registerMenuForUpdates(secondMenu, target: mockTarget, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
+        
+        appearanceManager.setAppearance(.dark)
+        XCTAssertEqual(mockTarget.updateCallCount, 2)
+        
+        appearanceManager.unregisterAllMenusForTarget(mockTarget)
+        mockTarget.updateCallCount = 0
+        
+        appearanceManager.setAppearance(.light)
+        XCTAssertEqual(mockTarget.updateCallCount, 0)
+    }
+    
+    func testUnregisterMenuAfterMenuDeallocated() {
+        weak var weakMenu: NSMenu?
+        
+        do {
+            let tempMenu = NSMenu()
+            tempMenu.addItem(NSMenuItem(title: "Temp", action: nil, keyEquivalent: ""))
+            weakMenu = tempMenu
+            
+            appearanceManager.registerMenuForUpdates(tempMenu, target: mockTarget, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
+        }
+        
+        XCTAssertNil(weakMenu)
+        
+        appearanceManager.setAppearance(.dark)
+    }
+    
     // MARK: - Update Menu Tests
     
     func testUpdateAppearanceMenuUpdatesItemStates() {

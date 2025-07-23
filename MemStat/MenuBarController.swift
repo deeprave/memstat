@@ -274,4 +274,8 @@ class MenuBarController: NSObject, StatsWindowDelegate {
         
         return image
     }
+    
+    deinit {
+        AppearanceManager.shared.unregisterAllMenusForTarget(self)
+    }
 }

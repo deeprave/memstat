@@ -13,7 +13,8 @@ class UpdateCoordinator {
     }
     
     func startUpdating(immediate: Bool = false) {
-        stopUpdating()
+        guard timer == nil else { return }
+        
         if immediate {
             updateHandler()
         }
