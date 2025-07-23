@@ -41,44 +41,6 @@ fileprivate func createSortableHeaderText(_ text: String, sortColumn: ProcessSor
     return "\(text) \(arrow)"
 }
 
-fileprivate struct LocalProcessTableLayout {
-    static let titleHeight: CGFloat = 26
-    static let headerHeight: CGFloat = 26
-    static let titleBottomMargin: CGFloat = 9
-    static let headerBottomMargin: CGFloat = 5
-    static let dataRowHeight: CGFloat = 19
-    static let leftMargin: CGFloat = 10
-    static let columnSpacing: CGFloat = 10
-    
-    static func sectionTitleY(tableHeight: CGFloat) -> CGFloat {
-        return tableHeight - titleHeight  // Title at top
-    }
-    
-    static func headerY(tableHeight: CGFloat) -> CGFloat {
-        return tableHeight - titleHeight - titleBottomMargin - headerHeight  // Header below title
-    }
-    
-    static func dataStartY(tableHeight: CGFloat) -> CGFloat {
-        return headerY(tableHeight: tableHeight) - headerBottomMargin - dataRowHeight  // First data row below header
-    }
-    
-    static let columns = [
-        (title: "PID", width: CGFloat(60), alignment: NSTextAlignment.right, sortColumn: ProcessSortColumn.pid),
-        (title: "%Mem", width: CGFloat(80), alignment: NSTextAlignment.right, sortColumn: ProcessSortColumn.memoryPercent),
-        (title: "Mem(MB)", width: CGFloat(80), alignment: NSTextAlignment.right, sortColumn: ProcessSortColumn.memoryBytes),
-        (title: "VMem(MB)", width: CGFloat(80), alignment: NSTextAlignment.right, sortColumn: ProcessSortColumn.virtualMemory),
-        (title: "%CPU", width: CGFloat(60), alignment: NSTextAlignment.right, sortColumn: ProcessSortColumn.cpuPercent),
-        (title: "Command", width: CGFloat(310), alignment: NSTextAlignment.left, sortColumn: ProcessSortColumn.command)
-    ]
-    
-    static func xPosition(for columnIndex: Int) -> CGFloat {
-        var x = leftMargin
-        for i in 0..<columnIndex {
-            x += columns[i].width + columnSpacing
-        }
-        return x
-    }
-}
 
 class MemoryTableSection: BaseTableSection {
     
@@ -479,18 +441,18 @@ class ProcessTableSection: BaseTableSection {
     }
     
     override func getTitleYPosition() -> CGFloat {
-        return LocalProcessTableLayout.sectionTitleY(tableHeight: height)
+        return TableLayoutManager.ProcessTableLayout.sectionTitleY(tableHeight: height)
     }
     
     
     override func createHeaders() {
         guard let section = sectionView, let delegate = delegate else { return }
         
-        let columns = LocalProcessTableLayout.columns
+        let columns = TableLayoutManager.ProcessTableLayout.columns
         for (index, column) in columns.enumerated() {
-            let x = LocalProcessTableLayout.xPosition(for: index)
+            let x = TableLayoutManager.ProcessTableLayout.xPosition(for: index)
             let headerWidth = (index == columns.count - 1) ? column.width : column.width + 10
-            let frame = NSRect(x: x, y: LocalProcessTableLayout.headerY(tableHeight: height), width: headerWidth, height: 26)
+            let frame = NSRect(x: x, y: TableLayoutManager.ProcessTableLayout.headerY(tableHeight: height), width: headerWidth, height: 26)
             
             let headerLabel = delegate.createHeaderLabel(
                 column.title,
@@ -517,10 +479,10 @@ class ProcessTableSection: BaseTableSection {
         guard let section = sectionView else { return }
         
         let borderTopMargin: CGFloat = 5
-        let borderHeight = LocalProcessTableLayout.headerY(tableHeight: height) - borderTopMargin
+        let borderHeight = TableLayoutManager.ProcessTableLayout.headerY(tableHeight: height) - borderTopMargin
         
-        for i in 1..<LocalProcessTableLayout.columns.count {
-            let x = LocalProcessTableLayout.xPosition(for: i)
+        for i in 1..<TableLayoutManager.ProcessTableLayout.columns.count {
+            let x = TableLayoutManager.ProcessTableLayout.xPosition(for: i)
             let border = NSView(frame: NSRect(x: x, y: borderTopMargin, width: 1, height: borderHeight))
             border.wantsLayer = true
             border.layer?.backgroundColor = ColorTheme.borderColor.cgColor
@@ -537,10 +499,10 @@ class ProcessTableSection: BaseTableSection {
         guard let section = sectionView, let delegate = delegate else { return }
         
         for i in 0..<20 {
-            let yPos = LocalProcessTableLayout.dataStartY(tableHeight: height) - (CGFloat(i) * LocalProcessTableLayout.dataRowHeight)
+            let yPos = TableLayoutManager.ProcessTableLayout.dataStartY(tableHeight: height) - (CGFloat(i) * TableLayoutManager.ProcessTableLayout.dataRowHeight)
             
-            for (columnIndex, column) in LocalProcessTableLayout.columns.enumerated() {
-                let x = LocalProcessTableLayout.xPosition(for: columnIndex)
+            for (columnIndex, column) in TableLayoutManager.ProcessTableLayout.columns.enumerated() {
+                let x = TableLayoutManager.ProcessTableLayout.xPosition(for: columnIndex)
                 let dataWidth = column.width - CGFloat(10)
                 let dataX = x + CGFloat(5)
                 

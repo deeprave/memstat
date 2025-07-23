@@ -1,18 +1,5 @@
 import Cocoa
 
-struct ProcessTableColumn {
-    let title: String
-    let width: CGFloat
-    let sortColumn: ProcessSortColumn
-    let alignment: NSTextAlignment
-    
-    init(title: String, width: CGFloat, sortColumn: ProcessSortColumn, alignment: NSTextAlignment = .center) {
-        self.title = title
-        self.width = width
-        self.sortColumn = sortColumn
-        self.alignment = alignment
-    }
-}
 
 struct StandardTableLayout {
     static let sectionTitleLeftMargin: CGFloat = 102
@@ -257,6 +244,7 @@ class StatsWindowController: NSWindowController, NSWindowDelegate, SortHandler, 
     }
     
     deinit {
+        updateCoordinator?.stopUpdating()
         if let observer = appearanceObserver {
             NotificationCenter.default.removeObserver(observer)
         }
