@@ -10,8 +10,11 @@ class UpdateCoordinator {
         self.updateHandler = updateHandler
     }
     
-    func startUpdating() {
+    func startUpdating(immediate: Bool = false) {
         stopUpdating()
+        if immediate {
+            updateHandler()
+        }
         timer = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true) { [weak self] _ in
             self?.updateHandler()
         }

@@ -1,5 +1,9 @@
 import Cocoa
 
+enum MenuTag: Int {
+    case appearanceMenu = 1000
+}
+
 enum AppearanceMode: String, CaseIterable {
     case system = "system"
     case light = "light"  
@@ -46,19 +50,19 @@ class AppearanceManager {
     
     func createAppearanceMenu(target: AnyObject, updateHandler: Selector) -> NSMenuItem {
         let appearanceItem = NSMenuItem(title: "Appearance", action: nil, keyEquivalent: "")
+        appearanceItem.tag = MenuTag.appearanceMenu.rawValue
         let appearanceSubmenu = NSMenu()
+        let menuHandler = AppearanceMenuHandler(target: target, updateHandler: updateHandler)
         
         for mode in AppearanceMode.allCases {
             let modeItem = NSMenuItem(title: mode.displayName, action: #selector(AppearanceMenuHandler.appearanceChanged(_:)), keyEquivalent: "")
-            modeItem.target = AppearanceMenuHandler.shared
-            modeItem.representedObject = mode
+            modeItem.target = menuHandler
+            modeItem.representedObject = AppearanceMenuData(mode: mode, handler: menuHandler)
             modeItem.state = (mode == currentMode) ? .on : .off
             appearanceSubmenu.addItem(modeItem)
         }
         
         appearanceItem.submenu = appearanceSubmenu
-        AppearanceMenuHandler.shared.updateHandler = updateHandler
-        AppearanceMenuHandler.shared.target = target
         
         return appearanceItem
     }
@@ -68,30 +72,44 @@ class AppearanceManager {
     }
     
     func updateAppearanceMenu(_ menu: NSMenu) {
-        guard let appearanceItem = menu.items.first(where: { $0.title == "Appearance" }),
+        guard let appearanceItem = menu.items.first(where: { $0.tag == MenuTag.appearanceMenu.rawValue }),
               let submenu = appearanceItem.submenu else { return }
         
         for item in submenu.items {
-            if let mode = item.representedObject as? AppearanceMode {
-                item.state = (mode == currentMode) ? .on : .off
+            if let menuData = item.representedObject as? AppearanceMenuData {
+                item.state = (menuData.mode == currentMode) ? .on : .off
             }
         }
     }
 }
 
-@objc private class AppearanceMenuHandler: NSObject {
-    static let shared = AppearanceMenuHandler()
+private class AppearanceMenuData {
+    let mode: AppearanceMode
+    let handler: AppearanceMenuHandler
     
-    var updateHandler: Selector?
-    weak var target: AnyObject?
+    init(mode: AppearanceMode, handler: AppearanceMenuHandler) {
+        self.mode = mode
+        self.handler = handler
+    }
+}
+
+@objc private class AppearanceMenuHandler: NSObject {
+    private let updateHandler: Selector
+    private weak var target: AnyObject?
+    
+    init(target: AnyObject, updateHandler: Selector) {
+        self.target = target
+        self.updateHandler = updateHandler
+        super.init()
+    }
     
     @objc func appearanceChanged(_ sender: NSMenuItem) {
-        guard let mode = sender.representedObject as? AppearanceMode else { return }
+        guard let menuData = sender.representedObject as? AppearanceMenuData else { return }
         
-        AppearanceManager.shared.setAppearance(mode)
+        AppearanceManager.shared.setAppearance(menuData.mode)
         
-        if let target = target, let handler = updateHandler {
-            _ = target.perform(handler)
+        if let target = target {
+            _ = target.perform(updateHandler)
         }
     }
 }
