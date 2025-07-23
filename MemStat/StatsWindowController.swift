@@ -117,7 +117,7 @@ class StatsWindowController: NSWindowController, NSWindowDelegate, SortHandler, 
     weak var delegate: StatsWindowDelegate?
     
     private var statsView: NSView!
-    private var timer: Timer?
+    private var updateCoordinator: UpdateCoordinator!
     private var appearanceObserver: NSObjectProtocol?
     
     private var tableSections: [BaseTableSection] = []
@@ -164,13 +164,13 @@ class StatsWindowController: NSWindowController, NSWindowDelegate, SortHandler, 
         setupStatsView()
     }
     
-    
-    
-    
     private func setupServices() {
         dataService = StatsDataService()
         uiFactory = UIComponentFactory(currentSortColumn: dataService.getCurrentSortColumn(), sortDescending: dataService.isSortDescending())
         themeManager = StatsThemeManager.shared
+        updateCoordinator = UpdateCoordinator(updateInterval: 1.0, updateHandler: { [weak self] in
+            self?.updateStats()
+        })
         dataService.sortHandler = self
     }
     
@@ -269,15 +269,11 @@ class StatsWindowController: NSWindowController, NSWindowDelegate, SortHandler, 
         window.setFrameOrigin(origin)
         window.orderFront(nil)
         
-        updateStats()
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            self?.updateStats()
-        }
+        updateCoordinator.startUpdating()
     }
     
     func hideWindow() {
-        timer?.invalidate()
-        timer = nil
+        updateCoordinator.stopUpdating()
         window?.orderOut(nil)
     }
     
@@ -306,9 +302,6 @@ class StatsWindowController: NSWindowController, NSWindowDelegate, SortHandler, 
     }
     
     func startUpdatingStats() {
-        updateStats()
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            self?.updateStats()
-        }
+        updateCoordinator.startUpdating()
     }
 }

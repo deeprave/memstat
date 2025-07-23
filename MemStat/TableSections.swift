@@ -44,12 +44,13 @@ fileprivate func createSortableHeaderText(_ text: String, sortColumn: ProcessSor
 
 // Local definition of table layout to avoid dependency
 fileprivate struct LocalProcessTableLayout {
-    // Layout constants
     static let titleHeight: CGFloat = 26
     static let headerHeight: CGFloat = 26
     static let titleBottomMargin: CGFloat = 9
     static let headerBottomMargin: CGFloat = 5
     static let dataRowHeight: CGFloat = 19
+    static let leftMargin: CGFloat = 10
+    static let columnSpacing: CGFloat = 10
     
     // Calculate positions from top of table relative to table height
     static func sectionTitleY(tableHeight: CGFloat) -> CGFloat {
@@ -74,9 +75,9 @@ fileprivate struct LocalProcessTableLayout {
     ]
     
     static func xPosition(for columnIndex: Int) -> CGFloat {
-        var x: CGFloat = 10
+        var x = leftMargin
         for i in 0..<columnIndex {
-            x += columns[i].width + CGFloat(10)
+            x += columns[i].width + columnSpacing
         }
         return x
     }

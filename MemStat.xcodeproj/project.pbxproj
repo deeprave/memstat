@@ -50,6 +50,10 @@
 		TEST004 /* MenuBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE004 /* MenuBarControllerTests.swift */; };
 		TEST005 /* StatsWindowControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE005 /* StatsWindowControllerTests.swift */; };
 		TEST006 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE006 /* TestHelpers.swift */; };
+		APPEARANCE001 /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPEARANCEFILE001 /* AppearanceManager.swift */; };
+		APPEARANCE002 /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPEARANCEFILE001 /* AppearanceManager.swift */; };
+		UPDATE001 /* UpdateCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = UPDATEFILE001 /* UpdateCoordinator.swift */; };
+		UPDATE002 /* UpdateCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = UPDATEFILE001 /* UpdateCoordinator.swift */; };
 		TESTAPP001 /* MemStat.app in Frameworks */ = {isa = PBXBuildFile; fileRef = 019A60B755834539846281592A3987F4 /* MemStat.app */; };
 /* End PBXBuildFile section */
 
@@ -99,6 +103,8 @@
 		TESTFILE004 /* MenuBarControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarControllerTests.swift; sourceTree = "<group>"; };
 		TESTFILE005 /* StatsWindowControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsWindowControllerTests.swift; sourceTree = "<group>"; };
 		TESTFILE006 /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
+		APPEARANCEFILE001 /* AppearanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = "<group>"; };
+		UPDATEFILE001 /* UpdateCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCoordinator.swift; sourceTree = "<group>"; };
 		TESTINFO001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		TESTTARGET001 /* MemStatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MemStatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -143,6 +149,8 @@
 				79CA34102E2681E9003ABE85 /* TableLayoutManager.swift */,
 				TABLESECTIONSFILE001 /* TableSections.swift */,
 				79CA34112E2681E9003ABE85 /* UIComponentFactory.swift */,
+				APPEARANCEFILE001 /* AppearanceManager.swift */,
+				UPDATEFILE001 /* UpdateCoordinator.swift */,
 				79C10A712E260CD900A5D8EA /* Version.swift */,
 			);
 			path = MemStat;
@@ -330,6 +338,8 @@
 				APPMODE001 /* AppMode.swift in Sources */,
 				MAINWIN001 /* MainWindowController.swift in Sources */,
 				TABLESECTIONS001 /* TableSections.swift in Sources */,
+				APPEARANCE001 /* AppearanceManager.swift in Sources */,
+				UPDATE001 /* UpdateCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,6 +367,8 @@
 				TEST006 /* TestHelpers.swift in Sources */,
 				APPMODE002 /* AppMode.swift in Sources */,
 				TABLESECTIONS002 /* TableSections.swift in Sources */,
+				APPEARANCE002 /* AppearanceManager.swift in Sources */,
+				UPDATE002 /* UpdateCoordinator.swift in Sources */,
 				7905C0CA2E304B3C00F358A1 /* MemoryMonitor.swift in Sources */,
 				CMDTEST001 /* CommandLineTests.swift in Sources */,
 				MODETEST001 /* ModeSwitchingTests.swift in Sources */,

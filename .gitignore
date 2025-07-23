@@ -163,6 +163,7 @@ CLAUDE.md
 
 # IDE specific
 .idea/
+.kiro/
 .vscode/
 .cursor/
 .code-workspace
