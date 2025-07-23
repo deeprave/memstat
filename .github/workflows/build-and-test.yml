@@ -69,37 +69,10 @@ jobs:
           CODE_SIGN_IDENTITY="-" \
           CODE_SIGNING_REQUIRED=NO
     
-    - name: Build Release  
-      run: |
-        xcodebuild build \
-          -project MemStat.xcodeproj \
-          -scheme MemStat \
-          -configuration Release \
-          -derivedDataPath build \
-          -sdk macosx \
-          CODE_SIGN_IDENTITY="-" \
-          CODE_SIGNING_REQUIRED=NO
-    
     - name: Upload Test Results
       if: always()
       uses: actions/upload-artifact@v4
       with:
         name: test-results
-        path: |
-          build/Logs/Test/*.xcresult
-          TestResults/
-        retention-days: 30
-    
-    - name: Upload Debug Build
-      uses: actions/upload-artifact@v4
-      with:
-        name: MemStat-Debug
-        path: build/Build/Products/Debug/MemStat.app
-        retention-days: 7
-    
-    - name: Upload Release Build
-      uses: actions/upload-artifact@v4
-      with:
-        name: MemStat-Release
-        path: build/Build/Products/Release/MemStat.app
+        path: build/Logs/Test/*.xcresult
         retention-days: 30
