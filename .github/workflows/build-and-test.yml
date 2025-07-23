@@ -9,6 +9,7 @@ on:
 
 env:
   DEVELOPER_DIR: /Applications/Xcode.app/Contents/Developer
+  MD_APPLE_SDK_ROOT: /Applications/Xcode.app
 
 jobs:
   build-and-test:
@@ -49,15 +50,11 @@ jobs:
       run: |
         xcodebuild build \
           -project MemStat.xcodeproj \
-          -scheme MemStat \
+          -target MemStat \
           -configuration Debug \
           -derivedDataPath build \
-          -destination "platform=macOS" \
-          -allowProvisioningUpdates \
           CODE_SIGN_IDENTITY="-" \
-          CODE_SIGNING_REQUIRED=NO \
-          DEVELOPMENT_TEAM="" \
-          PROVISIONING_PROFILE_SPECIFIER=""
+          CODE_SIGNING_REQUIRED=NO
     
     - name: Run Tests
       run: just test
@@ -66,15 +63,11 @@ jobs:
       run: |
         xcodebuild build \
           -project MemStat.xcodeproj \
-          -scheme MemStat \
+          -target MemStat \
           -configuration Release \
           -derivedDataPath build \
-          -destination "platform=macOS" \
-          -allowProvisioningUpdates \
           CODE_SIGN_IDENTITY="-" \
-          CODE_SIGNING_REQUIRED=NO \
-          DEVELOPMENT_TEAM="" \
-          PROVISIONING_PROFILE_SPECIFIER=""
+          CODE_SIGNING_REQUIRED=NO
     
     - name: Upload Test Results
       if: always()
