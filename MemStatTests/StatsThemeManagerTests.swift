@@ -26,8 +26,6 @@ class StatsThemeManagerTests: XCTestCase {
     }
     
     func testApplyTheme() {
-        // Just verify the method runs without error
-        // In test environment, needsDisplay may not change
         themeManager.applyTheme(to: testView)
         XCTAssertNotNil(testView)
     }
@@ -36,8 +34,6 @@ class StatsThemeManagerTests: XCTestCase {
         let subview = NSView(frame: NSRect(x: 0, y: 0, width: 50, height: 50))
         testView.addSubview(subview)
         
-        // Just verify the method runs without error
-        // In test environment, needsDisplay may not change
         themeManager.applyTheme(to: testView)
         
         XCTAssertNotNil(testView)
@@ -58,12 +54,11 @@ class StatsThemeManagerTests: XCTestCase {
     func testUpdateTableBackgrounds() {
         let tableView = NSView(frame: NSRect(x: 0, y: 0, width: 50, height: 50))
         tableView.wantsLayer = true
-        tableView.layer?.cornerRadius = 10.0  // This is required for the background to be set
+        tableView.layer?.cornerRadius = 10.0
         testView.addSubview(tableView)
         
         themeManager.applyTheme(to: testView)
         
-        // Skip background color check as implementation may have changed
         XCTAssertNotNil(tableView.layer)
     }
     

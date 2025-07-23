@@ -22,7 +22,6 @@ class StatsDataService: SortHandler {
     func updateSortingAndRefresh(sortColumn: ProcessSortColumn, sortDescending: Bool) {
         self.currentSortColumn = sortColumn
         self.sortDescending = sortDescending
-        // Don't call back to sortHandler to avoid infinite recursion
     }
     
     func getCurrentSortColumn() -> ProcessSortColumn {

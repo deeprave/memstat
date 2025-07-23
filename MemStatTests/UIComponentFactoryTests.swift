@@ -87,7 +87,6 @@ class UIComponentFactoryTests: XCTestCase {
         let backgroundView = section.subviews.last
         XCTAssertNotNil(backgroundView)
         
-        // The background frame is calculated using insetBy which expands the bounds
         let expectedFrame = section.bounds.insetBy(dx: -padding, dy: -padding)
         XCTAssertEqual(backgroundView?.frame, expectedFrame)
     }

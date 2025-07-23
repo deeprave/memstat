@@ -18,6 +18,11 @@ class UpdateCoordinator {
         timer = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true) { [weak self] _ in
             self?.updateHandler()
         }
+        
+        // Schedule on main run loop with common modes for UI thread safety
+        if let timer = timer {
+            RunLoop.main.add(timer, forMode: .common)
+        }
     }
     
     func stopUpdating() {

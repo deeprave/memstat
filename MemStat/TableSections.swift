@@ -1,7 +1,6 @@
 import Cocoa
 import Foundation
 
-// Helper functions to avoid dependency on FormatUtilities
 fileprivate func formatBytes(_ bytes: UInt64) -> String {
     let units = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"]
     var value = Double(bytes)
@@ -42,7 +41,6 @@ fileprivate func createSortableHeaderText(_ text: String, sortColumn: ProcessSor
     return "\(text) \(arrow)"
 }
 
-// Local definition of table layout to avoid dependency
 fileprivate struct LocalProcessTableLayout {
     static let titleHeight: CGFloat = 26
     static let headerHeight: CGFloat = 26
@@ -52,7 +50,6 @@ fileprivate struct LocalProcessTableLayout {
     static let leftMargin: CGFloat = 10
     static let columnSpacing: CGFloat = 10
     
-    // Calculate positions from top of table relative to table height
     static func sectionTitleY(tableHeight: CGFloat) -> CGFloat {
         return tableHeight - titleHeight  // Title at top
     }
@@ -83,7 +80,6 @@ fileprivate struct LocalProcessTableLayout {
     }
 }
 
-// Table section classes moved from StatsWindowController.swift
 class MemoryTableSection: BaseTableSection {
     
     init(yPosition: CGFloat) {
@@ -224,7 +220,6 @@ class VirtualTableSection: BaseTableSection {
             ("File-backed", true)
         ]
         
-        // Custom label width for Virtual table
         let customLabelWidth: CGFloat = 105
         
         for (index, (label, hasUnits)) in metrics.enumerated() {
@@ -243,7 +238,6 @@ class VirtualTableSection: BaseTableSection {
             section.addSubview(labelView)
             
             if hasUnits {
-                // Adjust value position based on custom label width
                 let customValueX = customLabelWidth + VerticalTableLayout.labelValueSpacing
                 
                 let valueLabel = delegate.createDataLabel(
@@ -258,7 +252,6 @@ class VirtualTableSection: BaseTableSection {
                     useMonospacedFont: false
                 )
                 
-                // Adjust unit position based on custom value position
                 let customUnitX = customValueX + (VerticalTableLayout.valueWidth - VerticalTableLayout.unitWidth - 5 + 5)
                 
                 let unitLabel = delegate.createDataLabel(
@@ -447,7 +440,6 @@ class SwapTableSection: BaseTableSection {
         dataLabels[7].stringValue = String(stats.swapIns)
         dataLabels[8].stringValue = String(stats.swapOuts)
         
-        // Calculate swap efficiency (lower is better - ratio of ins to outs)
         let efficiency = (stats.swapOuts > 0) ? Double(stats.swapIns) / Double(stats.swapOuts) : 0.0
         dataLabels[9].stringValue = String(format: "%.2f", efficiency)
     }
@@ -497,7 +489,6 @@ class ProcessTableSection: BaseTableSection {
         let columns = LocalProcessTableLayout.columns
         for (index, column) in columns.enumerated() {
             let x = LocalProcessTableLayout.xPosition(for: index)
-            // For headers, extend width to include spacing (except last column)
             let headerWidth = (index == columns.count - 1) ? column.width : column.width + 10
             let frame = NSRect(x: x, y: LocalProcessTableLayout.headerY(tableHeight: height), width: headerWidth, height: 26)
             
@@ -525,11 +516,9 @@ class ProcessTableSection: BaseTableSection {
     private func createBorders() {
         guard let section = sectionView else { return }
         
-        // Calculate border height from header to bottom with margins
         let borderTopMargin: CGFloat = 5
         let borderHeight = LocalProcessTableLayout.headerY(tableHeight: height) - borderTopMargin
         
-        // Vertical borders between columns
         for i in 1..<LocalProcessTableLayout.columns.count {
             let x = LocalProcessTableLayout.xPosition(for: i)
             let border = NSView(frame: NSRect(x: x, y: borderTopMargin, width: 1, height: borderHeight))
@@ -538,7 +527,6 @@ class ProcessTableSection: BaseTableSection {
             section.addSubview(border)
         }
         
-        // Bottom border
         let bottomBorder = NSView(frame: NSRect(x: 0, y: 0, width: section.bounds.width, height: 1))
         bottomBorder.wantsLayer = true
         bottomBorder.layer?.backgroundColor = ColorTheme.borderColor.cgColor

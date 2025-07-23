@@ -33,7 +33,6 @@ class TableLayoutManager {
         ]
     }
     
-    // Individual section creation methods for tests
     func createMemorySection(yPosition: CGFloat, in parentView: NSView) -> BaseTableSection {
         return MemoryTableSection(yPosition: yPosition)
     }

@@ -18,6 +18,7 @@ This project is a macOS app that runs both in the macOS menu bar and as a regula
 - All new files created must be added to the Xcode project in order that xcodebuild works, including test files and other artifacts, as required
 - prefer to use 'just' as a runner, the justfile contains a number of useful targets
 - use just as task runner for local development
+- always use just and the just test target to run tests. Individual tests can use this target as well
 
 ## Git Commit Policy
 - NEVER do git commit, even if asked for a commit message. I require signing of commits and commit signing does not currently work when claude attempts a git commit.

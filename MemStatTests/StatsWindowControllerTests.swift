@@ -57,9 +57,7 @@ class StatsWindowControllerTests: XCTestCase {
         let testPoint = NSPoint(x: 100, y: 100)
         statsWindowController.showWindow(at: testPoint)
         
-        // Test that window is positioned correctly (x coordinate)
         XCTAssertEqual(statsWindowController.window?.frame.origin.x, testPoint.x)
-        // For y coordinate, allow for system adjustments in CI environments
         if let actualY = statsWindowController.window?.frame.origin.y {
             XCTAssertGreaterThanOrEqual(actualY, testPoint.y - 100, "Y position should be close to expected")
         }
@@ -112,7 +110,6 @@ class StatsWindowControllerTests: XCTestCase {
         XCTAssertEqual(label.frame, frame)
         XCTAssertEqual(label.alignment, .center)
         XCTAssertFalse(label.isEditable)
-        // Cell type check removed as implementation may have changed
         XCTAssertNotNil(label)
     }
     
@@ -176,12 +173,9 @@ class StatsWindowControllerTests: XCTestCase {
         }
         
         XCTAssertTrue(window.isVisible)
-        // Test x position precisely
         XCTAssertEqual(window.frame.origin.x, testOrigin.x)
-        // Test y position with tolerance for system adjustments
         let actualY = window.frame.origin.y
         XCTAssertGreaterThanOrEqual(actualY, testOrigin.y - 100, "Y position should be reasonably close to expected")
-        // Test that window has reasonable dimensions
         XCTAssertGreaterThan(window.frame.width, 0, "Window should have width")
         XCTAssertGreaterThan(window.frame.height, 0, "Window should have height")
     }
