@@ -86,6 +86,9 @@ jobs:
           "build/Build/Products/Release/MemStat.app" \
           "MemStat-${{ github.event.inputs.version || github.ref_name }}.zip"
     
+    - name: List artifacts
+      run: ls -la dist/ || true
+    
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
@@ -93,8 +96,7 @@ jobs:
         draft: false
         prerelease: false
         files: |
-          MemStat-*.dmg
-          MemStat-*.zip
+          dist/*.dmg
+          dist/*.zip
         generate_release_notes: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
