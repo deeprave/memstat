@@ -8,28 +8,28 @@ class MockMemoryMonitor: MemoryMonitor {
     var lastSortDescending: Bool?
     
     override init() {
-        let basic = BasicMemoryInfo(
+        let basic = MemoryStats.BasicMemoryInfo(
             totalMemory: 8_589_934_592,
             usedMemory: 4_294_967_296,
             freeMemory: 4_294_967_296,
             memoryPressure: "Normal"
         )
         
-        let detailed = DetailedMemoryInfo(
+        let detailed = MemoryStats.DetailedMemoryInfo(
             activeMemory: 2_147_483_648,
             inactiveMemory: 1_073_741_824,
             wiredMemory: 1_073_741_824,
             compressedMemory: 0
         )
         
-        let app = AppMemoryInfo(
+        let app = MemoryStats.AppMemoryInfo(
             appPhysicalMemory: 1_073_741_824,
             appVirtualMemory: 2_147_483_648,
             anonymousMemory: 1_610_612_736,
             fileBackedMemory: 536_870_912
         )
         
-        let swap = SwapInfo(
+        let swap = MemoryStats.SwapInfo(
             swapTotalMemory: 0,
             swapUsedMemory: 0,
             swapFreeMemory: 0,
