@@ -262,4 +262,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         return image
     }
+    
+    deinit {
+        AppearanceManager.shared.unregisterAllMenusForTarget(self)
+    }
 }

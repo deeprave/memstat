@@ -60,6 +60,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Timer Management**: Fixed UpdateCoordinator timer scheduling to prevent duplicate registration
   - Changed from scheduledTimer to Timer(timeInterval:) with explicit RunLoop registration
   - Eliminates potential scheduling conflicts and ensures proper timer lifecycle management
+- **UpdateCoordinator Race Conditions**: Added guard against repeated startUpdating calls
+  - Prevents overlapping timer schedules and race conditions from multiple start requests
+  - Timer creation now skipped if timer is already active, ensuring single timer per coordinator
+- **AppearanceManager Memory Growth**: Implemented explicit menu unregistration system
+  - Added unregisterMenuForUpdates() and unregisterAllMenusForTarget() methods
+  - Enhanced WeakTargetReference tracking to prevent unbounded closure accumulation
+  - AppDelegate and MenuBarController now automatically unregister menus in deinit
+  - Prevents memory leaks from accumulating appearance menu registrations
 
 ## [1.2.3] - 2025-07-23
 
