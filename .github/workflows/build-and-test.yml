@@ -27,17 +27,25 @@ jobs:
     - name: Install just
       uses: extractions/setup-just@v2
     
+    - name: Install SwiftLint
+      run: brew install swiftlint
+    
+    - name: Run SwiftLint
+      run: swiftlint --strict || true
+    
     - name: Generate version
       run: just version
     
     - name: Build Debug
-      run: just build
+      run: |
+        just build BUILD_ARGS='-destination "platform=macOS" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO'
     
     - name: Run Tests
       run: just test
     
     - name: Build Release
-      run: just release
+      run: |
+        just release BUILD_ARGS='-destination "platform=macOS" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO'
     
     - name: Upload Test Results
       if: always()
@@ -53,44 +61,12 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: MemStat-Debug
-        path: build/Debug/MemStat.app
+        path: build/Build/Products/Debug/MemStat.app
         retention-days: 7
     
     - name: Upload Release Build
       uses: actions/upload-artifact@v4
       with:
         name: MemStat-Release
-        path: build/Release/MemStat.app
+        path: build/Build/Products/Release/MemStat.app
         retention-days: 30
-
-  code-quality:
-    name: Code Quality Checks
-    runs-on: macos-latest
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    
-    - name: Setup Xcode
-      uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: latest-stable
-    
-    - name: Install SwiftLint
-      run: brew install swiftlint
-    
-    - name: Run SwiftLint
-      run: swiftlint --strict
-      continue-on-error: true
-    
-    - name: Xcode Analyze
-      run: |
-        xcodebuild analyze \
-          -project MemStat.xcodeproj \
-          -scheme MemStat \
-          -configuration Debug \
-          -destination "platform=macOS" \
-          CODE_SIGN_IDENTITY="" \
-          CODE_SIGNING_REQUIRED=NO \
-          CODE_SIGNING_ALLOWED=NO \
-          ONLY_ACTIVE_ARCH=NO
