@@ -121,7 +121,7 @@ class TableSectionTests: XCTestCase {
         section.setupSection(in: NSView(frame: NSRect(x: 0, y: 0, width: 800, height: 600)), delegate: mockDelegate)
         
         XCTAssertEqual(section.yPosition, 100)
-        XCTAssertEqual(section.height, VerticalTableLayout.calculateTableHeight(for: 7))
+        XCTAssertEqual(section.height, TableLayoutManager.VerticalTableLayout.calculateTableHeight(for: 7))
         
         XCTAssertEqual(mockDelegate.headerLabelsCreated, 0)
         XCTAssertEqual(mockDelegate.dataLabelsCreated, 20)
@@ -196,7 +196,7 @@ class TableSectionTests: XCTestCase {
         section.setupSection(in: NSView(frame: NSRect(x: 0, y: 0, width: 800, height: 600)), delegate: mockDelegate)
         
         XCTAssertEqual(section.yPosition, 200)
-        XCTAssertEqual(section.height, VerticalTableLayout.calculateTableHeight(for: 7))
+        XCTAssertEqual(section.height, TableLayoutManager.VerticalTableLayout.calculateTableHeight(for: 7))
         
         XCTAssertEqual(mockDelegate.headerLabelsCreated, 0)
         XCTAssertEqual(mockDelegate.dataLabelsCreated, 21)
@@ -214,7 +214,7 @@ class TableSectionTests: XCTestCase {
         section.setupSection(in: NSView(frame: NSRect(x: 0, y: 0, width: 800, height: 600)), delegate: mockDelegate)
         
         XCTAssertEqual(section.yPosition, 300)
-        XCTAssertEqual(section.height, VerticalTableLayout.calculateTableHeight(for: 7))
+        XCTAssertEqual(section.height, TableLayoutManager.VerticalTableLayout.calculateTableHeight(for: 7))
         
         XCTAssertEqual(mockDelegate.headerLabelsCreated, 0)
         XCTAssertEqual(mockDelegate.dataLabelsCreated, 17)
@@ -225,7 +225,7 @@ class TableSectionTests: XCTestCase {
         section.setupSection(in: NSView(frame: NSRect(x: 0, y: 0, width: 800, height: 600)), delegate: mockDelegate)
         
         XCTAssertEqual(section.yPosition, 400)
-        XCTAssertEqual(section.height, VerticalTableLayout.processTableHeight)
+        XCTAssertEqual(section.height, TableLayoutManager.VerticalTableLayout.processTableHeight)
         
         XCTAssertEqual(mockDelegate.headerLabelsCreated, 6)
         

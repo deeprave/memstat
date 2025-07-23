@@ -1,6 +1,6 @@
 import Cocoa
 
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, AppearanceMenuUpdateDelegate {
     
     var mainWindowController: MainWindowController?
     var menuBarController: MenuBarController?
@@ -139,10 +139,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         appMenu.addItem(NSMenuItem.separator())
         
-        let appearanceItem = AppearanceManager.shared.createAppearanceMenu(target: self, updateHandler: #selector(updateAppearanceMenu))
+        let appearanceItem = AppearanceManager.shared.createAppearanceMenu(delegate: self)
         appMenu.addItem(appearanceItem)
         
-        AppearanceManager.shared.registerMenuForUpdates(mainMenu, target: self, updateHandler: #selector(updateAppearanceMenu))
+        AppearanceManager.shared.registerMenuForUpdates(mainMenu, delegate: self)
         
         appMenu.addItem(NSMenuItem.separator())
         
@@ -191,7 +191,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         AppearanceManager.shared.restoreAppearanceMode()
     }
     
-    @objc private func updateAppearanceMenu() {
+    func updateAppearanceMenu() {
         guard let mainMenu = NSApp.mainMenu else { return }
         AppearanceManager.shared.updateAppearanceMenu(mainMenu)
     }
@@ -264,6 +264,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     deinit {
-        AppearanceManager.shared.unregisterAllMenusForTarget(self)
+        AppearanceManager.shared.unregisterAllMenusForDelegate(self)
     }
 }

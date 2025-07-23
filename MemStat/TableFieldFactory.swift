@@ -8,27 +8,27 @@ class TableFieldFactory {
         self.labelFactory = labelFactory
     }
     
-    func createMetricField(label: String, hasUnits: Bool, rowIndex: Int, sectionHeight: CGFloat, section: NSView, labelWidth: CGFloat = VerticalTableLayout.labelWidth) -> [NSTextField] {
-        let rowY = VerticalTableLayout.rowY(rowIndex: rowIndex, sectionHeight: sectionHeight)
+    func createMetricField(label: String, hasUnits: Bool, rowIndex: Int, sectionHeight: CGFloat, section: NSView, labelWidth: CGFloat = TableLayoutManager.VerticalTableLayout.labelWidth) -> [NSTextField] {
+        let rowY = TableLayoutManager.VerticalTableLayout.rowY(rowIndex: rowIndex, sectionHeight: sectionHeight)
         var fields: [NSTextField] = []
         
         let labelView = labelFactory.createRowLabel(
             text: label,
             frame: NSRect(
-                x: VerticalTableLayout.labelX(),
+                x: TableLayoutManager.VerticalTableLayout.labelX(),
                 y: rowY,
                 width: labelWidth,
-                height: VerticalTableLayout.rowHeight
+                height: TableLayoutManager.VerticalTableLayout.rowHeight
             ),
             alignment: .right
         )
         section.addSubview(labelView)
         
         if hasUnits {
-            let customValueX = labelWidth + VerticalTableLayout.labelValueSpacing
-            let valueWidth = labelWidth == VerticalTableLayout.labelWidth ? 
-                VerticalTableLayout.valueWidth - VerticalTableLayout.unitWidth - 5 :
-                VerticalTableLayout.valueWidth - VerticalTableLayout.unitWidth - 5 + 5
+            let customValueX = labelWidth + TableLayoutManager.VerticalTableLayout.labelValueSpacing
+            let valueWidth = labelWidth == TableLayoutManager.VerticalTableLayout.labelWidth ? 
+                TableLayoutManager.VerticalTableLayout.valueWidth - TableLayoutManager.VerticalTableLayout.unitWidth - 5 :
+                TableLayoutManager.VerticalTableLayout.valueWidth - TableLayoutManager.VerticalTableLayout.unitWidth - 5 + 5
             
             let valueLabel = labelFactory.createDataLabel(
                 text: "Loading...",
@@ -36,7 +36,7 @@ class TableFieldFactory {
                     x: customValueX,
                     y: rowY,
                     width: valueWidth,
-                    height: VerticalTableLayout.rowHeight
+                    height: TableLayoutManager.VerticalTableLayout.rowHeight
                 ),
                 alignment: .right,
                 useMonospacedFont: false
@@ -48,7 +48,7 @@ class TableFieldFactory {
                     x: customValueX + valueWidth,
                     y: rowY,
                     width: 26,
-                    height: VerticalTableLayout.rowHeight
+                    height: TableLayoutManager.VerticalTableLayout.rowHeight
                 ),
                 alignment: .right,
                 useMonospacedFont: false
@@ -59,8 +59,8 @@ class TableFieldFactory {
             fields.append(valueLabel)
             fields.append(unitLabel)
         } else {
-            let unitFieldRightEdge = VerticalTableLayout.unitX() + 26
-            let fieldWidth = VerticalTableLayout.valueWidth
+            let unitFieldRightEdge = TableLayoutManager.VerticalTableLayout.unitX() + 26
+            let fieldWidth = TableLayoutManager.VerticalTableLayout.valueWidth
             let fieldX = unitFieldRightEdge - fieldWidth
             
             let valueLabel = labelFactory.createDataLabel(
@@ -69,7 +69,7 @@ class TableFieldFactory {
                     x: fieldX,
                     y: rowY,
                     width: fieldWidth,
-                    height: VerticalTableLayout.rowHeight
+                    height: TableLayoutManager.VerticalTableLayout.rowHeight
                 ),
                 alignment: .right,
                 useMonospacedFont: false

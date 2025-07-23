@@ -1,5 +1,9 @@
 import Cocoa
 
+protocol AppearanceMenuUpdateDelegate: AnyObject {
+    func updateAppearanceMenu()
+}
+
 enum MenuTag: Int {
     case appearanceMenu = 1000
 }
@@ -34,11 +38,11 @@ private class WeakMenuReference {
     }
 }
 
-private class WeakTargetReference {
-    weak var target: AnyObject?
+private class WeakDelegateReference {
+    weak var delegate: AppearanceMenuUpdateDelegate?
     
-    init(target: AnyObject) {
-        self.target = target
+    init(delegate: AppearanceMenuUpdateDelegate) {
+        self.delegate = delegate
     }
 }
 
@@ -46,7 +50,7 @@ class AppearanceManager {
     static let shared = AppearanceManager()
     
     private let userDefaultsKey = "AppearanceMode"
-    private var registeredMenus: [(weakMenu: WeakMenuReference, weakTarget: WeakTargetReference, updateHandler: () -> Void)] = []
+    private var registeredMenus: [(weakMenu: WeakMenuReference, weakDelegate: WeakDelegateReference, updateHandler: () -> Void)] = []
     
     private init() {}
     
@@ -66,11 +70,11 @@ class AppearanceManager {
         updateAllAppearanceMenus()
     }
     
-    func createAppearanceMenu(target: AnyObject, updateHandler: Selector) -> NSMenuItem {
+    func createAppearanceMenu(delegate: AppearanceMenuUpdateDelegate) -> NSMenuItem {
         let appearanceItem = NSMenuItem(title: "Appearance", action: nil, keyEquivalent: "")
         appearanceItem.tag = MenuTag.appearanceMenu.rawValue
         let appearanceSubmenu = NSMenu()
-        let menuHandler = AppearanceMenuHandler(target: target, updateHandler: updateHandler)
+        let menuHandler = AppearanceMenuHandler(delegate: delegate)
         
         for mode in AppearanceMode.allCases {
             let modeItem = NSMenuItem(title: mode.displayName, action: #selector(AppearanceMenuHandler.appearanceChanged(_:)), keyEquivalent: "")
@@ -85,15 +89,15 @@ class AppearanceManager {
         return appearanceItem
     }
     
-    func registerMenuForUpdates(_ menu: NSMenu, target: AnyObject, updateHandler: Selector) {
+    func registerMenuForUpdates(_ menu: NSMenu, delegate: AppearanceMenuUpdateDelegate) {
         let weakMenuRef = WeakMenuReference(menu: menu)
-        let weakTargetRef = WeakTargetReference(target: target)
-        let updateClosure = { [weak self, weakMenuRef, weakTargetRef] in
-            guard let self = self, let target = weakTargetRef.target, let menu = weakMenuRef.menu else { return }
+        let weakDelegateRef = WeakDelegateReference(delegate: delegate)
+        let updateClosure = { [weak self, weakMenuRef, weakDelegateRef] in
+            guard let self = self, let delegate = weakDelegateRef.delegate, let menu = weakMenuRef.menu else { return }
             self.updateAppearanceMenu(menu)
-            _ = target.perform(updateHandler)
+            delegate.updateAppearanceMenu()
         }
-        registeredMenus.append((weakMenu: weakMenuRef, weakTarget: weakTargetRef, updateHandler: updateClosure))
+        registeredMenus.append((weakMenu: weakMenuRef, weakDelegate: weakDelegateRef, updateHandler: updateClosure))
     }
     
     func unregisterMenuForUpdates(_ menu: NSMenu) {
@@ -103,17 +107,17 @@ class AppearanceManager {
         }
     }
     
-    func unregisterAllMenusForTarget(_ target: AnyObject) {
+    func unregisterAllMenusForDelegate(_ delegate: AppearanceMenuUpdateDelegate) {
         registeredMenus.removeAll { entry in
-            guard let registeredTarget = entry.weakTarget.target else { return true }
-            return registeredTarget === target
+            guard let registeredDelegate = entry.weakDelegate.delegate else { return true }
+            return registeredDelegate === delegate
         }
     }
     
     private func updateAllAppearanceMenus() {
         registeredMenus = registeredMenus.compactMap { entry in
             guard let menu = entry.weakMenu.menu else { return nil }
-            guard entry.weakTarget.target != nil else { return nil }
+            guard entry.weakDelegate.delegate != nil else { return nil }
             guard menu.supermenu != nil || menu.numberOfItems > 0 else { return nil }
             return entry
         }
@@ -150,12 +154,10 @@ class AppearanceMenuData {
 }
 
 @objc class AppearanceMenuHandler: NSObject {
-    private let updateHandler: Selector
-    weak var target: AnyObject?
+    weak var delegate: AppearanceMenuUpdateDelegate?
     
-    init(target: AnyObject, updateHandler: Selector) {
-        self.target = target
-        self.updateHandler = updateHandler
+    init(delegate: AppearanceMenuUpdateDelegate) {
+        self.delegate = delegate
         super.init()
     }
     
@@ -164,8 +166,6 @@ class AppearanceMenuData {
         
         AppearanceManager.shared.setAppearance(menuData.mode)
         
-        if let target = target {
-            _ = target.perform(updateHandler)
-        }
+        delegate?.updateAppearanceMenu()
     }
 }

@@ -78,7 +78,7 @@ class AppearanceManagerTests: XCTestCase {
     }
     
     func testSetAppearanceCallsUpdateAllAppearanceMenus() {
-        appearanceManager.registerMenuForUpdates(testMenu, target: mockTarget, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
+        appearanceManager.registerMenuForUpdates(testMenu, delegate: mockTarget)
         
         mockTarget.updateCallCount = 0
         
@@ -90,7 +90,7 @@ class AppearanceManagerTests: XCTestCase {
     // MARK: - Menu Creation Tests
     
     func testCreateAppearanceMenuStructure() {
-        let appearanceItem = appearanceManager.createAppearanceMenu(target: mockTarget, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
+        let appearanceItem = appearanceManager.createAppearanceMenu(delegate: mockTarget)
         
         XCTAssertEqual(appearanceItem.title, "Appearance")
         XCTAssertEqual(appearanceItem.tag, MenuTag.appearanceMenu.rawValue)
@@ -110,7 +110,7 @@ class AppearanceManagerTests: XCTestCase {
     }
     
     func testCreateAppearanceMenuItemsHaveCorrectTargets() {
-        let appearanceItem = appearanceManager.createAppearanceMenu(target: mockTarget, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
+        let appearanceItem = appearanceManager.createAppearanceMenu(delegate: mockTarget)
         
         guard let submenu = appearanceItem.submenu else {
             XCTFail("Submenu should not be nil")
@@ -129,7 +129,7 @@ class AppearanceManagerTests: XCTestCase {
     func testCreateAppearanceMenuCurrentModeIsSelected() {
         appearanceManager.setAppearance(.light)
         
-        let appearanceItem = appearanceManager.createAppearanceMenu(target: mockTarget, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
+        let appearanceItem = appearanceManager.createAppearanceMenu(delegate: mockTarget)
         
         guard let submenu = appearanceItem.submenu else {
             XCTFail("Submenu should not be nil")
@@ -148,7 +148,7 @@ class AppearanceManagerTests: XCTestCase {
     // MARK: - Menu Registration Tests
     
     func testRegisterMenuForUpdates() {
-        appearanceManager.registerMenuForUpdates(testMenu, target: mockTarget, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
+        appearanceManager.registerMenuForUpdates(testMenu, delegate: mockTarget)
         
         appearanceManager.setAppearance(.dark)
         
@@ -160,8 +160,8 @@ class AppearanceManagerTests: XCTestCase {
         secondMenu.addItem(NSMenuItem(title: "Test2", action: nil, keyEquivalent: ""))
         let secondTarget = MockAppearanceTarget()
         
-        appearanceManager.registerMenuForUpdates(testMenu, target: mockTarget, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
-        appearanceManager.registerMenuForUpdates(secondMenu, target: secondTarget, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
+        appearanceManager.registerMenuForUpdates(testMenu, delegate: mockTarget)
+        appearanceManager.registerMenuForUpdates(secondMenu, delegate: secondTarget)
         
         appearanceManager.setAppearance(.light)
         
@@ -170,7 +170,7 @@ class AppearanceManagerTests: XCTestCase {
     }
     
     func testUnregisterMenuForUpdates() {
-        appearanceManager.registerMenuForUpdates(testMenu, target: mockTarget, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
+        appearanceManager.registerMenuForUpdates(testMenu, delegate: mockTarget)
         
         appearanceManager.setAppearance(.dark)
         XCTAssertEqual(mockTarget.updateCallCount, 1)
@@ -182,17 +182,17 @@ class AppearanceManagerTests: XCTestCase {
         XCTAssertEqual(mockTarget.updateCallCount, 0)
     }
     
-    func testUnregisterAllMenusForTarget() {
+    func testUnregisterAllMenusForDelegate() {
         let secondMenu = NSMenu()
         secondMenu.addItem(NSMenuItem(title: "Test2", action: nil, keyEquivalent: ""))
         
-        appearanceManager.registerMenuForUpdates(testMenu, target: mockTarget, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
-        appearanceManager.registerMenuForUpdates(secondMenu, target: mockTarget, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
+        appearanceManager.registerMenuForUpdates(testMenu, delegate: mockTarget)
+        appearanceManager.registerMenuForUpdates(secondMenu, delegate: mockTarget)
         
         appearanceManager.setAppearance(.dark)
         XCTAssertEqual(mockTarget.updateCallCount, 2)
         
-        appearanceManager.unregisterAllMenusForTarget(mockTarget)
+        appearanceManager.unregisterAllMenusForDelegate(mockTarget)
         mockTarget.updateCallCount = 0
         
         appearanceManager.setAppearance(.light)
@@ -207,7 +207,7 @@ class AppearanceManagerTests: XCTestCase {
             tempMenu.addItem(NSMenuItem(title: "Temp", action: nil, keyEquivalent: ""))
             weakMenu = tempMenu
             
-            appearanceManager.registerMenuForUpdates(tempMenu, target: mockTarget, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
+            appearanceManager.registerMenuForUpdates(tempMenu, delegate: mockTarget)
         }
         
         XCTAssertNil(weakMenu)
@@ -218,7 +218,7 @@ class AppearanceManagerTests: XCTestCase {
     // MARK: - Update Menu Tests
     
     func testUpdateAppearanceMenuUpdatesItemStates() {
-        let appearanceItem = appearanceManager.createAppearanceMenu(target: mockTarget, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
+        let appearanceItem = appearanceManager.createAppearanceMenu(delegate: mockTarget)
         testMenu.addItem(appearanceItem)
         
         appearanceManager.currentMode = .dark
@@ -269,7 +269,7 @@ class AppearanceManagerTests: XCTestCase {
     // MARK: - Menu Handler Tests
     
     func testAppearanceMenuHandlerChangesAppearance() {
-        let appearanceItem = appearanceManager.createAppearanceMenu(target: mockTarget, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
+        let appearanceItem = appearanceManager.createAppearanceMenu(delegate: mockTarget)
         
         guard let submenu = appearanceItem.submenu else {
             XCTFail("Submenu should not be nil")
@@ -290,7 +290,7 @@ class AppearanceManagerTests: XCTestCase {
     func testAppearanceMenuHandlerCallsUpdateHandler() {
         mockTarget.updateCallCount = 0
         
-        let appearanceItem = appearanceManager.createAppearanceMenu(target: mockTarget, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
+        let appearanceItem = appearanceManager.createAppearanceMenu(delegate: mockTarget)
         
         guard let submenu = appearanceItem.submenu else {
             XCTFail("Submenu should not be nil")
@@ -314,7 +314,7 @@ class AppearanceManagerTests: XCTestCase {
         var target: MockAppearanceTarget? = MockAppearanceTarget()
         let menu = NSMenu()
         
-        appearanceManager.registerMenuForUpdates(menu, target: target!, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
+        appearanceManager.registerMenuForUpdates(menu, delegate: target!)
         
         target = nil
         
@@ -324,7 +324,7 @@ class AppearanceManagerTests: XCTestCase {
     func testMenuCleanupOnUpdate() {
         let menu = NSMenu()
         menu.addItem(NSMenuItem(title: "Test3", action: nil, keyEquivalent: ""))
-        appearanceManager.registerMenuForUpdates(menu, target: mockTarget, updateHandler: #selector(MockAppearanceTarget.updateAppearanceMenu))
+        appearanceManager.registerMenuForUpdates(menu, delegate: mockTarget)
         
         appearanceManager.setAppearance(.system)
         
@@ -334,10 +334,10 @@ class AppearanceManagerTests: XCTestCase {
 
 // MARK: - Mock Classes
 
-@objc class MockAppearanceTarget: NSObject {
+class MockAppearanceTarget: NSObject, AppearanceMenuUpdateDelegate {
     var updateCallCount = 0
     
-    @objc func updateAppearanceMenu() {
+    func updateAppearanceMenu() {
         updateCallCount += 1
     }
 }
