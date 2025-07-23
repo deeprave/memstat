@@ -42,6 +42,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Clear deprecation path documented for v2.0.0 to eliminate type ambiguity
   - Prevents potential confusion between top-level and nested type definitions
 
+### Improved
+- **Resource Management**: Enhanced component lifecycle management for better reliability
+  - Added cleanup safeguards in StatsWindowController deinit to ensure timer shutdown
+  - Prevents potential resource leaks if normal shutdown sequence is interrupted
+- **Menu System Architecture**: Improved AppearanceManager menu update mechanism
+  - Enhanced closure capture semantics for more robust menu state synchronization
+  - Direct menu updates provide explicit control over appearance state propagation
+- **Layout System Consolidation**: Unified layout constants into centralized management
+  - Moved ProcessTableColumn and layout logic to TableLayoutManager for consistency
+  - Eliminated duplicate LocalProcessTableLayout reducing maintenance overhead
+  - Centralized process table configuration improves code organization and reduces duplication
+
 ## [1.2.3] - 2025-07-23
 
 ### Fixed

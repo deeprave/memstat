@@ -1,8 +1,62 @@
 import Cocoa
 import Foundation
 
+struct ProcessTableColumn {
+    let title: String
+    let width: CGFloat
+    let sortColumn: ProcessSortColumn
+    let alignment: NSTextAlignment
+    
+    init(title: String, width: CGFloat, sortColumn: ProcessSortColumn, alignment: NSTextAlignment = .center) {
+        self.title = title
+        self.width = width
+        self.sortColumn = sortColumn
+        self.alignment = alignment
+    }
+}
+
 class TableLayoutManager {
     static let shared = TableLayoutManager()
+    
+    // MARK: - Process Table Layout Constants
+    struct ProcessTableLayout {
+        static let titleHeight: CGFloat = 26
+        static let headerHeight: CGFloat = 26
+        static let titleBottomMargin: CGFloat = 9
+        static let headerBottomMargin: CGFloat = 5
+        static let dataRowHeight: CGFloat = 19
+        static let leftMargin: CGFloat = 10
+        static let columnSpacing: CGFloat = 10
+        
+        static let columns = [
+            ProcessTableColumn(title: "PID", width: 60, sortColumn: .pid),
+            ProcessTableColumn(title: "Memory %", width: 80, sortColumn: .memoryPercent),
+            ProcessTableColumn(title: "Memory", width: 80, sortColumn: .memoryBytes),
+            ProcessTableColumn(title: "Virtual", width: 80, sortColumn: .virtualMemoryBytes),
+            ProcessTableColumn(title: "CPU %", width: 60, sortColumn: .cpuPercent),
+            ProcessTableColumn(title: "Command", width: 330, sortColumn: .command, alignment: .left)
+        ]
+        
+        static func sectionTitleY(tableHeight: CGFloat) -> CGFloat {
+            return tableHeight - titleHeight
+        }
+        
+        static func headerY(tableHeight: CGFloat) -> CGFloat {
+            return tableHeight - titleHeight - titleBottomMargin - headerHeight
+        }
+        
+        static func dataStartY(tableHeight: CGFloat) -> CGFloat {
+            return headerY(tableHeight: tableHeight) - headerBottomMargin - dataRowHeight
+        }
+        
+        static func xPosition(for columnIndex: Int) -> CGFloat {
+            var x = leftMargin
+            for i in 0..<columnIndex {
+                x += columns[i].width + columnSpacing
+            }
+            return x
+        }
+    }
     
     private init() {}
     
