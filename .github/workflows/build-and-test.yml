@@ -1,0 +1,92 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  DEVELOPER_DIR: /Applications/Xcode.app/Contents/Developer
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+    
+    - name: Install just
+      uses: extractions/setup-just@v2
+    
+    - name: Generate version
+      run: just version
+    
+    - name: Build Debug
+      run: just build
+    
+    - name: Run Tests
+      run: just test
+    
+    - name: Build Release
+      run: just release
+    
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: |
+          build/Logs/Test/*.xcresult
+          TestResults/
+        retention-days: 30
+    
+    - name: Upload Debug Build
+      uses: actions/upload-artifact@v4
+      with:
+        name: MemStat-Debug
+        path: build/Debug/MemStat.app
+        retention-days: 7
+    
+    - name: Upload Release Build
+      uses: actions/upload-artifact@v4
+      with:
+        name: MemStat-Release
+        path: build/Release/MemStat.app
+        retention-days: 30
+
+  code-quality:
+    name: Code Quality Checks
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+    
+    - name: Run SwiftLint
+      uses: norio-nomura/action-swiftlint@3.2.1
+      with:
+        args: --strict
+      continue-on-error: true
+    
+    - name: Xcode Analyze
+      run: |
+        xcodebuild analyze \
+          -project MemStat.xcodeproj \
+          -scheme MemStat \
+          -configuration Debug \
+          ONLY_ACTIVE_ARCH=NO \
+          CODE_SIGNING_ALLOWED=NO
