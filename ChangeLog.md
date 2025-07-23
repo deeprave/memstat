@@ -5,7 +5,61 @@ All notable changes to MemStat will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - v1.2.0
+## [Unreleased]
+
+## [1.2.3] - 2025-07-23
+
+### Fixed
+- **AppearanceManager Menu Identification**: Replaced fragile string-based menu item identification with robust tag-based system using MenuTag enum
+- **Singleton Issues**: Fixed AppearanceMenuHandler singleton pattern that could cause issues with multiple menu instances by creating per-menu handlers
+- **Memory Management**: Added AppearanceMenuData wrapper for proper memory management in appearance menu handling
+- **Test Result Bundle Warnings**: Configured test scheme to use explicit result bundle path, eliminating `mkstemp: No such file or directory` warnings during test execution
+
+### Enhanced
+- **UpdateCoordinator**: Added immediate execution option to `startUpdating(immediate: Bool = false)` method to support immediate stats display on window opening
+- **Code Quality**: Improved menu handling architecture to be more maintainable and less prone to localization issues
+
+### Technical
+- **Menu System**: Introduced MenuTag enum with integer-based menu identification instead of string comparison
+- **Test Infrastructure**: Added `resultBundlePath = "/tmp/memstat-test-results.xcresult"` to test scheme configuration
+- **Architecture**: Moved from singleton to per-instance pattern for appearance menu handlers
+
+## [1.2.2] - 2025-07-23
+
+### Fixed
+- **Code Maintainability**: Comprehensive code refactoring for improved maintainability and SOLID compliance
+  - Removed unnecessary comments while preserving MARK navigation, API documentation, and complex logic explanations
+  - Simplified obtuse syntax and improved code readability
+  - Extracted duplicate appearance management code into centralized AppearanceManager
+  - Created UpdateCoordinator to handle timer management and reduce coupling
+  - Refactored MemoryStats constructor from 19 parameters to structured approach with BasicMemoryInfo, DetailedMemoryInfo, AppMemoryInfo, and SwapInfo
+- **Build System**: All new refactored files properly added to Xcode project for successful builds
+- **Test Coverage**: All 104 tests pass after refactoring, confirming functionality preservation
+
+### Added
+- **AppearanceManager**: Centralized appearance management following SOLID principles
+- **UpdateCoordinator**: Extracted timer management from StatsWindowController for better separation of concerns
+- **Structured Data Types**: Organized MemoryStats with grouped information structures for better maintainability
+
+### Changed
+- **Code Organization**: Improved SOLID principles compliance throughout codebase
+- **Constructor Patterns**: Simplified complex constructors with structured data approach
+- **Architecture**: Better separation of concerns with dedicated managers for specific functionality
+
+## [1.2.1] - 2025-07-23
+
+### Fixed
+- **CI/CD Pipeline**: Fixed GitHub Actions workflow issues
+  - Removed dependency on `just` build tool in CI pipelines due to compatibility challenges
+  - Updated workflows to use direct `xcodebuild` commands for better reliability
+  - Fixed release workflow permissions and asset path issues
+  - Removed manual workflow dispatch trigger that was incompatible with release automation
+
+### Technical
+- **GitHub Actions**: Streamlined build and release workflows for better maintainability
+- **Build System**: Direct xcodebuild integration for more predictable CI/CD execution
+
+## [1.2.0] - 2025-07-23
 
 ### Fixed
 - **UI Layout and Alignment**: Fixed multiple UI alignment issues
@@ -84,7 +138,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - All build and test issues have been resolved
 - Complete test suite now passes with 125 tests executed successfully
 
-## [1.1.1] - 2024-XX-XX
+## [1.1.1] - 2025-07-21
 
 ### Features Present in This Release
 - Real-time memory monitoring (Physical, Virtual, Swap)
