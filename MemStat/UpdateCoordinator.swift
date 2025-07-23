@@ -17,7 +17,7 @@ class UpdateCoordinator {
         if immediate {
             updateHandler()
         }
-        timer = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true) { [weak self] _ in
+        timer = Timer(timeInterval: updateInterval, repeats: true) { [weak self] _ in
             self?.updateHandler()
         }
         

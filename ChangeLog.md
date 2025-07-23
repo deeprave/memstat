@@ -47,12 +47,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added cleanup safeguards in StatsWindowController deinit to ensure timer shutdown
   - Prevents potential resource leaks if normal shutdown sequence is interrupted
 - **Menu System Architecture**: Improved AppearanceManager menu update mechanism
+  - Fixed WeakMenuReference capture to prevent premature wrapper deallocation
   - Enhanced closure capture semantics for more robust menu state synchronization
   - Direct menu updates provide explicit control over appearance state propagation
 - **Layout System Consolidation**: Unified layout constants into centralized management
   - Moved ProcessTableColumn and layout logic to TableLayoutManager for consistency
   - Eliminated duplicate LocalProcessTableLayout reducing maintenance overhead
   - Centralized process table configuration improves code organization and reduces duplication
+- **Timer Management**: Fixed UpdateCoordinator timer scheduling to prevent duplicate registration
+  - Changed from scheduledTimer to Timer(timeInterval:) with explicit RunLoop registration
+  - Eliminates potential scheduling conflicts and ensures proper timer lifecycle management
 
 ## [1.2.3] - 2025-07-23
 

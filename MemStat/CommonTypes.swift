@@ -183,6 +183,7 @@ public typealias AppMemoryInfo = MemoryStats.AppMemoryInfo
 @available(*, deprecated, renamed: "MemoryStats.SwapInfo", message: "Use MemoryStats.SwapInfo instead. These top-level typealiases will be removed in v2.0.0")
 public typealias SwapInfo = MemoryStats.SwapInfo
 
+
 public struct VerticalTableLayout {
     public static let memoryTableWidth: CGFloat = 229
     public static let virtualTableWidth: CGFloat = 252

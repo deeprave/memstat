@@ -79,8 +79,8 @@ class AppearanceManager {
     
     func registerMenuForUpdates(_ menu: NSMenu, target: AnyObject, updateHandler: Selector) {
         let weakMenuRef = WeakMenuReference(menu: menu)
-        let updateClosure = { [weak self, weak target, weak weakMenuRef] in
-            guard let self = self, let target = target, let menuRef = weakMenuRef, let menu = menuRef.menu else { return }
+        let updateClosure = { [weak self, weak target, weakMenuRef] in
+            guard let self = self, let target = target, let menu = weakMenuRef.menu else { return }
             self.updateAppearanceMenu(menu)
             _ = target.perform(updateHandler)
         }
