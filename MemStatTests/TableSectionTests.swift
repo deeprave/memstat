@@ -6,7 +6,7 @@ class MockLabelFactory: LabelFactory {
     var headerLabelsCreated = 0
     var dataLabelsCreated = 0
     
-    func createHeaderLabel(_ text: String, frame: NSRect, isDarkBackground: Bool, sortColumn: ProcessSortColumn?, fontSize: CGFloat, alignment: NSTextAlignment) -> NSTextField {
+    func createHeaderLabel(_ text: String, frame: NSRect, isDarkBackground: Bool, sortColumn: ProcessSortColumn?, fontSize: CGFloat, alignment: NSTextAlignment, isSortColumn: Bool) -> NSTextField {
         headerLabelsCreated += 1
         let label = NSTextField(frame: frame)
         label.stringValue = text
@@ -16,6 +16,22 @@ class MockLabelFactory: LabelFactory {
     }
     
     func createDataLabel(text: String, frame: NSRect, alignment: NSTextAlignment, useMonospacedFont: Bool) -> NSTextField {
+        dataLabelsCreated += 1
+        let label = NSTextField(frame: frame)
+        label.stringValue = text
+        label.alignment = alignment
+        return label
+    }
+    
+    func createProcessDataLabel(text: String, frame: NSRect, alignment: NSTextAlignment, useMonospacedFont: Bool) -> NSTextField {
+        dataLabelsCreated += 1
+        let label = NSTextField(frame: frame)
+        label.stringValue = text
+        label.alignment = alignment
+        return label
+    }
+    
+    func createRowLabel(text: String, frame: NSRect, alignment: NSTextAlignment) -> NSTextField {
         dataLabelsCreated += 1
         let label = NSTextField(frame: frame)
         label.stringValue = text
@@ -53,12 +69,28 @@ class MockTableSectionDelegate: TableSectionDelegate {
     var lastSortColumn: ProcessSortColumn? { sortHandler.lastSortColumn }
     var lastSortDescending: Bool? { sortHandler.lastSortDescending }
     
-    func createHeaderLabel(_ text: String, frame: NSRect, isDarkBackground: Bool, sortColumn: ProcessSortColumn?, fontSize: CGFloat, alignment: NSTextAlignment) -> NSTextField {
-        return labelFactory.createHeaderLabel(text, frame: frame, isDarkBackground: isDarkBackground, sortColumn: sortColumn, fontSize: fontSize, alignment: alignment)
+    func getCurrentSortColumn() -> ProcessSortColumn {
+        return .memoryPercent
+    }
+    
+    func isSortDescending() -> Bool {
+        return true
+    }
+    
+    func createHeaderLabel(_ text: String, frame: NSRect, isDarkBackground: Bool, sortColumn: ProcessSortColumn?, fontSize: CGFloat, alignment: NSTextAlignment, isSortColumn: Bool) -> NSTextField {
+        return labelFactory.createHeaderLabel(text, frame: frame, isDarkBackground: isDarkBackground, sortColumn: sortColumn, fontSize: fontSize, alignment: alignment, isSortColumn: isSortColumn)
     }
     
     func createDataLabel(text: String, frame: NSRect, alignment: NSTextAlignment, useMonospacedFont: Bool) -> NSTextField {
         return labelFactory.createDataLabel(text: text, frame: frame, alignment: alignment, useMonospacedFont: useMonospacedFont)
+    }
+    
+    func createProcessDataLabel(text: String, frame: NSRect, alignment: NSTextAlignment, useMonospacedFont: Bool) -> NSTextField {
+        return labelFactory.createProcessDataLabel(text: text, frame: frame, alignment: alignment, useMonospacedFont: useMonospacedFont)
+    }
+    
+    func createRowLabel(text: String, frame: NSRect, alignment: NSTextAlignment) -> NSTextField {
+        return labelFactory.createRowLabel(text: text, frame: frame, alignment: alignment)
     }
     
     func addTableBackground(to section: NSView, padding: CGFloat) {
@@ -92,7 +124,7 @@ class TableSectionTests: XCTestCase {
         XCTAssertEqual(section.height, VerticalTableLayout.calculateTableHeight(for: 7))
         
         XCTAssertEqual(mockDelegate.headerLabelsCreated, 0)
-        XCTAssertEqual(mockDelegate.dataLabelsCreated, 13)
+        XCTAssertEqual(mockDelegate.dataLabelsCreated, 20)
         XCTAssertEqual(mockDelegate.backgroundsAdded, 1)
         
         guard let sectionView = section.sectionView else {
@@ -151,7 +183,7 @@ class TableSectionTests: XCTestCase {
         XCTAssertEqual(section.height, VerticalTableLayout.calculateTableHeight(for: 7))
         
         XCTAssertEqual(mockDelegate.headerLabelsCreated, 0)
-        XCTAssertEqual(mockDelegate.dataLabelsCreated, 14)
+        XCTAssertEqual(mockDelegate.dataLabelsCreated, 21)
         
         guard let sectionView = section.sectionView else {
             XCTFail("Section view not created")
@@ -169,7 +201,7 @@ class TableSectionTests: XCTestCase {
         XCTAssertEqual(section.height, VerticalTableLayout.calculateTableHeight(for: 7))
         
         XCTAssertEqual(mockDelegate.headerLabelsCreated, 0)
-        XCTAssertEqual(mockDelegate.dataLabelsCreated, 10)
+        XCTAssertEqual(mockDelegate.dataLabelsCreated, 17)
     }
     
     func testProcessTableSectionCreation() {

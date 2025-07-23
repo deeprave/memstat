@@ -12,7 +12,7 @@ class TableFieldFactory {
         let rowY = VerticalTableLayout.rowY(rowIndex: rowIndex, sectionHeight: sectionHeight)
         var fields: [NSTextField] = []
         
-        let labelView = labelFactory.createDataLabel(
+        let labelView = labelFactory.createRowLabel(
             text: label,
             frame: NSRect(
                 x: VerticalTableLayout.labelX(),
@@ -20,10 +20,8 @@ class TableFieldFactory {
                 width: labelWidth,
                 height: VerticalTableLayout.rowHeight
             ),
-            alignment: .right,
-            useMonospacedFont: false
+            alignment: .right
         )
-        labelView.textColor = ColorTheme.alwaysDarkText
         section.addSubview(labelView)
         
         if hasUnits {
@@ -49,10 +47,10 @@ class TableFieldFactory {
                 frame: NSRect(
                     x: customValueX + valueWidth,
                     y: rowY,
-                    width: VerticalTableLayout.unitWidth,
+                    width: 26,
                     height: VerticalTableLayout.rowHeight
                 ),
-                alignment: .left,
+                alignment: .right,
                 useMonospacedFont: false
             )
             
@@ -61,17 +59,19 @@ class TableFieldFactory {
             fields.append(valueLabel)
             fields.append(unitLabel)
         } else {
-            let alignment: NSTextAlignment = (label == "Pressure" || label == "Util" || label == "Swap Ins" || label == "Swap Outs" || label == "Efficiency") ? .right : .left
-            let frameWidth = VerticalTableLayout.valueWidth
+            let unitFieldRightEdge = VerticalTableLayout.unitX() + 26
+            let fieldWidth = VerticalTableLayout.valueWidth
+            let fieldX = unitFieldRightEdge - fieldWidth
+            
             let valueLabel = labelFactory.createDataLabel(
                 text: "Loading...",
                 frame: NSRect(
-                    x: VerticalTableLayout.valueX(),
+                    x: fieldX,
                     y: rowY,
-                    width: frameWidth,
+                    width: fieldWidth,
                     height: VerticalTableLayout.rowHeight
                 ),
-                alignment: alignment,
+                alignment: .right,
                 useMonospacedFont: false
             )
             

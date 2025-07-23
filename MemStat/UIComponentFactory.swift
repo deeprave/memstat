@@ -2,19 +2,32 @@ import Cocoa
 import Foundation
 
 class UIComponentFactory: LabelFactory, BackgroundStylist {
-    private let currentSortColumn: ProcessSortColumn
-    private let sortDescending: Bool
+    private var currentSortColumn: ProcessSortColumn?
+    private var sortDescending: Bool
     
-    init(currentSortColumn: ProcessSortColumn, sortDescending: Bool) {
+    init(currentSortColumn: ProcessSortColumn? = nil, sortDescending: Bool = false) {
         self.currentSortColumn = currentSortColumn
         self.sortDescending = sortDescending
     }
     
-    func createHeaderLabel(_ text: String, frame: NSRect, isDarkBackground: Bool, sortColumn: ProcessSortColumn?, fontSize: CGFloat, alignment: NSTextAlignment) -> NSTextField {
-        let displayText = FormatUtilities.createSortableHeaderText(text, sortColumn: sortColumn, currentSortColumn: currentSortColumn, sortDescending: sortDescending)
+    private func monospacedFont(ofSize size: CGFloat) -> NSFont {
+        if #available(macOS 10.15, *) {
+            return NSFont.monospacedSystemFont(ofSize: size, weight: .regular)
+        } else {
+            return NSFont(name: "Menlo", size: size) ?? NSFont.userFixedPitchFont(ofSize: size) ?? NSFont.systemFont(ofSize: size)
+        }
+    }
+    
+    func createHeaderLabel(_ text: String, frame: NSRect, isDarkBackground: Bool, sortColumn: ProcessSortColumn?, fontSize: CGFloat, alignment: NSTextAlignment, isSortColumn: Bool) -> NSTextField {
+        let displayText: String
+        if isSortColumn && sortColumn != nil {
+            let arrow = sortDescending ? "▼" : "▲"
+            displayText = "\(text) \(arrow)"
+        } else {
+            displayText = text
+        }
         
         let label = NSTextField(frame: frame)
-        label.stringValue = displayText
         label.font = NSFont.systemFont(ofSize: fontSize, weight: .bold)
         label.alignment = alignment
         label.isBordered = false
@@ -26,43 +39,49 @@ class UIComponentFactory: LabelFactory, BackgroundStylist {
         let cell = VerticallyCenteredTextFieldCell(textCell: displayText)
         cell.font = NSFont.systemFont(ofSize: 14, weight: .bold)
         cell.alignment = alignment
-        
-        if isDarkBackground {
-            let isActiveSortColumn = sortColumn != nil && sortColumn == currentSortColumn
-            
-            if isActiveSortColumn {
-                label.textColor = NSColor.systemYellow
-                cell.textColor = NSColor.systemYellow
-                cell.customBackgroundColor = TableStyling.headerBackgroundColor
-            } else {
-                label.textColor = TableStyling.headerTextColor
-                cell.textColor = TableStyling.headerTextColor
-                cell.customBackgroundColor = TableStyling.headerBackgroundColor
-            }
-            cell.customBorderColor = TableStyling.borderColor
-        } else {
-            let isActiveSortColumn = sortColumn != nil && sortColumn == currentSortColumn
-            
-            if isActiveSortColumn {
-                label.textColor = NSColor.systemYellow
-                cell.textColor = NSColor.systemYellow
-            } else {
-                label.textColor = ColorTheme.alwaysDarkText
-                cell.textColor = ColorTheme.alwaysDarkText
-            }
-        }
+        cell.customBackgroundColor = TableStyling.headerBackgroundColor
         
         label.cell = cell
+        label.stringValue = displayText
         
+        if isSortColumn {
+            label.textColor = NSColor.systemYellow
+            cell.textColor = NSColor.systemYellow
+        } else {
+            label.textColor = TableStyling.headerTextColor
+            cell.textColor = TableStyling.headerTextColor
+        }
+       
         return label
     }
     
     func createDataLabel(text: String, frame: NSRect, alignment: NSTextAlignment, useMonospacedFont: Bool) -> NSTextField {
         let label = NSTextField(labelWithString: text)
-        label.font = useMonospacedFont ? NSFont.monospacedSystemFont(ofSize: 17, weight: .regular) : NSFont.systemFont(ofSize: 17)
+        label.font = useMonospacedFont ? monospacedFont(ofSize: 17) : NSFont.systemFont(ofSize: 17)
         label.textColor = TableStyling.dataTextColor
         label.frame = frame
         label.alignment = alignment
+        label.cell?.alignment = alignment
+        return label
+    }
+    
+    func createProcessDataLabel(text: String, frame: NSRect, alignment: NSTextAlignment, useMonospacedFont: Bool) -> NSTextField {
+        let label = NSTextField(labelWithString: text)
+        label.font = useMonospacedFont ? monospacedFont(ofSize: 12) : NSFont.systemFont(ofSize: 12)
+        label.textColor = TableStyling.dataTextColor
+        label.frame = frame
+        label.alignment = alignment
+        label.cell?.alignment = alignment
+        return label
+    }
+    
+    func createRowLabel(text: String, frame: NSRect, alignment: NSTextAlignment) -> NSTextField {
+        let label = NSTextField(labelWithString: text)
+        label.font = NSFont.systemFont(ofSize: 17, weight: .bold)
+        label.textColor = ColorTheme.alwaysDarkText
+        label.frame = frame
+        label.alignment = alignment
+        label.cell?.alignment = alignment
         return label
     }
     

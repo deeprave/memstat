@@ -10,7 +10,7 @@ class MockLabelFactoryForFieldTests: LabelFactory {
     var lastDataLabelAlignment: NSTextAlignment?
     var lastUseMonospacedFont: Bool?
     
-    func createHeaderLabel(_ text: String, frame: NSRect, isDarkBackground: Bool, sortColumn: ProcessSortColumn?, fontSize: CGFloat, alignment: NSTextAlignment) -> NSTextField {
+    func createHeaderLabel(_ text: String, frame: NSRect, isDarkBackground: Bool, sortColumn: ProcessSortColumn?, fontSize: CGFloat, alignment: NSTextAlignment, isSortColumn: Bool) -> NSTextField {
         headerLabelsCreated += 1
         let label = NSTextField(frame: frame)
         label.stringValue = text
@@ -23,6 +23,31 @@ class MockLabelFactoryForFieldTests: LabelFactory {
         lastDataLabelFrame = frame
         lastDataLabelAlignment = alignment
         lastUseMonospacedFont = useMonospacedFont
+        
+        let label = NSTextField(frame: frame)
+        label.stringValue = text
+        label.alignment = alignment
+        return label
+    }
+    
+    func createProcessDataLabel(text: String, frame: NSRect, alignment: NSTextAlignment, useMonospacedFont: Bool) -> NSTextField {
+        dataLabelsCreated += 1
+        lastDataLabelText = text
+        lastDataLabelFrame = frame
+        lastDataLabelAlignment = alignment
+        lastUseMonospacedFont = useMonospacedFont
+        
+        let label = NSTextField(frame: frame)
+        label.stringValue = text
+        label.alignment = alignment
+        return label
+    }
+    
+    func createRowLabel(text: String, frame: NSRect, alignment: NSTextAlignment) -> NSTextField {
+        dataLabelsCreated += 1
+        lastDataLabelText = text
+        lastDataLabelFrame = frame
+        lastDataLabelAlignment = alignment
         
         let label = NSTextField(frame: frame)
         label.stringValue = text
@@ -151,7 +176,7 @@ class TableFieldFactoryTests: XCTestCase {
             section: testSection
         )
         
-        XCTAssertEqual(mockLabelFactory.lastDataLabelAlignment, .left)
+        XCTAssertEqual(mockLabelFactory.lastDataLabelAlignment, .right)
     }
     
     func testCreateMultipleMetricFields() {

@@ -69,6 +69,12 @@ class MenuBarController: NSObject, StatsWindowDelegate {
         
         menu.addItem(NSMenuItem.separator())
         
+        let switchModeItem = NSMenuItem(title: "Switch to Regular Window", action: #selector(switchToWindowMode), keyEquivalent: "")
+        switchModeItem.target = self
+        menu.addItem(switchModeItem)
+        
+        menu.addItem(NSMenuItem.separator())
+        
         let quitItem = NSMenuItem(title: "Quit MemStat", action: #selector(quitApp), keyEquivalent: "q")
         quitItem.target = self
         menu.addItem(quitItem)
@@ -129,7 +135,7 @@ class MenuBarController: NSObject, StatsWindowDelegate {
         
         let alert = NSAlert()
         alert.messageText = "MemStat"
-        alert.informativeText = "Version \(AppVersion.displayVersion)\nDavid Nugent\nBuild: \(AppVersion.buildNumber)\nCompiled: \(getCompilationDate())\n\nA simple memory statistics monitor for macOS."
+        alert.informativeText = "Version\n\(AppVersion.displayVersion)\nDavid Nugent\nBuild: \(AppVersion.buildNumber)\nCompiled: \(getCompilationDate())\n\nA simple memory statistics monitor for macOS.\n\nCurrent Mode: Menu Bar"
         alert.addButton(withTitle: "OK")
         
         alert.icon = createAboutIcon()
@@ -148,6 +154,12 @@ class MenuBarController: NSObject, StatsWindowDelegate {
         }
         
         updateLoginItemMenu()
+    }
+    
+    @objc private func switchToWindowMode() {
+        if let appDelegate = NSApp.delegate as? AppDelegate {
+            appDelegate.switchToMode(.window)
+        }
     }
     
     @objc private func quitApp() {

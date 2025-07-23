@@ -12,22 +12,27 @@ version:
 # Build debug version (default)
 build: version
 	@echo "Building MemStat (Debug)..."
-	xcodebuild -scheme MemStat -configuration Debug build
+	xcodebuild -scheme MemStat -configuration Debug -derivedDataPath build build
 
 # Build debug version explicitly
 debug: version
 	@echo "Building MemStat (Debug)..."
-	xcodebuild -scheme MemStat -configuration Debug build
+	xcodebuild -scheme MemStat -configuration Debug -derivedDataPath build build
 
 # Build release version
 release: version
 	@echo "Building MemStat (Release)..."
 	xcodebuild -scheme MemStat -configuration Release -derivedDataPath build build
 
-# Run tests
-test: version
+# Run tests (optionally specify test to run)
+test TEST_ID="": version
 	@echo "Running tests..."
-	xcodebuild test -scheme MemStat -destination 'platform=macOS'
+	@if [ "{{TEST_ID}}" = "" ]; then \
+		xcodebuild test -scheme MemStat -destination 'platform=macOS'; \
+	else \
+		echo "Running specific test: {{TEST_ID}}"; \
+		xcodebuild test -scheme MemStat -destination 'platform=macOS' -only-testing:{{TEST_ID}}; \
+	fi
 
 # Clean build artifacts
 clean:
@@ -54,6 +59,21 @@ dmg: release
 dist: zip dmg
 	@echo "All distribution packages created!"
 
+# Run the app (uses saved preference or default window mode)
+run: debug
+	@echo "Running MemStat in default mode..."
+	@./build/Build/Products/Debug/MemStat.app/Contents/MacOS/MemStat &
+
+# Run the app in window mode
+run-window: debug
+	@echo "Running MemStat in window mode..."
+	@./build/Build/Products/Debug/MemStat.app/Contents/MacOS/MemStat --window &
+
+# Run the app in menubar mode
+run-menubar: debug
+	@echo "Running MemStat in menubar mode..."
+	@./build/Build/Products/Debug/MemStat.app/Contents/MacOS/MemStat --menubar &
+
 # Show current version
 show-version:
 	@echo "Current version info:"
@@ -69,7 +89,11 @@ help:
 	@echo "  just         - Build debug version (default)"
 	@echo "  just debug   - Build debug version"
 	@echo "  just release - Build release version"
-	@echo "  just test    - Run tests"
+	@echo "  just run     - Run debug app (uses saved preference)"
+	@echo "  just run-window - Run debug app in window mode"
+	@echo "  just run-menubar - Run debug app in menubar mode"
+	@echo "  just test    - Run all tests"
+	@echo "  just test TEST_ID - Run specific test (e.g., just test MemStatTests/TableFieldFactoryTests/testCreateMetricFieldAlignment)"
 	@echo "  just clean   - Clean build artifacts"
 	@echo "  just archive - Create release archive"
 	@echo "  just zip     - Create ZIP distribution"

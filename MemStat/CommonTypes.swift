@@ -130,11 +130,15 @@ public struct VerticalTableLayout {
 }
 
 public protocol TableSectionDelegate: LabelFactory, BackgroundStylist, SortHandler {
+    func getCurrentSortColumn() -> ProcessSortColumn
+    func isSortDescending() -> Bool
 }
 
 public protocol LabelFactory {
-    func createHeaderLabel(_ text: String, frame: NSRect, isDarkBackground: Bool, sortColumn: ProcessSortColumn?, fontSize: CGFloat, alignment: NSTextAlignment) -> NSTextField
+    func createHeaderLabel(_ text: String, frame: NSRect, isDarkBackground: Bool, sortColumn: ProcessSortColumn?, fontSize: CGFloat, alignment: NSTextAlignment, isSortColumn: Bool) -> NSTextField
     func createDataLabel(text: String, frame: NSRect, alignment: NSTextAlignment, useMonospacedFont: Bool) -> NSTextField
+    func createProcessDataLabel(text: String, frame: NSRect, alignment: NSTextAlignment, useMonospacedFont: Bool) -> NSTextField
+    func createRowLabel(text: String, frame: NSRect, alignment: NSTextAlignment) -> NSTextField
 }
 
 public protocol BackgroundStylist {
@@ -145,23 +149,6 @@ public protocol SortHandler: AnyObject {
     func updateSortingAndRefresh(sortColumn: ProcessSortColumn, sortDescending: Bool)
 }
 
-public struct ColumnConfig {
-    public let title: String
-    public let width: CGFloat
-    public let alignment: NSTextAlignment
-    public let hasUnits: Bool
-    public let isDarkBackground: Bool
-    public let sortColumn: ProcessSortColumn?
-    
-    public init(title: String, width: CGFloat, alignment: NSTextAlignment = .right, hasUnits: Bool = true, isDarkBackground: Bool = true, sortColumn: ProcessSortColumn? = nil) {
-        self.title = title
-        self.width = width
-        self.alignment = alignment
-        self.hasUnits = hasUnits
-        self.isDarkBackground = isDarkBackground
-        self.sortColumn = sortColumn
-    }
-}
 
 public struct TableStyling {
     public static let tableBackgroundColor = CGColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -366,38 +353,12 @@ open class BaseTableSection {
     }
     
     open func createHeaders() {
-        guard let section = sectionView, let delegate = delegate else { return }
-        
-        let columns = getColumnConfigurations()
-        for (index, column) in columns.enumerated() {
-            let headerFrame = NSRect(
-                x: getHeaderX(for: index),
-                y: getHeaderY(),
-                width: column.width,
-                height: 26
-            )
-            
-            let headerLabel = delegate.createHeaderLabel(
-                column.title,
-                frame: headerFrame,
-                isDarkBackground: column.isDarkBackground,
-                sortColumn: column.sortColumn,
-                fontSize: 14,
-                alignment: column.alignment
-            )
-            
-            section.addSubview(headerLabel)
-        }
     }
     
     open func createDataFields() {
     }
     
     open func updateData(with stats: MemoryStats) {
-    }
-    
-    open func getColumnConfigurations() -> [ColumnConfig] {
-        return []
     }
     
     open func getTitleFontSize() -> CGFloat {
@@ -409,18 +370,6 @@ open class BaseTableSection {
     }
     
     open func getTitleYPosition() -> CGFloat {
-        return 0
-    }
-    
-    open func getHeaderX(for index: Int) -> CGFloat {
-        return 0
-    }
-    
-    open func getHeaderY() -> CGFloat {
-        return 0
-    }
-    
-    open func getDataY() -> CGFloat {
         return 0
     }
 }

@@ -22,7 +22,7 @@ class UIComponentFactoryTests: XCTestCase {
     func testCreateHeaderLabel() {
         let text = "Test Header"
         let frame = NSRect(x: 10, y: 10, width: 100, height: 20)
-        let label = factory.createHeaderLabel(text, frame: frame, isDarkBackground: false, sortColumn: nil, fontSize: 12.0, alignment: .center)
+        let label = factory.createHeaderLabel(text, frame: frame, isDarkBackground: false, sortColumn: nil, fontSize: 12.0, alignment: .center, isSortColumn: false)
         
         XCTAssertEqual(label.stringValue, text)
         XCTAssertEqual(label.frame, frame)
@@ -33,7 +33,7 @@ class UIComponentFactoryTests: XCTestCase {
     func testCreateHeaderLabelWithSortColumn() {
         let text = "Memory"
         let frame = NSRect(x: 10, y: 10, width: 100, height: 20)
-        let label = factory.createHeaderLabel(text, frame: frame, isDarkBackground: false, sortColumn: .memoryPercent, fontSize: 12.0, alignment: .center)
+        let label = factory.createHeaderLabel(text, frame: frame, isDarkBackground: false, sortColumn: .memoryPercent, fontSize: 12.0, alignment: .center, isSortColumn: false)
         
         XCTAssertEqual(label.stringValue, text)
         XCTAssertNotNil(label.cell as? VerticallyCenteredTextFieldCell)
@@ -69,7 +69,7 @@ class UIComponentFactoryTests: XCTestCase {
         let initialSubviewCount = section.subviews.count
         factory.addTableBackground(to: section, padding: 5.0)
         
-        XCTAssertEqual(section.subviews.count, initialSubviewCount + 1)
+        XCTAssertEqual(section.subviews.count, initialSubviewCount + 2)
         
         let backgroundView = section.subviews.last
         XCTAssertNotNil(backgroundView)
@@ -87,12 +87,8 @@ class UIComponentFactoryTests: XCTestCase {
         let backgroundView = section.subviews.last
         XCTAssertNotNil(backgroundView)
         
-        let expectedFrame = NSRect(
-            x: padding,
-            y: padding,
-            width: section.frame.width - 2 * padding,
-            height: section.frame.height - 2 * padding
-        )
+        // The background frame is calculated using insetBy which expands the bounds
+        let expectedFrame = section.bounds.insetBy(dx: -padding, dy: -padding)
         XCTAssertEqual(backgroundView?.frame, expectedFrame)
     }
     

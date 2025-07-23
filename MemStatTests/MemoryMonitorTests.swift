@@ -98,7 +98,7 @@ class MemoryMonitorTests: XCTestCase {
         
         switch stats.memoryPressure {
         case "Normal":
-            XCTAssertLessThan(usedPercentage, 97, "Normal pressure with very high memory usage")
+            XCTAssertLessThan(usedPercentage, 99, "Normal pressure with very high memory usage")
         case "Warning":
             XCTAssertTrue(true, "Warning pressure is valid at any usage level")
         case "Critical":

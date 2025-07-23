@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		103ACD51B219408CA222AC382B4D64EF /* MemoryMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F58170FA9444305AC782A0919AEE23A /* MemoryMonitor.swift */; };
+		7905C0CA2E304B3C00F358A1 /* MemoryMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F58170FA9444305AC782A0919AEE23A /* MemoryMonitor.swift */; };
 		79C10A722E260CD900A5D8EA /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C10A712E260CD900A5D8EA /* Version.swift */; };
 		79C10A732E260CD900A5D8EA /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C10A712E260CD900A5D8EA /* Version.swift */; };
 		79CA34122E2681E9003ABE85 /* StatsDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA340D2E2681E9003ABE85 /* StatsDataService.swift */; };
@@ -29,11 +30,20 @@
 		79CA343C2E27295C003ABE85 /* CommonTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CA343A2E2727B7003ABE85 /* CommonTypes.swift */; };
 		79F9FE8E2E253A7000223DB8 /* FormatUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F9FE8D2E253A6300223DB8 /* FormatUtilities.swift */; };
 		950CCE1ED19B42FDA7B85BA2428EF490 /* LoginItemsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9598E85B5CD943C3BA0C3A3B40E40A1B /* LoginItemsManager.swift */; };
+		APPDELEGATETEST001 /* AppDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPDELEGATETESTFILE001 /* AppDelegateTests.swift */; };
+		APPMODE001 /* AppMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPMODEFILE001 /* AppMode.swift */; };
+		APPMODE002 /* AppMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPMODEFILE001 /* AppMode.swift */; };
+		APPMODETEST001 /* AppModeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPMODETESTFILE001 /* AppModeTests.swift */; };
 		BC91B92471E54BECAD37311A5C96BC2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB4B2A514054C4F93C4A8B03C535F88 /* AppDelegate.swift */; };
+		CMDTEST001 /* CommandLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CMDTESTFILE001 /* CommandLineTests.swift */; };
 		D151BFF9FC174C9A8CE621AD2016E85D /* StatsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EC40C6BB064D6A8B1D20DD28D10233 /* StatsWindowController.swift */; };
 		D7C0C56444584D47AF8190574F162899 /* MenuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A196A6C2D92A454782E75C07D1173C5E /* MenuBarController.swift */; };
 		E4A8B1C74F6D4A5B9E3C8D2F01234567 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B7C3D85E2A4B6C9F1A0E8D4C293847 /* main.swift */; };
 		F357572923874F39AE7C0C699A05C69B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F357572923874F39AE7C0C699A05C69A /* Assets.xcassets */; };
+		MAINWIN001 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = MAINWINFILE001 /* MainWindowController.swift */; };
+		MODETEST001 /* ModeSwitchingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = MODETESTFILE001 /* ModeSwitchingTests.swift */; };
+		TABLESECTIONS001 /* TableSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = TABLESECTIONSFILE001 /* TableSections.swift */; };
+		TABLESECTIONS002 /* TableSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = TABLESECTIONSFILE001 /* TableSections.swift */; };
 		TEST001 /* FormatUtilitiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE001 /* FormatUtilitiesTests.swift */; };
 		TEST002 /* MemoryMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE002 /* MemoryMonitorTests.swift */; };
 		TEST003 /* TableSectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE003 /* TableSectionTests.swift */; };
@@ -73,9 +83,16 @@
 		79F9FE8D2E253A6300223DB8 /* FormatUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatUtilities.swift; sourceTree = "<group>"; };
 		9598E85B5CD943C3BA0C3A3B40E40A1B /* LoginItemsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemsManager.swift; sourceTree = "<group>"; };
 		A196A6C2D92A454782E75C07D1173C5E /* MenuBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarController.swift; sourceTree = "<group>"; };
+		APPDELEGATETESTFILE001 /* AppDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTests.swift; sourceTree = "<group>"; };
+		APPMODEFILE001 /* AppMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMode.swift; sourceTree = "<group>"; };
+		APPMODETESTFILE001 /* AppModeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModeTests.swift; sourceTree = "<group>"; };
 		C36C4A9C9C5246948423432FB4F57666 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CMDTESTFILE001 /* CommandLineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandLineTests.swift; sourceTree = "<group>"; };
 		F357572923874F39AE7C0C699A05C69A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F9B7C3D85E2A4B6C9F1A0E8D4C293847 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		MAINWINFILE001 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
+		MODETESTFILE001 /* ModeSwitchingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeSwitchingTests.swift; sourceTree = "<group>"; };
+		TABLESECTIONSFILE001 /* TableSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSections.swift; sourceTree = "<group>"; };
 		TESTFILE001 /* FormatUtilitiesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatUtilitiesTests.swift; sourceTree = "<group>"; };
 		TESTFILE002 /* MemoryMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryMonitorTests.swift; sourceTree = "<group>"; };
 		TESTFILE003 /* TableSectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSectionTests.swift; sourceTree = "<group>"; };
@@ -108,22 +125,25 @@
 		447412DA43804163BD48A45D3347FF87 /* MemStat */ = {
 			isa = PBXGroup;
 			children = (
-				F9B7C3D85E2A4B6C9F1A0E8D4C293847 /* main.swift */,
-				79CA343A2E2727B7003ABE85 /* CommonTypes.swift */,
-				2EB4B2A514054C4F93C4A8B03C535F88 /* AppDelegate.swift */,
-				79F9FE8D2E253A6300223DB8 /* FormatUtilities.swift */,
-				9598E85B5CD943C3BA0C3A3B40E40A1B /* LoginItemsManager.swift */,
-				5F58170FA9444305AC782A0919AEE23A /* MemoryMonitor.swift */,
-				A196A6C2D92A454782E75C07D1173C5E /* MenuBarController.swift */,
-				75EC40C6BB064D6A8B1D20DD28D10233 /* StatsWindowController.swift */,
-				79CA340D2E2681E9003ABE85 /* StatsDataService.swift */,
-				79CA340E2E2681E9003ABE85 /* StatsThemeManager.swift */,
-				79CA340F2E2681E9003ABE85 /* TableFieldFactory.swift */,
-				79CA34102E2681E9003ABE85 /* TableLayoutManager.swift */,
-				79CA34112E2681E9003ABE85 /* UIComponentFactory.swift */,
-				79C10A712E260CD900A5D8EA /* Version.swift */,
 				F357572923874F39AE7C0C699A05C69A /* Assets.xcassets */,
 				C36C4A9C9C5246948423432FB4F57666 /* Info.plist */,
+				2EB4B2A514054C4F93C4A8B03C535F88 /* AppDelegate.swift */,
+				APPMODEFILE001 /* AppMode.swift */,
+				79CA343A2E2727B7003ABE85 /* CommonTypes.swift */,
+				79F9FE8D2E253A6300223DB8 /* FormatUtilities.swift */,
+				9598E85B5CD943C3BA0C3A3B40E40A1B /* LoginItemsManager.swift */,
+				F9B7C3D85E2A4B6C9F1A0E8D4C293847 /* main.swift */,
+				MAINWINFILE001 /* MainWindowController.swift */,
+				5F58170FA9444305AC782A0919AEE23A /* MemoryMonitor.swift */,
+				A196A6C2D92A454782E75C07D1173C5E /* MenuBarController.swift */,
+				79CA340D2E2681E9003ABE85 /* StatsDataService.swift */,
+				79CA340E2E2681E9003ABE85 /* StatsThemeManager.swift */,
+				75EC40C6BB064D6A8B1D20DD28D10233 /* StatsWindowController.swift */,
+				79CA340F2E2681E9003ABE85 /* TableFieldFactory.swift */,
+				79CA34102E2681E9003ABE85 /* TableLayoutManager.swift */,
+				TABLESECTIONSFILE001 /* TableSections.swift */,
+				79CA34112E2681E9003ABE85 /* UIComponentFactory.swift */,
+				79C10A712E260CD900A5D8EA /* Version.swift */,
 			);
 			path = MemStat;
 			sourceTree = "<group>";
@@ -160,6 +180,10 @@
 				TESTFILE004 /* MenuBarControllerTests.swift */,
 				TESTFILE005 /* StatsWindowControllerTests.swift */,
 				TESTFILE006 /* TestHelpers.swift */,
+				CMDTESTFILE001 /* CommandLineTests.swift */,
+				MODETESTFILE001 /* ModeSwitchingTests.swift */,
+				APPMODETESTFILE001 /* AppModeTests.swift */,
+				APPDELEGATETESTFILE001 /* AppDelegateTests.swift */,
 				TESTINFO001 /* Info.plist */,
 			);
 			path = MemStatTests;
@@ -303,6 +327,9 @@
 				103ACD51B219408CA222AC382B4D64EF /* MemoryMonitor.swift in Sources */,
 				79C10A732E260CD900A5D8EA /* Version.swift in Sources */,
 				950CCE1ED19B42FDA7B85BA2428EF490 /* LoginItemsManager.swift in Sources */,
+				APPMODE001 /* AppMode.swift in Sources */,
+				MAINWIN001 /* MainWindowController.swift in Sources */,
+				TABLESECTIONS001 /* TableSections.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +355,13 @@
 				79CA34382E271891003ABE85 /* StatsThemeManagerTests.swift in Sources */,
 				79CA34392E271891003ABE85 /* TableFieldFactoryTests.swift in Sources */,
 				TEST006 /* TestHelpers.swift in Sources */,
+				APPMODE002 /* AppMode.swift in Sources */,
+				TABLESECTIONS002 /* TableSections.swift in Sources */,
+				7905C0CA2E304B3C00F358A1 /* MemoryMonitor.swift in Sources */,
+				CMDTEST001 /* CommandLineTests.swift in Sources */,
+				MODETEST001 /* ModeSwitchingTests.swift in Sources */,
+				APPMODETEST001 /* AppModeTests.swift in Sources */,
+				APPDELEGATETEST001 /* AppDelegateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,7 +431,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -456,7 +490,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -536,7 +570,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MemStatTests/Info.plist;
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.uniquode.MemStatTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -554,7 +588,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MemStatTests/Info.plist;
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.uniquode.MemStatTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
