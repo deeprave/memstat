@@ -5,8 +5,10 @@ class UpdateCoordinator {
     private let updateInterval: TimeInterval
     private let updateHandler: () -> Void
     
+    private static let minimumUpdateInterval: TimeInterval = 0.1
+    
     init(updateInterval: TimeInterval, updateHandler: @escaping () -> Void) {
-        self.updateInterval = updateInterval
+        self.updateInterval = max(updateInterval, Self.minimumUpdateInterval)
         self.updateHandler = updateHandler
     }
     

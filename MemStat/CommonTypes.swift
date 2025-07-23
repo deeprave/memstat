@@ -169,17 +169,18 @@ public struct MemoryStats {
 }
 
 // MARK: - Type Aliases for Backward Compatibility
+// TODO: Remove these typealiases in version 2.0.0 to eliminate ambiguity
 
-@available(*, deprecated, message: "Use MemoryStats.BasicMemoryInfo instead")
+@available(*, deprecated, renamed: "MemoryStats.BasicMemoryInfo", message: "Use MemoryStats.BasicMemoryInfo instead. These top-level typealiases will be removed in v2.0.0")
 public typealias BasicMemoryInfo = MemoryStats.BasicMemoryInfo
 
-@available(*, deprecated, message: "Use MemoryStats.DetailedMemoryInfo instead")
+@available(*, deprecated, renamed: "MemoryStats.DetailedMemoryInfo", message: "Use MemoryStats.DetailedMemoryInfo instead. These top-level typealiases will be removed in v2.0.0")
 public typealias DetailedMemoryInfo = MemoryStats.DetailedMemoryInfo
 
-@available(*, deprecated, message: "Use MemoryStats.AppMemoryInfo instead")
+@available(*, deprecated, renamed: "MemoryStats.AppMemoryInfo", message: "Use MemoryStats.AppMemoryInfo instead. These top-level typealiases will be removed in v2.0.0")
 public typealias AppMemoryInfo = MemoryStats.AppMemoryInfo
 
-@available(*, deprecated, message: "Use MemoryStats.SwapInfo instead")
+@available(*, deprecated, renamed: "MemoryStats.SwapInfo", message: "Use MemoryStats.SwapInfo instead. These top-level typealiases will be removed in v2.0.0")
 public typealias SwapInfo = MemoryStats.SwapInfo
 
 public struct VerticalTableLayout {
@@ -195,12 +196,12 @@ public struct VerticalTableLayout {
     public static let unitWidth: CGFloat = 30
     public static let leftMargin: CGFloat = 10
     public static let rightMargin: CGFloat = 0
-    public static let labelValueSpacing: CGFloat = 20  // Space between labels and values
-    public static let topMargin: CGFloat = rowHeight  // Space from window top to tables (1 row)
-    public static let tableProcessSpacing: CGFloat = 25  // Space between top tables and process table
-    public static let processTableHeight: CGFloat = 452  // Height of the process table
-    public static let bottomMargin: CGFloat = rowHeight  // Space from process table to window bottom (1 row)
-    public static let sectionSpacing: CGFloat = 20  // Space between sections
+    public static let labelValueSpacing: CGFloat = 20
+    public static let topMargin: CGFloat = rowHeight
+    public static let tableProcessSpacing: CGFloat = 25
+    public static let processTableHeight: CGFloat = 452
+    public static let bottomMargin: CGFloat = rowHeight
+    public static let sectionSpacing: CGFloat = 20
     
     public static func memoryTableX(containerWidth: CGFloat) -> CGFloat {
         return (containerWidth - 750) / 2

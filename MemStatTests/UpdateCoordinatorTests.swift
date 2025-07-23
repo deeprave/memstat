@@ -6,7 +6,7 @@ class UpdateCoordinatorTests: XCTestCase {
     
     var updateCoordinator: UpdateCoordinator!
     var mockUpdateHandler: MockUpdateHandler!
-    let testInterval: TimeInterval = 0.1 // Short interval for testing
+    let testInterval: TimeInterval = 0.1
     
     override func setUp() {
         super.setUp()
@@ -56,7 +56,6 @@ class UpdateCoordinatorTests: XCTestCase {
         
         XCTAssertEqual(mockUpdateHandler.callCount, 1)
         
-        // Wait for first timer fire
         let expectation = XCTestExpectation(description: "Timer should fire")
         DispatchQueue.main.asyncAfter(deadline: .now() + testInterval + 0.05) {
             expectation.fulfill()
@@ -140,7 +139,6 @@ class UpdateCoordinatorTests: XCTestCase {
         
         updateCoordinator.startUpdating(immediate: false)
         
-        // Wait for multiple timer fires
         let expectation = XCTestExpectation(description: "Multiple timer fires")
         DispatchQueue.main.asyncAfter(deadline: .now() + testInterval * 3.5) {
             expectation.fulfill()
@@ -151,7 +149,6 @@ class UpdateCoordinatorTests: XCTestCase {
         let elapsed = Date().timeIntervalSince(startTime)
         let expectedCalls = Int(elapsed / testInterval)
         
-        // Should be within reasonable range (allow for timing variations)
         XCTAssertGreaterThanOrEqual(mockUpdateHandler.callCount, expectedCalls - 1)
         XCTAssertLessThanOrEqual(mockUpdateHandler.callCount, expectedCalls + 2)
     }
@@ -161,7 +158,6 @@ class UpdateCoordinatorTests: XCTestCase {
         
         updateCoordinator.startUpdating(immediate: false)
         
-        // Wait for multiple intervals
         let expectation = XCTestExpectation(description: "Timer should repeat")
         DispatchQueue.main.asyncAfter(deadline: .now() + testInterval * 2.5) {
             expectation.fulfill()
@@ -169,14 +165,12 @@ class UpdateCoordinatorTests: XCTestCase {
         
         wait(for: [expectation], timeout: 2.0)
         
-        // Should have been called multiple times
         XCTAssertGreaterThanOrEqual(mockUpdateHandler.callCount, 2)
     }
     
     // MARK: - Memory Management Tests
     
     func testWeakSelfInTimer() {
-        // Create a coordinator that will be released
         var coordinator: UpdateCoordinator? = UpdateCoordinator(
             updateInterval: testInterval,
             updateHandler: mockUpdateHandler.handleUpdate
@@ -184,10 +178,8 @@ class UpdateCoordinatorTests: XCTestCase {
         
         coordinator?.startUpdating(immediate: false)
         
-        // Release the coordinator
         coordinator = nil
         
-        // Wait for timer interval
         let expectation = XCTestExpectation(description: "Timer should not crash")
         DispatchQueue.main.asyncAfter(deadline: .now() + testInterval * 2) {
             expectation.fulfill()
@@ -195,7 +187,6 @@ class UpdateCoordinatorTests: XCTestCase {
         
         wait(for: [expectation], timeout: 2.0)
         
-        // Test passes if no crash occurs and app continues running
     }
     
     func testTimerInvalidationOnDeallocation() {
@@ -206,11 +197,9 @@ class UpdateCoordinatorTests: XCTestCase {
         
         coordinator?.startUpdating(immediate: false)
         
-        // Explicitly stop before releasing (good practice)
         coordinator?.stopUpdating()
         coordinator = nil
         
-        // Should not crash
         let expectation = XCTestExpectation(description: "Cleanup should work")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             expectation.fulfill()
@@ -228,10 +217,8 @@ class UpdateCoordinatorTests: XCTestCase {
             updateHandler: throwingHandler.handleUpdate
         )
         
-        // Should not crash even if handler has issues
         coordinator.startUpdating(immediate: true)
         
-        // Verify handler was called immediately
         XCTAssertEqual(throwingHandler.callCount, 1)
         
         let expectation = XCTestExpectation(description: "Should handle exceptions")
@@ -243,22 +230,20 @@ class UpdateCoordinatorTests: XCTestCase {
         
         coordinator.stopUpdating()
         
-        // Verify handler was called multiple times (immediate + at least one timer call)
         XCTAssertGreaterThanOrEqual(throwingHandler.callCount, 2)
     }
     
     func testVeryShortInterval() {
         let shortHandler = MockUpdateHandler()
         let coordinator = UpdateCoordinator(
-            updateInterval: 0.001, // Very short interval
+            updateInterval: 0.001,
             updateHandler: shortHandler.handleUpdate
         )
         
         coordinator.startUpdating(immediate: false)
         
-        // Let it run briefly
-        let expectation = XCTestExpectation(description: "Short interval should work")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        let expectation = XCTestExpectation(description: "Short interval should be clamped to minimum")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             expectation.fulfill()
         }
         
@@ -266,8 +251,8 @@ class UpdateCoordinatorTests: XCTestCase {
         
         coordinator.stopUpdating()
         
-        // Should have been called many times
-        XCTAssertGreaterThan(shortHandler.callCount, 10)
+        XCTAssertGreaterThan(shortHandler.callCount, 1)
+        XCTAssertLessThan(shortHandler.callCount, 5)
     }
     
     func testZeroInterval() {
@@ -277,11 +262,10 @@ class UpdateCoordinatorTests: XCTestCase {
             updateHandler: zeroHandler.handleUpdate
         )
         
-        // Should not crash with zero interval
         coordinator.startUpdating(immediate: true)
         
-        let expectation = XCTestExpectation(description: "Zero interval should work")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        let expectation = XCTestExpectation(description: "Zero interval should be clamped to minimum")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
             expectation.fulfill()
         }
         
@@ -289,8 +273,29 @@ class UpdateCoordinatorTests: XCTestCase {
         
         coordinator.stopUpdating()
         
-        // At minimum should have been called once (immediate)
-        XCTAssertGreaterThanOrEqual(zeroHandler.callCount, 1)
+        XCTAssertGreaterThanOrEqual(zeroHandler.callCount, 2)
+    }
+    
+    func testMinimumIntervalEnforcement() {
+        let handler = MockUpdateHandler()
+        let coordinator = UpdateCoordinator(
+            updateInterval: 0.05,
+            updateHandler: handler.handleUpdate
+        )
+        
+        coordinator.startUpdating(immediate: false)
+        
+        let expectation = XCTestExpectation(description: "Minimum interval should be enforced")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1.0)
+        
+        coordinator.stopUpdating()
+        
+        XCTAssertGreaterThan(handler.callCount, 1)
+        XCTAssertLessThan(handler.callCount, 5)
     }
     
     // MARK: - Integration Tests
@@ -298,7 +303,6 @@ class UpdateCoordinatorTests: XCTestCase {
     func testStartStopCycle() {
         mockUpdateHandler.callCount = 0
         
-        // Start, wait, stop, start again
         updateCoordinator.startUpdating(immediate: true)
         XCTAssertEqual(mockUpdateHandler.callCount, 1)
         
@@ -313,7 +317,6 @@ class UpdateCoordinatorTests: XCTestCase {
         
         updateCoordinator.stopUpdating()
         
-        // Wait and verify no more calls
         let stopWait = XCTestExpectation(description: "Stop period")
         DispatchQueue.main.asyncAfter(deadline: .now() + testInterval * 2) {
             stopWait.fulfill()
@@ -323,7 +326,6 @@ class UpdateCoordinatorTests: XCTestCase {
         let countAfterStop = mockUpdateHandler.callCount
         XCTAssertEqual(countAfterStop, countAfterFirst)
         
-        // Start again
         updateCoordinator.startUpdating(immediate: true)
         XCTAssertEqual(mockUpdateHandler.callCount, countAfterStop + 1)
     }
@@ -346,8 +348,5 @@ class MockThrowingUpdateHandler {
     
     func handleUpdate() {
         callCount += 1
-        // Simulate an error condition without actually crashing
-        // In real code, this might throw an exception or cause other issues
-        // but for testing, we just track that it was called
     }
 }

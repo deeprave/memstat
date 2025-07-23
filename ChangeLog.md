@@ -31,6 +31,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Code Organization**: Improved namespace organization by moving memory info structs as nested types
 - **Testing Strategy**: Simplified test data creation through factory methods rather than manual instantiation
 
+### Security
+- **UpdateCoordinator Validation**: Added minimum interval validation to prevent timer flooding
+  - Timer intervals below 0.1 seconds are now clamped to prevent overwhelming the run loop
+  - Protects against accidental or malicious attempts to consume excessive CPU resources
+- **Memory Management**: Fixed potential memory leaks in AppearanceManager
+  - Implemented weak reference pattern for menu tracking to prevent retain cycles
+  - Automatic cleanup of deallocated menus to maintain proper memory hygiene
+- **Type Safety**: Enhanced deprecated type aliases with version removal plan
+  - Clear deprecation path documented for v2.0.0 to eliminate type ambiguity
+  - Prevents potential confusion between top-level and nested type definitions
+
 ## [1.2.3] - 2025-07-23
 
 ### Fixed
