@@ -25,7 +25,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        // Only terminate when last window closes in window mode
         return currentMode == .window
     }
     
@@ -89,38 +88,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     private func startMenuBarMode() {
-        // Clean up window mode if active
         mainWindowController?.close()
         mainWindowController = nil
         
-        // Start menubar mode
         menuBarController = MenuBarController()
-        
-        // Hide dock icon in menubar mode
         NSApp.setActivationPolicy(.accessory)
     }
     
     private func startWindowMode() {
-        // Clean up menubar mode if active
         menuBarController = nil
         
-        // Start window mode
         setupApplicationMenu()
         mainWindowController = MainWindowController()
         mainWindowController?.showWindow(nil)
         NSApp.activate(ignoringOtherApps: true)
-        
-        // Show dock icon in window mode
         NSApp.setActivationPolicy(.regular)
     }
     
     func switchToMode(_ mode: AppMode) {
         guard mode != currentMode else { return }
         
-        // Save preference
         UserDefaults.standard.set(mode.rawValue, forKey: "AppMode")
-        
-        // Show restart dialog
         let alert = NSAlert()
         alert.messageText = "Mode Change"
         alert.informativeText = "MemStat will restart to switch to \(mode.displayName) mode."
@@ -131,7 +119,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if response == .alertFirstButtonReturn {
             restartApplication()
         } else {
-            // Revert the preference if cancelled
             UserDefaults.standard.set(currentMode.rawValue, forKey: "AppMode")
         }
     }
@@ -150,7 +137,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func setupApplicationMenu() {
         let mainMenu = NSMenu()
         
-        // App menu
         let appMenuItem = NSMenuItem()
         let appMenu = NSMenu()
         
@@ -160,27 +146,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         appMenu.addItem(NSMenuItem.separator())
         
-        let appearanceItem = NSMenuItem(title: "Appearance", action: nil, keyEquivalent: "")
-        let appearanceSubmenu = NSMenu()
-        
-        let autoItem = NSMenuItem(title: "Auto", action: #selector(setAppearanceAuto), keyEquivalent: "")
-        autoItem.target = self
-        appearanceSubmenu.addItem(autoItem)
-        
-        let lightItem = NSMenuItem(title: "Light", action: #selector(setAppearanceLight), keyEquivalent: "")
-        lightItem.target = self
-        appearanceSubmenu.addItem(lightItem)
-        
-        let darkItem = NSMenuItem(title: "Dark", action: #selector(setAppearanceDark), keyEquivalent: "")
-        darkItem.target = self
-        appearanceSubmenu.addItem(darkItem)
-        
-        appearanceItem.submenu = appearanceSubmenu
+        let appearanceItem = AppearanceManager.shared.createAppearanceMenu(target: self, updateHandler: #selector(updateAppearanceMenu))
         appMenu.addItem(appearanceItem)
         
         appMenu.addItem(NSMenuItem.separator())
         
-        // Add mode selection menu
         let modeItem = NSMenuItem(title: "Mode", action: nil, keyEquivalent: "")
         let modeSubmenu = NSMenu()
         
@@ -221,62 +191,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         alert.runModal()
     }
     
-    @objc private func setAppearanceAuto() {
-        NSApp.appearance = nil
-        UserDefaults.standard.set("auto", forKey: "AppearanceMode")
-        updateAppearanceMenu()
-    }
-    
-    @objc private func setAppearanceLight() {
-        NSApp.appearance = NSAppearance(named: .aqua)
-        UserDefaults.standard.set("light", forKey: "AppearanceMode")
-        updateAppearanceMenu()
-    }
-    
-    @objc private func setAppearanceDark() {
-        NSApp.appearance = NSAppearance(named: .darkAqua)
-        UserDefaults.standard.set("dark", forKey: "AppearanceMode")
-        updateAppearanceMenu()
-    }
     
     private func restoreAppearanceMode() {
-        let savedMode = UserDefaults.standard.string(forKey: "AppearanceMode") ?? "auto"
-        
-        switch savedMode {
-        case "light":
-            NSApp.appearance = NSAppearance(named: .aqua)
-        case "dark":
-            NSApp.appearance = NSAppearance(named: .darkAqua)
-        default:
-            NSApp.appearance = nil
-        }
+        AppearanceManager.shared.restoreAppearanceMode()
     }
     
-    private func updateAppearanceMenu() {
+    @objc private func updateAppearanceMenu() {
         guard let mainMenu = NSApp.mainMenu else { return }
-        let currentMode = UserDefaults.standard.string(forKey: "AppearanceMode") ?? "auto"
-        
-        for item in mainMenu.items {
-            if let submenu = item.submenu {
-                for menuItem in submenu.items {
-                    if menuItem.title == "Appearance", let appearanceSubmenu = menuItem.submenu {
-                        for appearanceItem in appearanceSubmenu.items {
-                            switch appearanceItem.title {
-                            case "Auto":
-                                appearanceItem.state = currentMode == "auto" ? .on : .off
-                            case "Light":
-                                appearanceItem.state = currentMode == "light" ? .on : .off
-                            case "Dark":
-                                appearanceItem.state = currentMode == "dark" ? .on : .off
-                            default:
-                                break
-                            }
-                        }
-                        break
-                    }
-                }
-            }
-        }
+        AppearanceManager.shared.updateAppearanceMenu(mainMenu)
     }
     
     private func getCompilationDate() -> String {

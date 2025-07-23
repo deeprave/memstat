@@ -23,52 +23,100 @@ public struct ProcessInfo {
     }
 }
 
-public struct MemoryStats {
+public struct BasicMemoryInfo {
     public let totalMemory: UInt64
     public let usedMemory: UInt64
     public let freeMemory: UInt64
     public let memoryPressure: String
+    
+    public init(totalMemory: UInt64, usedMemory: UInt64, freeMemory: UInt64, memoryPressure: String) {
+        self.totalMemory = totalMemory
+        self.usedMemory = usedMemory
+        self.freeMemory = freeMemory
+        self.memoryPressure = memoryPressure
+    }
+}
+
+public struct DetailedMemoryInfo {
     public let activeMemory: UInt64
     public let inactiveMemory: UInt64
     public let wiredMemory: UInt64
     public let compressedMemory: UInt64
+    
+    public init(activeMemory: UInt64, inactiveMemory: UInt64, wiredMemory: UInt64, compressedMemory: UInt64) {
+        self.activeMemory = activeMemory
+        self.inactiveMemory = inactiveMemory
+        self.wiredMemory = wiredMemory
+        self.compressedMemory = compressedMemory
+    }
+}
+
+public struct AppMemoryInfo {
     public let appPhysicalMemory: UInt64
     public let appVirtualMemory: UInt64
     public let anonymousMemory: UInt64
     public let fileBackedMemory: UInt64
+    
+    public init(appPhysicalMemory: UInt64, appVirtualMemory: UInt64, anonymousMemory: UInt64, fileBackedMemory: UInt64) {
+        self.appPhysicalMemory = appPhysicalMemory
+        self.appVirtualMemory = appVirtualMemory
+        self.anonymousMemory = anonymousMemory
+        self.fileBackedMemory = fileBackedMemory
+    }
+}
+
+public struct SwapInfo {
     public let swapTotalMemory: UInt64
     public let swapUsedMemory: UInt64
     public let swapFreeMemory: UInt64
     public let swapUtilization: Double
     public let swapIns: UInt64
     public let swapOuts: UInt64
-    public let topProcesses: [ProcessInfo]
     
-    public init(totalMemory: UInt64, usedMemory: UInt64, freeMemory: UInt64, memoryPressure: String,
-                activeMemory: UInt64, inactiveMemory: UInt64, wiredMemory: UInt64, compressedMemory: UInt64,
-                appPhysicalMemory: UInt64, appVirtualMemory: UInt64, anonymousMemory: UInt64, fileBackedMemory: UInt64,
-                swapTotalMemory: UInt64, swapUsedMemory: UInt64, swapFreeMemory: UInt64, swapUtilization: Double,
-                swapIns: UInt64, swapOuts: UInt64, topProcesses: [ProcessInfo]) {
-        self.totalMemory = totalMemory
-        self.usedMemory = usedMemory
-        self.freeMemory = freeMemory
-        self.memoryPressure = memoryPressure
-        self.activeMemory = activeMemory
-        self.inactiveMemory = inactiveMemory
-        self.wiredMemory = wiredMemory
-        self.compressedMemory = compressedMemory
-        self.appPhysicalMemory = appPhysicalMemory
-        self.appVirtualMemory = appVirtualMemory
-        self.anonymousMemory = anonymousMemory
-        self.fileBackedMemory = fileBackedMemory
+    public init(swapTotalMemory: UInt64, swapUsedMemory: UInt64, swapFreeMemory: UInt64, swapUtilization: Double, swapIns: UInt64, swapOuts: UInt64) {
         self.swapTotalMemory = swapTotalMemory
         self.swapUsedMemory = swapUsedMemory
         self.swapFreeMemory = swapFreeMemory
         self.swapUtilization = swapUtilization
         self.swapIns = swapIns
         self.swapOuts = swapOuts
+    }
+}
+
+public struct MemoryStats {
+    public let basic: BasicMemoryInfo
+    public let detailed: DetailedMemoryInfo
+    public let app: AppMemoryInfo
+    public let swap: SwapInfo
+    public let topProcesses: [ProcessInfo]
+    
+    public init(basic: BasicMemoryInfo, detailed: DetailedMemoryInfo, app: AppMemoryInfo, swap: SwapInfo, topProcesses: [ProcessInfo]) {
+        self.basic = basic
+        self.detailed = detailed
+        self.app = app
+        self.swap = swap
         self.topProcesses = topProcesses
     }
+    
+    // Convenience properties for backward compatibility
+    public var totalMemory: UInt64 { basic.totalMemory }
+    public var usedMemory: UInt64 { basic.usedMemory }
+    public var freeMemory: UInt64 { basic.freeMemory }
+    public var memoryPressure: String { basic.memoryPressure }
+    public var activeMemory: UInt64 { detailed.activeMemory }
+    public var inactiveMemory: UInt64 { detailed.inactiveMemory }
+    public var wiredMemory: UInt64 { detailed.wiredMemory }
+    public var compressedMemory: UInt64 { detailed.compressedMemory }
+    public var appPhysicalMemory: UInt64 { app.appPhysicalMemory }
+    public var appVirtualMemory: UInt64 { app.appVirtualMemory }
+    public var anonymousMemory: UInt64 { app.anonymousMemory }
+    public var fileBackedMemory: UInt64 { app.fileBackedMemory }
+    public var swapTotalMemory: UInt64 { swap.swapTotalMemory }
+    public var swapUsedMemory: UInt64 { swap.swapUsedMemory }
+    public var swapFreeMemory: UInt64 { swap.swapFreeMemory }
+    public var swapUtilization: Double { swap.swapUtilization }
+    public var swapIns: UInt64 { swap.swapIns }
+    public var swapOuts: UInt64 { swap.swapOuts }
 }
 
 public struct VerticalTableLayout {

@@ -139,25 +139,41 @@ class TableSectionTests: XCTestCase {
         let section = MemoryTableSection(yPosition: 100)
         section.setupSection(in: NSView(frame: NSRect(x: 0, y: 0, width: 800, height: 600)), delegate: mockDelegate)
         
-        let stats = MemoryStats(
+        let basic = BasicMemoryInfo(
             totalMemory: 17_179_869_184,
             usedMemory: 12_884_901_888,
             freeMemory: 4_294_967_296,
-            memoryPressure: "Normal",
+            memoryPressure: "Normal"
+        )
+        
+        let detailed = DetailedMemoryInfo(
             activeMemory: 4_294_967_296,
             inactiveMemory: 2_147_483_648,
             wiredMemory: 4_294_967_296,
-            compressedMemory: 2_147_483_648,
+            compressedMemory: 2_147_483_648
+        )
+        
+        let app = AppMemoryInfo(
             appPhysicalMemory: 2_147_483_648,
             appVirtualMemory: 8_589_934_592,
             anonymousMemory: 3_221_225_472,
-            fileBackedMemory: 1_073_741_824,
+            fileBackedMemory: 1_073_741_824
+        )
+        
+        let swap = SwapInfo(
             swapTotalMemory: 0,
             swapUsedMemory: 0,
             swapFreeMemory: 0,
             swapUtilization: 0.0,
             swapIns: 0,
-            swapOuts: 0,
+            swapOuts: 0
+        )
+        
+        let stats = MemoryStats(
+            basic: basic,
+            detailed: detailed,
+            app: app,
+            swap: swap,
             topProcesses: []
         )
         
@@ -234,25 +250,41 @@ class TableSectionTests: XCTestCase {
                        cpuPercent: 25.8, command: "Xcode")
         ]
         
-        let testStats = MemoryStats(
+        let basic = BasicMemoryInfo(
             totalMemory: 17_179_869_184,
             usedMemory: 12_884_901_888,
             freeMemory: 4_294_967_296,
-            memoryPressure: "Normal",
+            memoryPressure: "Normal"
+        )
+        
+        let detailed = DetailedMemoryInfo(
             activeMemory: 4_294_967_296,
             inactiveMemory: 2_147_483_648,
             wiredMemory: 4_294_967_296,
-            compressedMemory: 2_147_483_648,
+            compressedMemory: 2_147_483_648
+        )
+        
+        let app = AppMemoryInfo(
             appPhysicalMemory: 2_147_483_648,
             appVirtualMemory: 8_589_934_592,
             anonymousMemory: 3_221_225_472,
-            fileBackedMemory: 1_073_741_824,
+            fileBackedMemory: 1_073_741_824
+        )
+        
+        let swap = SwapInfo(
             swapTotalMemory: 0,
             swapUsedMemory: 0,
             swapFreeMemory: 0,
             swapUtilization: 0.0,
             swapIns: 0,
-            swapOuts: 0,
+            swapOuts: 0
+        )
+        
+        let testStats = MemoryStats(
+            basic: basic,
+            detailed: detailed,
+            app: app,
+            swap: swap,
             topProcesses: processes
         )
         

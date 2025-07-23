@@ -8,25 +8,41 @@ class MockMemoryMonitor: MemoryMonitor {
     var lastSortDescending: Bool?
     
     override init() {
-        self.mockStats = MemoryStats(
+        let basic = BasicMemoryInfo(
             totalMemory: 8_589_934_592,
             usedMemory: 4_294_967_296,
             freeMemory: 4_294_967_296,
-            memoryPressure: "Normal",
+            memoryPressure: "Normal"
+        )
+        
+        let detailed = DetailedMemoryInfo(
             activeMemory: 2_147_483_648,
             inactiveMemory: 1_073_741_824,
             wiredMemory: 1_073_741_824,
-            compressedMemory: 0,
+            compressedMemory: 0
+        )
+        
+        let app = AppMemoryInfo(
             appPhysicalMemory: 1_073_741_824,
             appVirtualMemory: 2_147_483_648,
             anonymousMemory: 1_610_612_736,
-            fileBackedMemory: 536_870_912,
+            fileBackedMemory: 536_870_912
+        )
+        
+        let swap = SwapInfo(
             swapTotalMemory: 0,
             swapUsedMemory: 0,
             swapFreeMemory: 0,
             swapUtilization: 0.0,
             swapIns: 0,
-            swapOuts: 0,
+            swapOuts: 0
+        )
+        
+        self.mockStats = MemoryStats(
+            basic: basic,
+            detailed: detailed,
+            app: app,
+            swap: swap,
             topProcesses: [
                 ProcessInfo(pid: 1234, memoryPercent: 10.5, memoryBytes: 1_073_741_824, virtualMemoryBytes: 2_147_483_648, cpuPercent: 5.2, command: "Safari"),
                 ProcessInfo(pid: 5678, memoryPercent: 8.3, memoryBytes: 805_306_368, virtualMemoryBytes: 1_610_612_736, cpuPercent: 12.8, command: "Xcode")

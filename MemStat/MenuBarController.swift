@@ -43,22 +43,7 @@ class MenuBarController: NSObject, StatsWindowDelegate {
         
         menu.addItem(NSMenuItem.separator())
         
-        let appearanceItem = NSMenuItem(title: "Appearance", action: nil, keyEquivalent: "")
-        let appearanceSubmenu = NSMenu()
-        
-        let autoItem = NSMenuItem(title: "Auto", action: #selector(setAppearanceAuto), keyEquivalent: "")
-        autoItem.target = self
-        appearanceSubmenu.addItem(autoItem)
-        
-        let lightItem = NSMenuItem(title: "Light", action: #selector(setAppearanceLight), keyEquivalent: "")
-        lightItem.target = self
-        appearanceSubmenu.addItem(lightItem)
-        
-        let darkItem = NSMenuItem(title: "Dark", action: #selector(setAppearanceDark), keyEquivalent: "")
-        darkItem.target = self
-        appearanceSubmenu.addItem(darkItem)
-        
-        appearanceItem.submenu = appearanceSubmenu
+        let appearanceItem = AppearanceManager.shared.createAppearanceMenu(target: self, updateHandler: #selector(updateAppearanceMenu))
         menu.addItem(appearanceItem)
         
         menu.addItem(NSMenuItem.separator())
@@ -173,23 +158,6 @@ class MenuBarController: NSObject, StatsWindowDelegate {
         return NSClassFromString("XCTestCase") != nil
     }
     
-    @objc private func setAppearanceAuto() {
-        NSApp.appearance = nil
-        UserDefaults.standard.set("auto", forKey: "AppearanceMode")
-        updateAppearanceMenu()
-    }
-    
-    @objc private func setAppearanceLight() {
-        NSApp.appearance = NSAppearance(named: .aqua)
-        UserDefaults.standard.set("light", forKey: "AppearanceMode")
-        updateAppearanceMenu()
-    }
-    
-    @objc private func setAppearanceDark() {
-        NSApp.appearance = NSAppearance(named: .darkAqua)
-        UserDefaults.standard.set("dark", forKey: "AppearanceMode")
-        updateAppearanceMenu()
-    }
     
     private func updateLoginItemMenu() {
         for item in contextMenu.items {
@@ -200,39 +168,12 @@ class MenuBarController: NSObject, StatsWindowDelegate {
         }
     }
     
-    private func updateAppearanceMenu() {
-        let currentMode = UserDefaults.standard.string(forKey: "AppearanceMode") ?? "auto"
-        
-        for item in contextMenu.items {
-            if item.title == "Appearance", let submenu = item.submenu {
-                for subItem in submenu.items {
-                    switch subItem.title {
-                    case "Auto":
-                        subItem.state = currentMode == "auto" ? .on : .off
-                    case "Light":
-                        subItem.state = currentMode == "light" ? .on : .off
-                    case "Dark":
-                        subItem.state = currentMode == "dark" ? .on : .off
-                    default:
-                        break
-                    }
-                }
-                break
-            }
-        }
+    @objc private func updateAppearanceMenu() {
+        AppearanceManager.shared.updateAppearanceMenu(contextMenu)
     }
     
     private func restoreAppearanceMode() {
-        let savedMode = UserDefaults.standard.string(forKey: "AppearanceMode") ?? "auto"
-        
-        switch savedMode {
-        case "light":
-            NSApp.appearance = NSAppearance(named: .aqua)
-        case "dark":
-            NSApp.appearance = NSAppearance(named: .darkAqua)
-        default:
-            NSApp.appearance = nil
-        }
+        AppearanceManager.shared.restoreAppearanceMode()
     }
     
     private func getCompilationDate() -> String {
