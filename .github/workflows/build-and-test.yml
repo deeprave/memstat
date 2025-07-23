@@ -25,9 +25,6 @@ jobs:
       with:
         xcode-version: latest-stable
     
-    - name: Install just
-      uses: extractions/setup-just@v2
-    
     - name: Install SwiftLint
       run: brew install swiftlint
     
@@ -35,7 +32,7 @@ jobs:
       run: swiftlint --strict || true
     
     - name: Generate version
-      run: just version
+      run: ./Scripts/generate_version.sh
     
     - name: Select Xcode
       run: |
