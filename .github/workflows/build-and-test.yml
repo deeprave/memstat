@@ -13,7 +13,7 @@ env:
 jobs:
   build-and-test:
     name: Build and Test
-    runs-on: macos-latest
+    runs-on: macos-15
     
     steps:
     - name: Checkout code
@@ -37,22 +37,44 @@ jobs:
       run: just version
     
     - name: Select Xcode
-      run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+      run: |
+        sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+        xcodebuild -version
+        xcode-select -p
+    
+    - name: List Schemes
+      run: xcodebuild -list -project MemStat.xcodeproj || true
     
     - name: Build Debug
       run: |
-        export CODE_SIGN_IDENTITY=""
-        export CODE_SIGNING_REQUIRED=NO
-        just build
+        xcodebuild build \
+          -project MemStat.xcodeproj \
+          -scheme MemStat \
+          -configuration Debug \
+          -derivedDataPath build \
+          -destination "platform=macOS" \
+          -allowProvisioningUpdates \
+          CODE_SIGN_IDENTITY="-" \
+          CODE_SIGNING_REQUIRED=NO \
+          DEVELOPMENT_TEAM="" \
+          PROVISIONING_PROFILE_SPECIFIER=""
     
     - name: Run Tests
       run: just test
     
     - name: Build Release  
       run: |
-        export CODE_SIGN_IDENTITY=""
-        export CODE_SIGNING_REQUIRED=NO
-        just release
+        xcodebuild build \
+          -project MemStat.xcodeproj \
+          -scheme MemStat \
+          -configuration Release \
+          -derivedDataPath build \
+          -destination "platform=macOS" \
+          -allowProvisioningUpdates \
+          CODE_SIGN_IDENTITY="-" \
+          CODE_SIGNING_REQUIRED=NO \
+          DEVELOPMENT_TEAM="" \
+          PROVISIONING_PROFILE_SPECIFIER=""
     
     - name: Upload Test Results
       if: always()
