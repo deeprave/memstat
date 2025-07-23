@@ -1,6 +1,6 @@
  Project Overview
 
-This project is a macOS 13.0+ application that provides the user with a dynamic view of memory use and top 20 memory using processes. It is build using Xcode and Swift.
+This project is a macOS 13.0+ application that provides the user with a dynamic view of memory use and top 20 memory using processes. It is built using Xcode and Swift.
 
 MemStat only reads system memory statistics and process information. It does not:
 - Collect or transmit any data
