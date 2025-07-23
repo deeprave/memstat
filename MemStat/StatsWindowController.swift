@@ -269,7 +269,7 @@ class StatsWindowController: NSWindowController, NSWindowDelegate, SortHandler, 
         window.setFrameOrigin(origin)
         window.orderFront(nil)
         
-        updateCoordinator.startUpdating()
+        updateCoordinator.startUpdating(immediate: true)
     }
     
     func hideWindow() {
@@ -302,6 +302,6 @@ class StatsWindowController: NSWindowController, NSWindowDelegate, SortHandler, 
     }
     
     func startUpdatingStats() {
-        updateCoordinator.startUpdating()
+        updateCoordinator.startUpdating(immediate: true)
     }
 }
