@@ -47,11 +47,9 @@ class CommandLineTests: XCTestCase {
     func testConflictingFlags() {
         let conflictingArgs = ["MemStat", "--menubar", "--window"]
         
-        // Both flags are present - implementation should handle precedence
         XCTAssertTrue(conflictingArgs.contains("--menubar"), "Should detect --menubar flag")
         XCTAssertTrue(conflictingArgs.contains("--window"), "Should detect --window flag")
         
-        // In the actual implementation, --menubar would take precedence since it's checked first
     }
     
     func testMultipleShortFlags() {
@@ -64,9 +62,7 @@ class CommandLineTests: XCTestCase {
     // MARK: - Command Line Parsing Logic Tests
     
     func testCommandLineParsingLogic() {
-        // Test the logic that would be used in parseCommandLineMode()
         
-        // Test menubar flags
         let menubarLongArgs = ["MemStat", "--menubar"]
         let menubarShortArgs = ["MemStat", "-m"]
         
@@ -76,7 +72,6 @@ class CommandLineTests: XCTestCase {
         XCTAssertTrue(menubarLongResult, "Should parse --menubar flag correctly")
         XCTAssertTrue(menubarShortResult, "Should parse -m flag correctly")
         
-        // Test window flags
         let windowLongArgs = ["MemStat", "--window"]
         let windowShortArgs = ["MemStat", "-w"]
         
@@ -86,7 +81,6 @@ class CommandLineTests: XCTestCase {
         XCTAssertTrue(windowLongResult, "Should parse --window flag correctly")
         XCTAssertTrue(windowShortResult, "Should parse -w flag correctly")
         
-        // Test no flags
         let noFlagsArgs = ["MemStat"]
         let noFlagsResult = noFlagsArgs.contains("--menubar") || noFlagsArgs.contains("-m") || 
                            noFlagsArgs.contains("--window") || noFlagsArgs.contains("-w")
@@ -97,9 +91,7 @@ class CommandLineTests: XCTestCase {
     // MARK: - Mode Priority Tests
     
     func testModePriorityLogic() {
-        // Test the priority logic: command line > saved preference > default
         
-        // Simulate command line override
         let hasCommandLineMenubar = true
         let savedPreference = AppMode.window
         let defaultMode = AppMode.window
@@ -107,12 +99,10 @@ class CommandLineTests: XCTestCase {
         let finalMode = hasCommandLineMenubar ? AppMode.menubar : (savedPreference)
         XCTAssertEqual(finalMode, .menubar, "Command line should override saved preference")
         
-        // Simulate no command line, use saved preference
         let hasCommandLineFlag = false
         let finalMode2 = hasCommandLineFlag ? AppMode.menubar : savedPreference
         XCTAssertEqual(finalMode2, .window, "Should use saved preference when no command line flag")
         
-        // Simulate no command line, no saved preference
         let noSavedPreference: AppMode? = nil
         let finalMode3 = hasCommandLineFlag ? AppMode.menubar : (noSavedPreference ?? defaultMode)
         XCTAssertEqual(finalMode3, .window, "Should use default when no command line flag or saved preference")
@@ -121,7 +111,6 @@ class CommandLineTests: XCTestCase {
     // MARK: - Usage Message Tests
     
     func testUsageMessageContent() {
-        // Test that usage message contains expected elements
         let expectedElements = [
             "MemStat",
             "Usage:",
@@ -134,8 +123,6 @@ class CommandLineTests: XCTestCase {
             "Examples:"
         ]
         
-        // Since we can't easily capture print output in tests,
-        // we test that the expected elements would be included
         for element in expectedElements {
             XCTAssertFalse(element.isEmpty, "Usage element should not be empty: \(element)")
         }
@@ -144,39 +131,30 @@ class CommandLineTests: XCTestCase {
     // MARK: - Integration Tests
     
     func testCommandLineModeOverridesSavedPreference() {
-        // Save window preference
         UserDefaults.standard.set(AppMode.window.rawValue, forKey: "AppMode")
         
-        // Simulate command line menubar flag
         let commandLineOverride = AppMode.menubar
         
-        // Command line should take precedence
         let finalMode = commandLineOverride
         XCTAssertEqual(finalMode, .menubar, "Command line should override saved preference")
         
-        // Clean up
         UserDefaults.standard.removeObject(forKey: "AppMode")
     }
     
     func testNoCommandLineFallsBackToPreference() {
-        // Save menubar preference
         UserDefaults.standard.set(AppMode.menubar.rawValue, forKey: "AppMode")
         
-        // No command line override
         let savedMode = UserDefaults.standard.string(forKey: "AppMode") ?? AppMode.window.rawValue
         let finalMode = AppMode(rawValue: savedMode) ?? .window
         
         XCTAssertEqual(finalMode, .menubar, "Should use saved preference when no command line override")
         
-        // Clean up
         UserDefaults.standard.removeObject(forKey: "AppMode")
     }
     
     func testNoCommandLineNoPreferenceFallsBackToDefault() {
-        // Clear any saved preference
         UserDefaults.standard.removeObject(forKey: "AppMode")
         
-        // No command line override, no saved preference
         let savedMode = UserDefaults.standard.string(forKey: "AppMode") ?? AppMode.window.rawValue
         let finalMode = AppMode(rawValue: savedMode) ?? .window
         

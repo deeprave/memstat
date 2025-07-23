@@ -18,7 +18,6 @@ struct ProcessTableColumn {
 class TableLayoutManager {
     static let shared = TableLayoutManager()
     
-    // MARK: - Process Table Layout Constants
     struct ProcessTableLayout {
         static let titleHeight: CGFloat = 26
         static let headerHeight: CGFloat = 26

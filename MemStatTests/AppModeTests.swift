@@ -63,7 +63,6 @@ class AppModeTests: XCTestCase {
         let allCases = AppMode.allCases
         XCTAssertTrue(allCases is [AppMode], "allCases should be array of AppMode")
         
-        // Test that all cases are unique
         let uniqueCases = Set(allCases.map { $0.rawValue })
         XCTAssertEqual(uniqueCases.count, allCases.count, "All cases should have unique raw values")
     }
@@ -71,11 +70,9 @@ class AppModeTests: XCTestCase {
     func testAllCasesContainsAllModes() {
         let allCases = AppMode.allCases
         
-        // Manually check each known case
         XCTAssertTrue(allCases.contains(.menubar), "allCases should contain menubar")
         XCTAssertTrue(allCases.contains(.window), "allCases should contain window")
         
-        // Verify count matches expected
         XCTAssertEqual(allCases.count, 2, "Should have exactly 2 cases")
     }
     
@@ -84,24 +81,20 @@ class AppModeTests: XCTestCase {
     func testUserDefaultsIntegration() {
         let testKey = "TestAppMode"
         
-        // Test saving and loading menubar mode
         UserDefaults.standard.set(AppMode.menubar.rawValue, forKey: testKey)
         let loadedMenubarMode = AppMode(rawValue: UserDefaults.standard.string(forKey: testKey) ?? "")
         XCTAssertEqual(loadedMenubarMode, .menubar, "Should correctly save and load menubar mode")
         
-        // Test saving and loading window mode
         UserDefaults.standard.set(AppMode.window.rawValue, forKey: testKey)
         let loadedWindowMode = AppMode(rawValue: UserDefaults.standard.string(forKey: testKey) ?? "")
         XCTAssertEqual(loadedWindowMode, .window, "Should correctly save and load window mode")
         
-        // Clean up
         UserDefaults.standard.removeObject(forKey: testKey)
     }
     
     func testUserDefaultsFallback() {
         let testKey = "NonExistentTestKey"
         
-        // Test fallback behavior
         let fallbackMode = AppMode(rawValue: UserDefaults.standard.string(forKey: testKey) ?? AppMode.window.rawValue) ?? .window
         XCTAssertEqual(fallbackMode, .window, "Should fall back to window mode when key doesn't exist")
     }

@@ -38,8 +38,6 @@ public struct MemoryStats {
         self.topProcesses = topProcesses
     }
     
-    // MARK: - Nested Types
-    
     public struct BasicMemoryInfo {
         public let totalMemory: UInt64
         public let usedMemory: UInt64

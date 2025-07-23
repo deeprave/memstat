@@ -21,7 +21,6 @@ class UpdateCoordinator {
             self?.updateHandler()
         }
         
-        // Schedule on main run loop with common modes for UI thread safety
         if let timer = timer {
             RunLoop.main.add(timer, forMode: .common)
         }
@@ -30,5 +29,9 @@ class UpdateCoordinator {
     func stopUpdating() {
         timer?.invalidate()
         timer = nil
+    }
+    
+    deinit {
+        timer?.invalidate()
     }
 }

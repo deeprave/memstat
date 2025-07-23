@@ -52,6 +52,9 @@
 		TEST006 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE006 /* TestHelpers.swift */; };
 		TEST007 /* AppearanceManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE007 /* AppearanceManagerTests.swift */; };
 		TEST008 /* UpdateCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE008 /* UpdateCoordinatorTests.swift */; };
+		LOGINTEST001 /* LoginItemsManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = LOGINTESTFILE001 /* LoginItemsManagerTests.swift */; };
+		MAINTEST001 /* MainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = MAINTESTFILE001 /* MainTests.swift */; };
+		APPDELEGATECMDTEST001 /* AppDelegateCommandLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPDELEGATECMDTESTFILE001 /* AppDelegateCommandLineTests.swift */; };
 		APPEARANCE001 /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPEARANCEFILE001 /* AppearanceManager.swift */; };
 		APPEARANCE002 /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPEARANCEFILE001 /* AppearanceManager.swift */; };
 		UPDATE001 /* UpdateCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = UPDATEFILE001 /* UpdateCoordinator.swift */; };
@@ -106,6 +109,9 @@
 		TESTFILE005 /* StatsWindowControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsWindowControllerTests.swift; sourceTree = "<group>"; };
 		TESTFILE006 /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		TESTFILE007 /* AppearanceManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceManagerTests.swift; sourceTree = "<group>"; };
+		LOGINTESTFILE001 /* LoginItemsManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemsManagerTests.swift; sourceTree = "<group>"; };
+		MAINTESTFILE001 /* MainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTests.swift; sourceTree = "<group>"; };
+		APPDELEGATECMDTESTFILE001 /* AppDelegateCommandLineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateCommandLineTests.swift; sourceTree = "<group>"; };
 		TESTFILE008 /* UpdateCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCoordinatorTests.swift; sourceTree = "<group>"; };
 		APPEARANCEFILE001 /* AppearanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = "<group>"; };
 		UPDATEFILE001 /* UpdateCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCoordinator.swift; sourceTree = "<group>"; };
@@ -193,6 +199,9 @@
 				TESTFILE005 /* StatsWindowControllerTests.swift */,
 				TESTFILE006 /* TestHelpers.swift */,
 				TESTFILE007 /* AppearanceManagerTests.swift */,
+				LOGINTESTFILE001 /* LoginItemsManagerTests.swift */,
+				MAINTESTFILE001 /* MainTests.swift */,
+				APPDELEGATECMDTESTFILE001 /* AppDelegateCommandLineTests.swift */,
 				TESTFILE008 /* UpdateCoordinatorTests.swift */,
 				CMDTESTFILE001 /* CommandLineTests.swift */,
 				MODETESTFILE001 /* ModeSwitchingTests.swift */,
@@ -372,6 +381,9 @@
 				79CA34392E271891003ABE85 /* TableFieldFactoryTests.swift in Sources */,
 				TEST006 /* TestHelpers.swift in Sources */,
 				TEST007 /* AppearanceManagerTests.swift in Sources */,
+				LOGINTEST001 /* LoginItemsManagerTests.swift in Sources */,
+				MAINTEST001 /* MainTests.swift in Sources */,
+				APPDELEGATECMDTEST001 /* AppDelegateCommandLineTests.swift in Sources */,
 				TEST008 /* UpdateCoordinatorTests.swift in Sources */,
 				APPMODE002 /* AppMode.swift in Sources */,
 				TABLESECTIONS002 /* TableSections.swift in Sources */,
