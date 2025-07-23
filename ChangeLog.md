@@ -5,6 +5,14 @@ All notable changes to MemStat will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+- **Process Table Headers**: Fixed headers not displaying sort indicators on initial load
+  - Headers now correctly show sort arrows (▲/▼) and active column highlighting immediately
+  - Previously required clicking a header to trigger proper display formatting
+  - Added missing initialization call to updateAllProcessHeaders() after header creation
+
 ## [1.3.0] - 2025-07-24
 
 ### Fixed

@@ -473,6 +473,7 @@ class ProcessTableSection: BaseTableSection {
         }
         
         createBorders()
+        updateAllProcessHeaders()
     }
     
     private func createBorders() {
