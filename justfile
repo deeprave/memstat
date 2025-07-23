@@ -25,13 +25,13 @@ release: version
 	xcodebuild -scheme MemStat -configuration Release -derivedDataPath build build
 
 # Run tests (optionally specify test to run)
-test TEST_ID="": version
+test TEST_ID="" TEST_ARGS="-derivedDataPath build": version
 	@echo "Running tests..."
 	@if [ "{{TEST_ID}}" = "" ]; then \
-		xcodebuild test -scheme MemStat -destination 'platform=macOS'; \
+		xcodebuild test -scheme MemStat -destination 'platform=macOS' {{TEST_ARGS}}; \
 	else \
 		echo "Running specific test: {{TEST_ID}}"; \
-		xcodebuild test -scheme MemStat -destination 'platform=macOS' -only-testing:{{TEST_ID}}; \
+		xcodebuild test -scheme MemStat -destination 'platform=macOS' -only-testing:{{TEST_ID}} {{TEST_ARGS}}; \
 	fi
 
 # Clean build artifacts

@@ -58,7 +58,8 @@ jobs:
           CODE_SIGNING_REQUIRED=NO
     
     - name: Run Tests
-      run: just test
+      run: |
+        just test TEST_ARGS='-derivedDataPath build -sdk macosx CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO'
     
     - name: Build Release  
       run: |
