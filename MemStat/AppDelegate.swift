@@ -142,7 +142,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppearanceMenuUpdateDelegate
         let appearanceItem = AppearanceManager.shared.createAppearanceMenu(delegate: self)
         appMenu.addItem(appearanceItem)
         
-        AppearanceManager.shared.registerMenuForUpdates(mainMenu, delegate: self)
+        AppearanceManager.shared.registerMenuForUpdates(appMenu, delegate: self)
         
         appMenu.addItem(NSMenuItem.separator())
         

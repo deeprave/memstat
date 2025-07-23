@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Headers now correctly show sort arrows (▲/▼) and active column highlighting immediately
   - Previously required clicking a header to trigger proper display formatting
   - Added missing initialization call to updateAllProcessHeaders() after header creation
+- **Appearance Menu State**: Fixed appearance menu not updating checkmarks after mode change
+  - Menu checkmarks now correctly follow the selected appearance mode (System/Light/Dark)
+  - Fixed incorrect menu registration - now registers the app menu containing appearance items
+  - Menu update system now properly tracks and updates the correct menu instance
 
 ## [1.3.0] - 2025-07-24
 

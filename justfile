@@ -60,17 +60,19 @@ dist: zip dmg
 	@echo "All distribution packages created!"
 
 # Run the app (uses saved preference or default window mode)
-run: debug
+build-run: debug run
+
+run:
 	@echo "Running MemStat in default mode..."
 	@./build/Build/Products/Debug/MemStat.app/Contents/MacOS/MemStat &
 
 # Run the app in window mode
-run-window: debug
+run-window:
 	@echo "Running MemStat in window mode..."
 	@./build/Build/Products/Debug/MemStat.app/Contents/MacOS/MemStat --window &
 
 # Run the app in menubar mode
-run-menubar: debug
+run-menubar:
 	@echo "Running MemStat in menubar mode..."
 	@./build/Build/Products/Debug/MemStat.app/Contents/MacOS/MemStat --menubar &
 
@@ -86,19 +88,20 @@ help:
 	@echo "MemStat justfile"
 	@echo ""
 	@echo "Available recipes:"
-	@echo "  just         - Build debug version (default)"
-	@echo "  just debug   - Build debug version"
-	@echo "  just release - Build release version"
-	@echo "  just run     - Run debug app (uses saved preference)"
-	@echo "  just run-window - Run debug app in window mode"
-	@echo "  just run-menubar - Run debug app in menubar mode"
-	@echo "  just test    - Run all tests"
+	@echo "  just              - Build debug version (default)"
+	@echo "  just debug        - Build debug version"
+	@echo "  just release      - Build release version"
+	@echo "  just run          - Run debug app (uses saved preference)"
+	@echo "  just build-run    - Build and run debug app (uses saved preference)"
+	@echo "  just run-window   - Run debug app in window mode"
+	@echo "  just run-menubar  - Run debug app in menubar mode"
+	@echo "  just test         - Run all tests"
 	@echo "  just test TEST_ID - Run specific test (e.g., just test MemStatTests/TableFieldFactoryTests/testCreateMetricFieldAlignment)"
-	@echo "  just clean   - Clean build artifacts"
-	@echo "  just archive - Create release archive"
-	@echo "  just zip     - Create ZIP distribution"
-	@echo "  just dmg     - Create DMG distribution"
-	@echo "  just dist    - Create both ZIP and DMG distributions"
-	@echo "  just version - Generate Version.swift only"
+	@echo "  just clean        - Clean build artifacts"
+	@echo "  just archive      - Create release archive"
+	@echo "  just zip          - Create ZIP distribution"
+	@echo "  just dmg          - Create DMG distribution"
+	@echo "  just dist         - Create both ZIP and DMG distributions"
+	@echo "  just version      - Generate Version.swift only"
 	@echo "  just show-version - Display current version info"
-	@echo "  just help    - Show this help message"
+	@echo "  just help         - Show this help message"
