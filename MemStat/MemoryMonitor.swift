@@ -127,28 +127,28 @@ open class MemoryMonitor {
         let anonymousMemory = activeMemory + inactiveMemory
         let fileBackedMemory = (usedMemory > anonymousMemory) ? (usedMemory - anonymousMemory) : 0
         
-        let basic = BasicMemoryInfo(
+        let basic = MemoryStats.BasicMemoryInfo(
             totalMemory: totalMemory,
             usedMemory: usedMemory,
             freeMemory: freeMemory,
             memoryPressure: memoryPressure
         )
         
-        let detailed = DetailedMemoryInfo(
+        let detailed = MemoryStats.DetailedMemoryInfo(
             activeMemory: activeMemory,
             inactiveMemory: inactiveMemory,
             wiredMemory: wiredMemory,
             compressedMemory: compressedMemory
         )
         
-        let app = AppMemoryInfo(
+        let app = MemoryStats.AppMemoryInfo(
             appPhysicalMemory: appPhysicalMemory,
             appVirtualMemory: appVirtualMemory,
             anonymousMemory: anonymousMemory,
             fileBackedMemory: fileBackedMemory
         )
         
-        let swap = SwapInfo(
+        let swap = MemoryStats.SwapInfo(
             swapTotalMemory: swapUsage.total,
             swapUsedMemory: swapUsage.used,
             swapFreeMemory: swapUsage.free,

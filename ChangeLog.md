@@ -8,10 +8,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- **Memory Info Architecture**: Refactored memory information structs for better organization and reduced boilerplate
+  - Moved BasicMemoryInfo, DetailedMemoryInfo, AppMemoryInfo, and SwapInfo as nested types within MemoryStats
+  - Added static factory methods (mock()) to each nested type for simplified test data generation
+  - Added backward compatibility type aliases with deprecation warnings
+  - Reduced test boilerplate by utilizing factory methods instead of manual struct instantiation
+- **UpdateCoordinator Threading**: Fixed timer thread safety for UI interactions
+  - Added explicit RunLoop.main scheduling with .common mode for timer callbacks
+  - Ensures UI updates from timer callbacks are always performed on the main thread
 - **AppearanceManager Menu Updates**: Fixed bug where `setAppearance()` did not update appearance menus after changing mode
   - Added menu registration system to AppearanceManager for automatic menu updates when appearance changes
   - Registered appearance menus in both AppDelegate (window mode) and MenuBarController (menu bar mode)
   - All appearance menus now automatically reflect the current mode selection with proper checkmarks
+
+### Added
+- **Test Coverage**: Added comprehensive test suites for core components
+  - AppearanceManagerTests: Complete test coverage for appearance management functionality
+  - UpdateCoordinatorTests: Extensive testing of timer behavior, memory management, and error handling
+  - Enhanced existing test files with better organization and reduced verbosity
+
+### Changed
+- **Code Organization**: Improved namespace organization by moving memory info structs as nested types
+- **Testing Strategy**: Simplified test data creation through factory methods rather than manual instantiation
 
 ## [1.2.3] - 2025-07-23
 

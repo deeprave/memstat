@@ -23,66 +23,6 @@ public struct ProcessInfo {
     }
 }
 
-public struct BasicMemoryInfo {
-    public let totalMemory: UInt64
-    public let usedMemory: UInt64
-    public let freeMemory: UInt64
-    public let memoryPressure: String
-    
-    public init(totalMemory: UInt64, usedMemory: UInt64, freeMemory: UInt64, memoryPressure: String) {
-        self.totalMemory = totalMemory
-        self.usedMemory = usedMemory
-        self.freeMemory = freeMemory
-        self.memoryPressure = memoryPressure
-    }
-}
-
-public struct DetailedMemoryInfo {
-    public let activeMemory: UInt64
-    public let inactiveMemory: UInt64
-    public let wiredMemory: UInt64
-    public let compressedMemory: UInt64
-    
-    public init(activeMemory: UInt64, inactiveMemory: UInt64, wiredMemory: UInt64, compressedMemory: UInt64) {
-        self.activeMemory = activeMemory
-        self.inactiveMemory = inactiveMemory
-        self.wiredMemory = wiredMemory
-        self.compressedMemory = compressedMemory
-    }
-}
-
-public struct AppMemoryInfo {
-    public let appPhysicalMemory: UInt64
-    public let appVirtualMemory: UInt64
-    public let anonymousMemory: UInt64
-    public let fileBackedMemory: UInt64
-    
-    public init(appPhysicalMemory: UInt64, appVirtualMemory: UInt64, anonymousMemory: UInt64, fileBackedMemory: UInt64) {
-        self.appPhysicalMemory = appPhysicalMemory
-        self.appVirtualMemory = appVirtualMemory
-        self.anonymousMemory = anonymousMemory
-        self.fileBackedMemory = fileBackedMemory
-    }
-}
-
-public struct SwapInfo {
-    public let swapTotalMemory: UInt64
-    public let swapUsedMemory: UInt64
-    public let swapFreeMemory: UInt64
-    public let swapUtilization: Double
-    public let swapIns: UInt64
-    public let swapOuts: UInt64
-    
-    public init(swapTotalMemory: UInt64, swapUsedMemory: UInt64, swapFreeMemory: UInt64, swapUtilization: Double, swapIns: UInt64, swapOuts: UInt64) {
-        self.swapTotalMemory = swapTotalMemory
-        self.swapUsedMemory = swapUsedMemory
-        self.swapFreeMemory = swapFreeMemory
-        self.swapUtilization = swapUtilization
-        self.swapIns = swapIns
-        self.swapOuts = swapOuts
-    }
-}
-
 public struct MemoryStats {
     public let basic: BasicMemoryInfo
     public let detailed: DetailedMemoryInfo
@@ -98,7 +38,116 @@ public struct MemoryStats {
         self.topProcesses = topProcesses
     }
     
-    // Convenience properties for backward compatibility
+    // MARK: - Nested Types
+    
+    public struct BasicMemoryInfo {
+        public let totalMemory: UInt64
+        public let usedMemory: UInt64
+        public let freeMemory: UInt64
+        public let memoryPressure: String
+        
+        public init(totalMemory: UInt64, usedMemory: UInt64, freeMemory: UInt64, memoryPressure: String) {
+            self.totalMemory = totalMemory
+            self.usedMemory = usedMemory
+            self.freeMemory = freeMemory
+            self.memoryPressure = memoryPressure
+        }
+        
+        public static func mock(pressure: String = "Normal") -> BasicMemoryInfo {
+            return BasicMemoryInfo(
+                totalMemory: 17_179_869_184,
+                usedMemory: 10_737_418_240,
+                freeMemory: 6_442_450_944,
+                memoryPressure: pressure
+            )
+        }
+    }
+    
+    public struct DetailedMemoryInfo {
+        public let activeMemory: UInt64
+        public let inactiveMemory: UInt64
+        public let wiredMemory: UInt64
+        public let compressedMemory: UInt64
+        
+        public init(activeMemory: UInt64, inactiveMemory: UInt64, wiredMemory: UInt64, compressedMemory: UInt64) {
+            self.activeMemory = activeMemory
+            self.inactiveMemory = inactiveMemory
+            self.wiredMemory = wiredMemory
+            self.compressedMemory = compressedMemory
+        }
+        
+        public static func mock() -> DetailedMemoryInfo {
+            return DetailedMemoryInfo(
+                activeMemory: 4_294_967_296,
+                inactiveMemory: 2_147_483_648,
+                wiredMemory: 3_221_225_472,
+                compressedMemory: 1_073_741_824
+            )
+        }
+    }
+    
+    public struct AppMemoryInfo {
+        public let appPhysicalMemory: UInt64
+        public let appVirtualMemory: UInt64
+        public let anonymousMemory: UInt64
+        public let fileBackedMemory: UInt64
+        
+        public init(appPhysicalMemory: UInt64, appVirtualMemory: UInt64, anonymousMemory: UInt64, fileBackedMemory: UInt64) {
+            self.appPhysicalMemory = appPhysicalMemory
+            self.appVirtualMemory = appVirtualMemory
+            self.anonymousMemory = anonymousMemory
+            self.fileBackedMemory = fileBackedMemory
+        }
+        
+        public static func mock() -> AppMemoryInfo {
+            return AppMemoryInfo(
+                appPhysicalMemory: 2_147_483_648,
+                appVirtualMemory: 8_589_934_592,
+                anonymousMemory: 3_221_225_472,
+                fileBackedMemory: 1_073_741_824
+            )
+        }
+    }
+    
+    public struct SwapInfo {
+        public let swapTotalMemory: UInt64
+        public let swapUsedMemory: UInt64
+        public let swapFreeMemory: UInt64
+        public let swapUtilization: Double
+        public let swapIns: UInt64
+        public let swapOuts: UInt64
+        
+        public init(swapTotalMemory: UInt64, swapUsedMemory: UInt64, swapFreeMemory: UInt64, swapUtilization: Double, swapIns: UInt64, swapOuts: UInt64) {
+            self.swapTotalMemory = swapTotalMemory
+            self.swapUsedMemory = swapUsedMemory
+            self.swapFreeMemory = swapFreeMemory
+            self.swapUtilization = swapUtilization
+            self.swapIns = swapIns
+            self.swapOuts = swapOuts
+        }
+        
+        public static func mock() -> SwapInfo {
+            return SwapInfo(
+                swapTotalMemory: 2_147_483_648,
+                swapUsedMemory: 536_870_912,
+                swapFreeMemory: 1_610_612_736,
+                swapUtilization: 25.0,
+                swapIns: 1234567,
+                swapOuts: 987654
+            )
+        }
+    }
+    
+    public static func mock(pressure: String = "Normal") -> MemoryStats {
+        return MemoryStats(
+            basic: BasicMemoryInfo.mock(pressure: pressure),
+            detailed: DetailedMemoryInfo.mock(),
+            app: AppMemoryInfo.mock(),
+            swap: SwapInfo.mock(),
+            topProcesses: []
+        )
+    }
+    
     public var totalMemory: UInt64 { basic.totalMemory }
     public var usedMemory: UInt64 { basic.usedMemory }
     public var freeMemory: UInt64 { basic.freeMemory }
@@ -118,6 +167,20 @@ public struct MemoryStats {
     public var swapIns: UInt64 { swap.swapIns }
     public var swapOuts: UInt64 { swap.swapOuts }
 }
+
+// MARK: - Type Aliases for Backward Compatibility
+
+@available(*, deprecated, message: "Use MemoryStats.BasicMemoryInfo instead")
+public typealias BasicMemoryInfo = MemoryStats.BasicMemoryInfo
+
+@available(*, deprecated, message: "Use MemoryStats.DetailedMemoryInfo instead")
+public typealias DetailedMemoryInfo = MemoryStats.DetailedMemoryInfo
+
+@available(*, deprecated, message: "Use MemoryStats.AppMemoryInfo instead")
+public typealias AppMemoryInfo = MemoryStats.AppMemoryInfo
+
+@available(*, deprecated, message: "Use MemoryStats.SwapInfo instead")
+public typealias SwapInfo = MemoryStats.SwapInfo
 
 public struct VerticalTableLayout {
     public static let memoryTableWidth: CGFloat = 229
@@ -140,7 +203,6 @@ public struct VerticalTableLayout {
     public static let sectionSpacing: CGFloat = 20  // Space between sections
     
     public static func memoryTableX(containerWidth: CGFloat) -> CGFloat {
-        // Align with left edge of Process table (750px width, centered)
         return (containerWidth - 750) / 2
     }
     

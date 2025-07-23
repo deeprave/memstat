@@ -27,43 +27,7 @@ extension XCTestCase {
 struct TestDataGenerator {
     
     static func mockMemoryStats(pressure: String = "Normal") -> MemoryStats {
-        let basic = BasicMemoryInfo(
-            totalMemory: 17_179_869_184,
-            usedMemory: 10_737_418_240,
-            freeMemory: 6_442_450_944,
-            memoryPressure: pressure
-        )
-        
-        let detailed = DetailedMemoryInfo(
-            activeMemory: 4_294_967_296,
-            inactiveMemory: 2_147_483_648,
-            wiredMemory: 3_221_225_472,
-            compressedMemory: 1_073_741_824
-        )
-        
-        let app = AppMemoryInfo(
-            appPhysicalMemory: 2_147_483_648,
-            appVirtualMemory: 8_589_934_592,
-            anonymousMemory: 3_221_225_472,
-            fileBackedMemory: 1_073_741_824
-        )
-        
-        let swap = SwapInfo(
-            swapTotalMemory: 2_147_483_648,
-            swapUsedMemory: 536_870_912,
-            swapFreeMemory: 1_610_612_736,
-            swapUtilization: 25.0,
-            swapIns: 1234567,
-            swapOuts: 987654
-        )
-        
-        return MemoryStats(
-            basic: basic,
-            detailed: detailed,
-            app: app,
-            swap: swap,
-            topProcesses: []
-        )
+        return MemoryStats.mock(pressure: pressure)
     }
     
     static func mockProcessInfo(count: Int = 5) -> [MemStat.ProcessInfo] {

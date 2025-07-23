@@ -79,10 +79,8 @@ class AppearanceManager {
     }
     
     private func updateAllAppearanceMenus() {
-        // Clean up any menus that have been deallocated
         registeredMenus = registeredMenus.filter { $0.menu.supermenu != nil || $0.menu.numberOfItems > 0 }
         
-        // Update all registered menus
         for (_, updateHandler) in registeredMenus {
             updateHandler()
         }
@@ -104,7 +102,7 @@ class AppearanceManager {
     }
 }
 
-private class AppearanceMenuData {
+class AppearanceMenuData {
     let mode: AppearanceMode
     let handler: AppearanceMenuHandler
     
@@ -114,7 +112,7 @@ private class AppearanceMenuData {
     }
 }
 
-@objc private class AppearanceMenuHandler: NSObject {
+@objc class AppearanceMenuHandler: NSObject {
     private let updateHandler: Selector
     private weak var target: AnyObject?
     

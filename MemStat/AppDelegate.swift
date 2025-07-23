@@ -33,17 +33,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func parseCommandLineMode() -> AppMode? {
         let arguments = CommandLine.arguments
         
-        // Check for --menubar or -m flag
         if arguments.contains("--menubar") || arguments.contains("-m") {
             return .menubar
         }
         
-        // Check for --window or -w flag
         if arguments.contains("--window") || arguments.contains("-w") {
             return .window
         }
         
-        // Check for --help or -h flag
         if arguments.contains("--help") || arguments.contains("-h") {
             printUsage()
             NSApp.terminate(nil)
