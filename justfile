@@ -26,6 +26,8 @@ release: version
 
 # Run tests (optionally specify test to run)
 test TEST_ID="": version
+	@echo "Stopping any running MemStat instances..."
+	@pkill -f "MemStat.app" || true
 	@echo "Running tests..."
 	@if [ "{{TEST_ID}}" = "" ]; then \
 		xcodebuild test -scheme MemStat -destination 'platform=macOS'; \

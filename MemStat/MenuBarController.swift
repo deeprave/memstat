@@ -4,8 +4,13 @@ class MenuBarController: NSObject, StatsWindowDelegate, AppearanceMenuUpdateDele
     
     var statusItem: NSStatusItem!
     private var statsWindowController: StatsWindowController!
+    
+    // Internal accessor for testing
+    internal var testableStatsWindowController: StatsWindowController? {
+        return statsWindowController
+    }
     private var isWindowVisible = false
-    var contextMenu: NSMenu!
+    internal var contextMenu: NSMenu!
     
     override init() {
         super.init()
@@ -159,7 +164,7 @@ class MenuBarController: NSObject, StatsWindowDelegate, AppearanceMenuUpdateDele
         if !isWindowVisible {
             showWindow()
         } else {
-            statsWindowController.window?.orderFront(nil)
+            statsWindowController.window?.makeKeyAndOrderFront(nil)
             NSApp.activate(ignoringOtherApps: true)
         }
     }

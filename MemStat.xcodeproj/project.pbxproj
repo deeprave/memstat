@@ -59,6 +59,7 @@
 		APPEARANCE002 /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPEARANCEFILE001 /* AppearanceManager.swift */; };
 		UPDATE001 /* UpdateCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = UPDATEFILE001 /* UpdateCoordinator.swift */; };
 		UPDATE002 /* UpdateCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = UPDATEFILE001 /* UpdateCoordinator.swift */; };
+		DRAGGABLE001 /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DRAGGABLEFILE001 /* DraggableView.swift */; };
 		TESTAPP001 /* MemStat.app in Frameworks */ = {isa = PBXBuildFile; fileRef = 019A60B755834539846281592A3987F4 /* MemStat.app */; };
 /* End PBXBuildFile section */
 
@@ -115,6 +116,7 @@
 		TESTFILE008 /* UpdateCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCoordinatorTests.swift; sourceTree = "<group>"; };
 		APPEARANCEFILE001 /* AppearanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = "<group>"; };
 		UPDATEFILE001 /* UpdateCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCoordinator.swift; sourceTree = "<group>"; };
+		DRAGGABLEFILE001 /* DraggableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableView.swift; sourceTree = "<group>"; };
 		TESTINFO001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		TESTTARGET001 /* MemStatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MemStatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -161,6 +163,7 @@
 				79CA34112E2681E9003ABE85 /* UIComponentFactory.swift */,
 				APPEARANCEFILE001 /* AppearanceManager.swift */,
 				UPDATEFILE001 /* UpdateCoordinator.swift */,
+				DRAGGABLEFILE001 /* DraggableView.swift */,
 				79C10A712E260CD900A5D8EA /* Version.swift */,
 			);
 			path = MemStat;
@@ -355,6 +358,7 @@
 				TABLESECTIONS001 /* TableSections.swift in Sources */,
 				APPEARANCE001 /* AppearanceManager.swift in Sources */,
 				UPDATE001 /* UpdateCoordinator.swift in Sources */,
+				DRAGGABLE001 /* DraggableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
