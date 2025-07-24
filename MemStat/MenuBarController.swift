@@ -3,12 +3,7 @@ import Cocoa
 class MenuBarController: NSObject, StatsWindowDelegate, AppearanceMenuUpdateDelegate {
     
     var statusItem: NSStatusItem!
-    private var statsWindowController: StatsWindowController!
-    
-    // Internal accessor for testing
-    internal var testableStatsWindowController: StatsWindowController? {
-        return statsWindowController
-    }
+    internal var statsWindowController: StatsWindowController!
     private var isWindowVisible = false
     internal var contextMenu: NSMenu!
     
@@ -164,8 +159,7 @@ class MenuBarController: NSObject, StatsWindowDelegate, AppearanceMenuUpdateDele
         if !isWindowVisible {
             showWindow()
         } else {
-            statsWindowController.window?.makeKeyAndOrderFront(nil)
-            NSApp.activate(ignoringOtherApps: true)
+            WindowUtils.bringWindowToFront(statsWindowController.window)
         }
     }
     
