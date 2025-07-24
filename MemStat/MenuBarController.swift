@@ -3,9 +3,9 @@ import Cocoa
 class MenuBarController: NSObject, StatsWindowDelegate, AppearanceMenuUpdateDelegate {
     
     var statusItem: NSStatusItem!
-    internal var statsWindowController: StatsWindowController!
+    private var statsWindowController: StatsWindowController!
     private var isWindowVisible = false
-    internal var contextMenu: NSMenu!
+    private var contextMenu: NSMenu!
     
     override init() {
         super.init()
@@ -291,5 +291,14 @@ class MenuBarController: NSObject, StatsWindowDelegate, AppearanceMenuUpdateDele
     
     deinit {
         AppearanceManager.shared.unregisterAllMenusForDelegate(self)
+    }
+    
+    // MARK: - Test-only accessors
+    internal func testOnlyGetContextMenu() -> NSMenu? {
+        return contextMenu
+    }
+    
+    internal func testOnlyGetStatsWindowController() -> StatsWindowController? {
+        return statsWindowController
     }
 }
