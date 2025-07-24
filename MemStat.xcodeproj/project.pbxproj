@@ -52,7 +52,10 @@
 		TEST006 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE006 /* TestHelpers.swift */; };
 		TEST007 /* AppearanceManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE007 /* AppearanceManagerTests.swift */; };
 		TEST008 /* UpdateCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE008 /* UpdateCoordinatorTests.swift */; };
+		TEST009 /* MenuBarController+TestExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE009 /* MenuBarController+TestExtension.swift */; };
 		LOGINTEST001 /* LoginItemsManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = LOGINTESTFILE001 /* LoginItemsManagerTests.swift */; };
+		MENUITEMFACTORY001 /* MenuItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = MENUITEMFACTORYFILE001 /* MenuItemFactory.swift */; };
+		MENUITEMFACTORY002 /* MenuItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = MENUITEMFACTORYFILE001 /* MenuItemFactory.swift */; };
 		MAINTEST001 /* MainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = MAINTESTFILE001 /* MainTests.swift */; };
 		APPDELEGATECMDTEST001 /* AppDelegateCommandLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPDELEGATECMDTESTFILE001 /* AppDelegateCommandLineTests.swift */; };
 		APPEARANCE001 /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPEARANCEFILE001 /* AppearanceManager.swift */; };
@@ -116,10 +119,12 @@
 		MAINTESTFILE001 /* MainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTests.swift; sourceTree = "<group>"; };
 		APPDELEGATECMDTESTFILE001 /* AppDelegateCommandLineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateCommandLineTests.swift; sourceTree = "<group>"; };
 		TESTFILE008 /* UpdateCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCoordinatorTests.swift; sourceTree = "<group>"; };
+		TESTFILE009 /* MenuBarController+TestExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MenuBarController+TestExtension.swift"; sourceTree = "<group>"; };
 		APPEARANCEFILE001 /* AppearanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = "<group>"; };
 		UPDATEFILE001 /* UpdateCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCoordinator.swift; sourceTree = "<group>"; };
 		DRAGGABLEFILE001 /* DraggableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableView.swift; sourceTree = "<group>"; };
 		WINDOWUTILSFILE001 /* WindowUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowUtils.swift; sourceTree = "<group>"; };
+		MENUITEMFACTORYFILE001 /* MenuItemFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemFactory.swift; sourceTree = "<group>"; };
 		TESTINFO001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		TESTTARGET001 /* MemStatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MemStatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -168,6 +173,7 @@
 				UPDATEFILE001 /* UpdateCoordinator.swift */,
 				DRAGGABLEFILE001 /* DraggableView.swift */,
 				WINDOWUTILSFILE001 /* WindowUtils.swift */,
+				MENUITEMFACTORYFILE001 /* MenuItemFactory.swift */,
 				79C10A712E260CD900A5D8EA /* Version.swift */,
 			);
 			path = MemStat;
@@ -210,6 +216,7 @@
 				MAINTESTFILE001 /* MainTests.swift */,
 				APPDELEGATECMDTESTFILE001 /* AppDelegateCommandLineTests.swift */,
 				TESTFILE008 /* UpdateCoordinatorTests.swift */,
+				TESTFILE009 /* MenuBarController+TestExtension.swift */,
 				CMDTESTFILE001 /* CommandLineTests.swift */,
 				MODETESTFILE001 /* ModeSwitchingTests.swift */,
 				APPMODETESTFILE001 /* AppModeTests.swift */,
@@ -364,6 +371,7 @@
 				UPDATE001 /* UpdateCoordinator.swift in Sources */,
 				DRAGGABLE001 /* DraggableView.swift in Sources */,
 				WINDOWUTILS001 /* WindowUtils.swift in Sources */,
+				MENUITEMFACTORY001 /* MenuItemFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,11 +402,13 @@
 				MAINTEST001 /* MainTests.swift in Sources */,
 				APPDELEGATECMDTEST001 /* AppDelegateCommandLineTests.swift in Sources */,
 				TEST008 /* UpdateCoordinatorTests.swift in Sources */,
+				TEST009 /* MenuBarController+TestExtension.swift in Sources */,
 				APPMODE002 /* AppMode.swift in Sources */,
 				TABLESECTIONS002 /* TableSections.swift in Sources */,
 				APPEARANCE002 /* AppearanceManager.swift in Sources */,
 				UPDATE002 /* UpdateCoordinator.swift in Sources */,
 				WINDOWUTILS002 /* WindowUtils.swift in Sources */,
+				MENUITEMFACTORY002 /* MenuItemFactory.swift in Sources */,
 				7905C0CA2E304B3C00F358A1 /* MemoryMonitor.swift in Sources */,
 				CMDTEST001 /* CommandLineTests.swift in Sources */,
 				MODETEST001 /* ModeSwitchingTests.swift in Sources */,

@@ -162,8 +162,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppearanceMenuUpdateDelegate
         let windowMenuItem = NSMenuItem()
         let windowMenu = NSMenu(title: "Window")
         
-        let bringToFrontItem = NSMenuItem(title: "Bring to Front", action: #selector(bringToFront), keyEquivalent: "")
-        bringToFrontItem.target = self
+        let bringToFrontItem = MenuItemFactory.createBringToFrontItem(target: self, action: #selector(bringToFront))
         windowMenu.addItem(bringToFrontItem)
         
         windowMenu.addItem(NSMenuItem.separator())
