@@ -7,8 +7,8 @@ class DraggableView: NSView {
     private var initialLocation: NSPoint = NSZeroPoint
     private var isDragging: Bool = false
     
-    // List of interactive controls to exclude from dragging
-    private static let interactiveTypes: [AnyClass] = [
+    // Default list of interactive controls to exclude from dragging
+    private static let defaultInteractiveTypes: [AnyClass] = [
         NSTextField.self,
         NSButton.self,
         NSSlider.self,
@@ -17,6 +17,9 @@ class DraggableView: NSView {
         NSSegmentedControl.self,
         NSScrollView.self
     ]
+    
+    // Configurable list of interactive controls to exclude from dragging
+    var interactiveTypes: [AnyClass] = DraggableView.defaultInteractiveTypes
     
     override func mouseDown(with event: NSEvent) {
         let locationInView = convert(event.locationInWindow, from: nil)
@@ -54,6 +57,7 @@ class DraggableView: NSView {
     override func mouseUp(with event: NSEvent) {
         if isDragging {
             isDragging = false
+            initialLocation = NSZeroPoint
         } else {
             super.mouseUp(with: event)
         }
@@ -65,7 +69,7 @@ class DraggableView: NSView {
         // Check if the hit view or any of its superviews should be excluded from dragging
         var view: NSView? = hitView
         while let currentView = view {
-            for type in Self.interactiveTypes {
+            for type in interactiveTypes {
                 if currentView.isKind(of: type) {
                     return false
                 }

@@ -3,9 +3,9 @@ import Cocoa
 class MenuBarController: NSObject, StatsWindowDelegate, AppearanceMenuUpdateDelegate {
     
     var statusItem: NSStatusItem!
-    private var statsWindowController: StatsWindowController!
+    var statsWindowController: StatsWindowController!
     private var isWindowVisible = false
-    private var contextMenu: NSMenu!
+    var contextMenu: NSMenu!
     
     override init() {
         super.init()
@@ -37,8 +37,7 @@ class MenuBarController: NSObject, StatsWindowDelegate, AppearanceMenuUpdateDele
     private func setupContextMenu() {
         let menu = NSMenu()
         
-        let bringToFrontItem = NSMenuItem(title: "Bring to Front", action: #selector(bringStatsWindowToFront), keyEquivalent: "")
-        bringToFrontItem.target = self
+        let bringToFrontItem = MenuItemFactory.createBringToFrontItem(target: self, action: #selector(bringStatsWindowToFront))
         menu.addItem(bringToFrontItem)
         
         menu.addItem(NSMenuItem.separator())
@@ -291,14 +290,5 @@ class MenuBarController: NSObject, StatsWindowDelegate, AppearanceMenuUpdateDele
     
     deinit {
         AppearanceManager.shared.unregisterAllMenusForDelegate(self)
-    }
-    
-    // MARK: - Test-only accessors
-    internal func testOnlyGetContextMenu() -> NSMenu? {
-        return contextMenu
-    }
-    
-    internal func testOnlyGetStatsWindowController() -> StatsWindowController? {
-        return statsWindowController
     }
 }
