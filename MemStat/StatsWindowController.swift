@@ -164,7 +164,7 @@ class StatsWindowController: NSWindowController, NSWindowDelegate, SortHandler, 
     private func setupStatsView() {
         guard let window = window else { return }
         
-        statsView = NSView(frame: window.contentView!.bounds)
+        statsView = DraggableView(frame: window.contentView!.bounds)
         statsView.autoresizingMask = [.width, .height]
         statsView.wantsLayer = true
         statsView.layer?.masksToBounds = false
@@ -289,5 +289,54 @@ class StatsWindowController: NSWindowController, NSWindowDelegate, SortHandler, 
     
     func startUpdatingStats() {
         updateCoordinator.startUpdating(immediate: true)
+    }
+}
+
+class DraggableView: NSView {
+    private var initialLocation: NSPoint = NSZeroPoint
+    private var isDragging: Bool = false
+    
+    override func mouseDown(with event: NSEvent) {
+        let locationInView = convert(event.locationInWindow, from: nil)
+        
+        if shouldAllowDraggingAt(point: locationInView) {
+            initialLocation = event.locationInWindow
+            isDragging = true
+        } else {
+            super.mouseDown(with: event)
+        }
+    }
+    
+    override func mouseDragged(with event: NSEvent) {
+        guard isDragging, let window = self.window else {
+            super.mouseDragged(with: event)
+            return
+        }
+        
+        let currentLocation = event.locationInWindow
+        let newOrigin = NSPoint(
+            x: window.frame.origin.x + (currentLocation.x - initialLocation.x),
+            y: window.frame.origin.y + (currentLocation.y - initialLocation.y)
+        )
+        
+        window.setFrameOrigin(newOrigin)
+    }
+    
+    override func mouseUp(with event: NSEvent) {
+        if isDragging {
+            isDragging = false
+        } else {
+            super.mouseUp(with: event)
+        }
+    }
+    
+    private func shouldAllowDraggingAt(point: NSPoint) -> Bool {
+        let hitView = hitTest(point)
+        
+        if let textField = hitView as? NSTextField {
+            return !textField.gestureRecognizers.contains { $0 is NSClickGestureRecognizer }
+        }
+        
+        return hitView == self
     }
 }

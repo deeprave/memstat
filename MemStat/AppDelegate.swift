@@ -159,7 +159,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppearanceMenuUpdateDelegate
         appMenuItem.submenu = appMenu
         mainMenu.addItem(appMenuItem)
         
-        // Add Window menu
         let windowMenuItem = NSMenuItem()
         let windowMenu = NSMenu(title: "Window")
         

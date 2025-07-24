@@ -110,4 +110,60 @@ class MenuBarControllerTests: XCTestCase {
     func testContextMenuContainsModeSwitch() {
         XCTAssertNotNil(menuBarController.statusItem, "Status item should be created")
     }
+    
+    // MARK: - Bring to Front Feature Tests
+    
+    func testBringToFrontMenuItemExists() {
+        let contextMenu = menuBarController.contextMenu
+        XCTAssertNotNil(contextMenu)
+        
+        let bringToFrontItem = contextMenu?.items.first { $0.title == "Bring to Front" }
+        XCTAssertNotNil(bringToFrontItem, "Bring to Front menu item should exist")
+        XCTAssertEqual(bringToFrontItem?.action, #selector(MenuBarController.bringStatsWindowToFront))
+        XCTAssertEqual(bringToFrontItem?.target as? MenuBarController, menuBarController)
+        XCTAssertEqual(bringToFrontItem?.keyEquivalent, "", "Bring to Front should have no keyboard shortcut")
+    }
+    
+    func testBringToFrontMenuItemPosition() {
+        let contextMenu = menuBarController.contextMenu
+        XCTAssertNotNil(contextMenu)
+        
+        let firstItem = contextMenu?.items.first
+        XCTAssertEqual(firstItem?.title, "Bring to Front", "Bring to Front should be the first menu item")
+        
+        if contextMenu!.items.count > 1 {
+            let secondItem = contextMenu!.items[1]
+            XCTAssertTrue(secondItem.isSeparatorItem, "There should be a separator after Bring to Front")
+        }
+    }
+    
+    func testBringToFrontMethodExists() {
+        XCTAssertTrue(menuBarController.responds(to: #selector(MenuBarController.bringStatsWindowToFront)), 
+                     "MenuBarController should respond to bringStatsWindowToFront")
+    }
+    
+    // MARK: - Draggable Window Feature Tests
+    
+    func testStatsWindowHasDraggableView() {
+        let mirror = Mirror(reflecting: menuBarController!)
+        var statsWindowController: StatsWindowController?
+        
+        for child in mirror.children {
+            if child.label == "statsWindowController",
+               let controller = child.value as? StatsWindowController {
+                statsWindowController = controller
+                break
+            }
+        }
+        
+        XCTAssertNotNil(statsWindowController, "MenuBarController should have a statsWindowController")
+        
+        if let controller = statsWindowController,
+           let window = controller.window,
+           let contentView = window.contentView,
+           contentView.subviews.count > 0 {
+            let statsView = contentView.subviews[0]
+            XCTAssertTrue(statsView is DraggableView, "Stats view should be a DraggableView for drag functionality")
+        }
+    }
 }

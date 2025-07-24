@@ -148,7 +148,6 @@ class AppDelegateTests: XCTestCase {
     // MARK: - Window Menu Tests
     
     func testWindowMenuCreation() {
-        // Simulate the menu setup that would happen in window mode
         let mainMenu = NSMenu()
         let windowMenuItem = NSMenuItem()
         let windowMenu = NSMenu(title: "Window")
@@ -165,11 +164,9 @@ class AppDelegateTests: XCTestCase {
         windowMenuItem.submenu = windowMenu
         mainMenu.addItem(windowMenuItem)
         
-        // Verify menu structure
         XCTAssertEqual(windowMenu.title, "Window", "Window menu should have correct title")
         XCTAssertEqual(windowMenu.numberOfItems, 3, "Window menu should have 3 items (2 actions + 1 separator)")
         
-        // Verify menu items
         XCTAssertEqual(windowMenu.item(at: 0)?.title, "Bring to Front", "First item should be Bring to Front")
         XCTAssertEqual(windowMenu.item(at: 0)?.action, #selector(AppDelegate.bringToFront), "Bring to Front should have correct action")
         XCTAssertEqual(windowMenu.item(at: 0)?.target as? AppDelegate, appDelegate, "Bring to Front should target AppDelegate")
@@ -182,16 +179,13 @@ class AppDelegateTests: XCTestCase {
     }
     
     func testWindowActionsWithNoWindow() {
-        // Ensure no window controller is set
         appDelegate.mainWindowController = nil
         
-        // Test that window actions don't crash when no window exists
         XCTAssertNoThrow(appDelegate.bringToFront(), "bringToFront should not crash with no window")
         XCTAssertNoThrow(appDelegate.performMiniaturize(nil), "performMiniaturize should not crash with no window")
     }
     
     func testWindowActionMethodsExist() {
-        // Verify the methods exist and are accessible
         XCTAssertTrue(appDelegate.responds(to: #selector(AppDelegate.bringToFront)), "AppDelegate should respond to bringToFront")
         XCTAssertTrue(appDelegate.responds(to: #selector(AppDelegate.performMiniaturize(_:))), "AppDelegate should respond to performMiniaturize")
     }
@@ -199,14 +193,11 @@ class AppDelegateTests: XCTestCase {
     // MARK: - Mode Switching Menu Tests
     
     func testSwitchToMenuBarModeMenuCreation() {
-        // Simulate the menu setup that would happen in window mode
         let appMenu = NSMenu()
         
         let switchModeItem = NSMenuItem(title: "Switch to Menu Bar", action: #selector(AppDelegate.switchToMenuBarMode), keyEquivalent: "")
         switchModeItem.target = appDelegate
         appMenu.addItem(switchModeItem)
-        
-        // Verify menu item
         XCTAssertEqual(switchModeItem.title, "Switch to Menu Bar", "Menu item should have correct title")
         XCTAssertEqual(switchModeItem.action, #selector(AppDelegate.switchToMenuBarMode), "Menu item should have correct action")
         XCTAssertEqual(switchModeItem.target as? AppDelegate, appDelegate, "Menu item should target AppDelegate")
@@ -214,7 +205,6 @@ class AppDelegateTests: XCTestCase {
     }
     
     func testSwitchToMenuBarModeMethodExists() {
-        // Verify the method exists and is accessible
         XCTAssertTrue(appDelegate.responds(to: #selector(AppDelegate.switchToMenuBarMode)), "AppDelegate should respond to switchToMenuBarMode")
     }
 }

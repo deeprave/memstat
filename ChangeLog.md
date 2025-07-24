@@ -5,13 +5,22 @@ All notable changes to MemStat will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.4.0] - 2025-07-24
 
 ### Added
 - **Window Menu**: Added standard Window menu to window mode for better macOS integration
   - "Bring to Front" option to show and activate the memory statistics window
   - "Minimize" (⌘M) option for standard window management
   - Menu follows macOS conventions and provides expected window controls
+- **Menubar Mode Enhancements**: Improved user interaction capabilities in menubar mode
+  - **"Bring to Front" Context Menu**: Added right-click context menu option to bring stats window to front
+    - Shows window if not visible, or brings existing window to front and activates app
+    - Positioned as first menu item for easy access
+    - Preserves existing left-click toggle behavior for consistency
+  - **Draggable Stats Window**: Enabled click-and-drag window movement throughout the stats window
+    - Smart dragging that detects and preserves interactive elements (process table headers)
+    - Allows repositioning window by clicking and dragging on any non-interactive area
+    - Maintains full compatibility with existing sorting and UI interactions
 
 ### Changed
 - **Mode Switching UI Consistency**: Made mode selection UI consistent between window and menubar modes
@@ -35,6 +44,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Replaced hardcoded "io.uniquode.MemStat" strings throughout codebase
   - Updated main.swift, LoginItemsManager, and all test files to use centralized function
   - Improved maintainability and reduced risk of inconsistencies
+
+### Technical
+- **Test Coverage**: Added comprehensive tests for new menubar mode features
+  - MenuBarController tests for "Bring to Front" functionality and menu structure
+  - DraggableView integration tests for window movement capabilities
+  - All existing functionality preserved with 127/127 tests passing
 
 ## [1.3.0] - 2025-07-24
 

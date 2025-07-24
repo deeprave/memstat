@@ -5,7 +5,7 @@ class MenuBarController: NSObject, StatsWindowDelegate, AppearanceMenuUpdateDele
     var statusItem: NSStatusItem!
     private var statsWindowController: StatsWindowController!
     private var isWindowVisible = false
-    private var contextMenu: NSMenu!
+    var contextMenu: NSMenu!
     
     override init() {
         super.init()
@@ -36,6 +36,12 @@ class MenuBarController: NSObject, StatsWindowDelegate, AppearanceMenuUpdateDele
     
     private func setupContextMenu() {
         let menu = NSMenu()
+        
+        let bringToFrontItem = NSMenuItem(title: "Bring to Front", action: #selector(bringStatsWindowToFront), keyEquivalent: "")
+        bringToFrontItem.target = self
+        menu.addItem(bringToFrontItem)
+        
+        menu.addItem(NSMenuItem.separator())
         
         let aboutItem = NSMenuItem(title: "About MemStat", action: #selector(showAbout), keyEquivalent: "")
         aboutItem.target = self
@@ -146,6 +152,15 @@ class MenuBarController: NSObject, StatsWindowDelegate, AppearanceMenuUpdateDele
     @objc private func switchToWindowMode() {
         if let appDelegate = NSApp.delegate as? AppDelegate {
             appDelegate.switchToMode(.window)
+        }
+    }
+    
+    @objc func bringStatsWindowToFront() {
+        if !isWindowVisible {
+            showWindow()
+        } else {
+            statsWindowController.window?.orderFront(nil)
+            NSApp.activate(ignoringOtherApps: true)
         }
     }
     
