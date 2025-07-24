@@ -114,7 +114,7 @@ class MenuBarControllerTests: XCTestCase {
     // MARK: - Bring to Front Feature Tests
     
     func testBringToFrontMenuItemExists() {
-        let contextMenu = menuBarController.contextMenu
+        let contextMenu = menuBarController.testOnlyGetContextMenu()
         XCTAssertNotNil(contextMenu)
         
         let bringToFrontItem = contextMenu?.items.first { $0.title == "Bring to Front" }
@@ -125,7 +125,7 @@ class MenuBarControllerTests: XCTestCase {
     }
     
     func testBringToFrontMenuItemPosition() {
-        let contextMenu = menuBarController.contextMenu
+        let contextMenu = menuBarController.testOnlyGetContextMenu()
         XCTAssertNotNil(contextMenu)
         
         let firstItem = contextMenu?.items.first
@@ -145,7 +145,7 @@ class MenuBarControllerTests: XCTestCase {
     // MARK: - Draggable Window Feature Tests
     
     func testStatsWindowHasDraggableView() {
-        let statsWindowController = menuBarController.statsWindowController
+        let statsWindowController = menuBarController.testOnlyGetStatsWindowController()
         
         XCTAssertNotNil(statsWindowController, "MenuBarController should have a statsWindowController")
         

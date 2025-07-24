@@ -7,6 +7,17 @@ class DraggableView: NSView {
     private var initialLocation: NSPoint = NSZeroPoint
     private var isDragging: Bool = false
     
+    // List of interactive controls to exclude from dragging
+    private static let interactiveTypes: [AnyClass] = [
+        NSTextField.self,
+        NSButton.self,
+        NSSlider.self,
+        NSComboBox.self,
+        NSPopUpButton.self,
+        NSSegmentedControl.self,
+        NSScrollView.self
+    ]
+    
     override func mouseDown(with event: NSEvent) {
         let locationInView = convert(event.locationInWindow, from: nil)
         
@@ -25,38 +36,19 @@ class DraggableView: NSView {
         }
         
         let currentLocation = event.locationInWindow
-        var newOrigin = NSPoint(
+        let newOrigin = NSPoint(
             x: window.frame.origin.x + (currentLocation.x - initialLocation.x),
             y: window.frame.origin.y + (currentLocation.y - initialLocation.y)
         )
         
         // Calculate the combined visible area of all screens to allow multi-monitor dragging
-        let allScreens = NSScreen.screens
-        guard !allScreens.isEmpty else {
+        guard let screenBounds = combinedScreenBounds() else {
             window.setFrameOrigin(newOrigin)
             return
         }
         
-        let windowFrame = window.frame
-        
-        // Find the bounds that encompass all screens
-        var combinedFrame = allScreens[0].visibleFrame
-        for screen in allScreens.dropFirst() {
-            combinedFrame = combinedFrame.union(screen.visibleFrame)
-        }
-        
-        // Ensure at least part of the window remains visible (allow 50 points of window to be off-screen)
-        let minVisibleMargin: CGFloat = 50
-        let minX = combinedFrame.minX - windowFrame.width + minVisibleMargin
-        let maxX = combinedFrame.maxX - minVisibleMargin
-        let minY = combinedFrame.minY - windowFrame.height + minVisibleMargin
-        let maxY = combinedFrame.maxY - minVisibleMargin
-        
-        // Clamp the new position
-        newOrigin.x = min(max(newOrigin.x, minX), maxX)
-        newOrigin.y = min(max(newOrigin.y, minY), maxY)
-        
-        window.setFrameOrigin(newOrigin)
+        let clampedOrigin = clampedOrigin(newOrigin, windowFrame: window.frame, screenBounds: screenBounds)
+        window.setFrameOrigin(clampedOrigin)
     }
     
     override func mouseUp(with event: NSEvent) {
@@ -70,21 +62,10 @@ class DraggableView: NSView {
     private func shouldAllowDraggingAt(point: NSPoint) -> Bool {
         let hitView = hitTest(point)
         
-        // List of interactive controls to exclude from dragging
-        let interactiveTypes: [AnyClass] = [
-            NSTextField.self,
-            NSButton.self,
-            NSSlider.self,
-            NSComboBox.self,
-            NSPopUpButton.self,
-            NSSegmentedControl.self,
-            NSScrollView.self
-        ]
-        
         // Check if the hit view or any of its superviews should be excluded from dragging
         var view: NSView? = hitView
         while let currentView = view {
-            for type in interactiveTypes {
+            for type in Self.interactiveTypes {
                 if currentView.isKind(of: type) {
                     return false
                 }
@@ -97,5 +78,31 @@ class DraggableView: NSView {
         
         // Allow dragging from any non-interactive subview
         return true
+    }
+    
+    private func combinedScreenBounds() -> NSRect? {
+        let allScreens = NSScreen.screens
+        guard !allScreens.isEmpty else { return nil }
+        
+        // Find the bounds that encompass all screens
+        var combinedFrame = allScreens[0].visibleFrame
+        for screen in allScreens.dropFirst() {
+            combinedFrame = combinedFrame.union(screen.visibleFrame)
+        }
+        return combinedFrame
+    }
+    
+    private func clampedOrigin(_ newOrigin: NSPoint, windowFrame: NSRect, screenBounds: NSRect) -> NSPoint {
+        // Ensure at least part of the window remains visible (allow 50 points of window to be off-screen)
+        let minVisibleMargin: CGFloat = 50
+        let minX = screenBounds.minX - windowFrame.width + minVisibleMargin
+        let maxX = screenBounds.maxX - minVisibleMargin
+        let minY = screenBounds.minY - windowFrame.height + minVisibleMargin
+        let maxY = screenBounds.maxY - minVisibleMargin
+        
+        return NSPoint(
+            x: min(max(newOrigin.x, minX), maxX),
+            y: min(max(newOrigin.y, minY), maxY)
+        )
     }
 }
