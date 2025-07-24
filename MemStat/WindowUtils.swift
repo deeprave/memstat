@@ -8,9 +8,6 @@ enum WindowUtils {
         if window.isMiniaturized {
             window.deminiaturize(nil)
         }
-        if !window.isVisible {
-            window.orderFront(nil)
-        }
         window.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
     }
