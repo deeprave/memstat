@@ -23,11 +23,9 @@ class MainTests: XCTestCase {
     // MARK: - Bundle Identifier Tests
     
     func testAppConstantsBundleIdentifier() {
-        // Test that currentBundleIdentifier returns a non-empty string
         let currentBundleId = AppConstants.currentBundleIdentifier()
         XCTAssertFalse(currentBundleId.isEmpty)
         
-        // If we have a bundle identifier, it should match, otherwise it should fall back to our expected value
         if let bundleId = Bundle.main.bundleIdentifier {
             XCTAssertEqual(currentBundleId, bundleId)
         } else {
@@ -89,8 +87,6 @@ class MainTests: XCTestCase {
             return app.bundleIdentifier == currentBundleId && app != currentApp
         }
         
-        // During testing, the bundle identifier might be from the test runner
-        // We expect no other instances with the same bundle ID
         XCTAssertEqual(otherInstances.count, 0, "Should not find other instances during test run")
     }
     

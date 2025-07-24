@@ -24,6 +24,8 @@ A lightweight macOS application that provides real-time memory statistics and pr
 
 ### User Experience
 - **Smart Window Management**: Click to show/hide stats, click anywhere else to dismiss
+- **Draggable Windows**: In menu bar mode, click and drag the stats window to reposition
+- **Context Menu Integration**: Right-click menu bar icon for "Bring to Front" and other options
 - **Appearance Support**: Auto/Light/Dark mode with visual menu indicators
 - **Launch at Login**: Optional system startup integration
 - **Command Line Support**: Force startup mode with `--menubar`, `--window`, or `--help` flags
@@ -50,14 +52,18 @@ A lightweight macOS application that provides real-time memory statistics and pr
 - Standard macOS window controls (minimize, close, etc.)
 
 ### Menu Bar Mode
-- Click the MemStat icon in your menu bar to view current statistics
-- Right-click the menu bar icon for options including mode switching
-- Click outside the stats window to dismiss
+- **Left-click**: MemStat icon in your menu bar to show/hide current statistics
+- **Right-click**: Menu bar icon for context menu with options including:
+  - "Bring to Front": Show stats window or bring it to front if already visible
+  - Mode switching, preferences, and other settings
+- **Window Interaction**: Click and drag anywhere on the stats window to reposition it
+- **Auto-dismiss**: Click outside the stats window to hide it
 
 ### Universal Features
-- Click column headers in the process table to sort by that column
-- Access appearance settings and launch preferences via menus
-- Use command line flags to override saved mode preference
+- **Sorting**: Click column headers in the process table to sort by that column
+- **Smart Interaction**: Window dragging automatically avoids interactive elements (headers)
+- **Preferences**: Access appearance settings and launch preferences via menus
+- **Command Line**: Use command line flags to override saved mode preference
 
 ## Command Line Options
 
