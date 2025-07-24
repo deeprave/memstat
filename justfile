@@ -60,20 +60,22 @@ dist: zip dmg
 	@echo "All distribution packages created!"
 
 # Run the app (uses saved preference or default window mode)
-build-run: debug run
-
 run:
-	@echo "Running MemStat in default mode..."
+	@echo "Running MemStat (Debug) in default mode..."
 	@./build/Build/Products/Debug/MemStat.app/Contents/MacOS/MemStat &
+
+run-release:
+	@echo "Running MemStat (Release) in default mode..."
+	@./build/Build/Products/Release/MemStat.app/Contents/MacOS/MemStat &
 
 # Run the app in window mode
 run-window:
-	@echo "Running MemStat in window mode..."
+	@echo "Running MemStat (Debug) in window mode..."
 	@./build/Build/Products/Debug/MemStat.app/Contents/MacOS/MemStat --window &
 
 # Run the app in menubar mode
 run-menubar:
-	@echo "Running MemStat in menubar mode..."
+	@echo "Running MemStat (Debug) in menubar mode..."
 	@./build/Build/Products/Debug/MemStat.app/Contents/MacOS/MemStat --menubar &
 
 # Show current version
@@ -92,7 +94,6 @@ help:
 	@echo "  just debug        - Build debug version"
 	@echo "  just release      - Build release version"
 	@echo "  just run          - Run debug app (uses saved preference)"
-	@echo "  just build-run    - Build and run debug app (uses saved preference)"
 	@echo "  just run-window   - Run debug app in window mode"
 	@echo "  just run-menubar  - Run debug app in menubar mode"
 	@echo "  just test         - Run all tests"

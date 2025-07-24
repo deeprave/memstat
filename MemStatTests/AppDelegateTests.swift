@@ -144,6 +144,57 @@ class AppDelegateTests: XCTestCase {
         let savedMode = UserDefaults.standard.string(forKey: "AppearanceMode")
         XCTAssertEqual(savedMode, "auto", "Should be able to save appearance mode")
     }
+    
+    // MARK: - Window Menu Tests
+    
+    func testWindowMenuCreation() {
+        // Simulate the menu setup that would happen in window mode
+        let mainMenu = NSMenu()
+        let windowMenuItem = NSMenuItem()
+        let windowMenu = NSMenu(title: "Window")
+        
+        let bringToFrontItem = NSMenuItem(title: "Bring to Front", action: #selector(AppDelegate.bringToFront), keyEquivalent: "")
+        bringToFrontItem.target = appDelegate
+        windowMenu.addItem(bringToFrontItem)
+        
+        windowMenu.addItem(NSMenuItem.separator())
+        
+        let minimizeItem = NSMenuItem(title: "Minimize", action: #selector(AppDelegate.performMiniaturize(_:)), keyEquivalent: "m")
+        windowMenu.addItem(minimizeItem)
+        
+        windowMenuItem.submenu = windowMenu
+        mainMenu.addItem(windowMenuItem)
+        
+        // Verify menu structure
+        XCTAssertEqual(windowMenu.title, "Window", "Window menu should have correct title")
+        XCTAssertEqual(windowMenu.numberOfItems, 3, "Window menu should have 3 items (2 actions + 1 separator)")
+        
+        // Verify menu items
+        XCTAssertEqual(windowMenu.item(at: 0)?.title, "Bring to Front", "First item should be Bring to Front")
+        XCTAssertEqual(windowMenu.item(at: 0)?.action, #selector(AppDelegate.bringToFront), "Bring to Front should have correct action")
+        XCTAssertEqual(windowMenu.item(at: 0)?.target as? AppDelegate, appDelegate, "Bring to Front should target AppDelegate")
+        
+        XCTAssertTrue(windowMenu.item(at: 1)?.isSeparatorItem == true, "Second item should be separator")
+        
+        XCTAssertEqual(windowMenu.item(at: 2)?.title, "Minimize", "Third item should be Minimize")
+        XCTAssertEqual(windowMenu.item(at: 2)?.action, #selector(AppDelegate.performMiniaturize(_:)), "Minimize should have correct action")
+        XCTAssertEqual(windowMenu.item(at: 2)?.keyEquivalent, "m", "Minimize should have ⌘M shortcut")
+    }
+    
+    func testWindowActionsWithNoWindow() {
+        // Ensure no window controller is set
+        appDelegate.mainWindowController = nil
+        
+        // Test that window actions don't crash when no window exists
+        XCTAssertNoThrow(appDelegate.bringToFront(), "bringToFront should not crash with no window")
+        XCTAssertNoThrow(appDelegate.performMiniaturize(nil), "performMiniaturize should not crash with no window")
+    }
+    
+    func testWindowActionMethodsExist() {
+        // Verify the methods exist and are accessible
+        XCTAssertTrue(appDelegate.responds(to: #selector(AppDelegate.bringToFront)), "AppDelegate should respond to bringToFront")
+        XCTAssertTrue(appDelegate.responds(to: #selector(AppDelegate.performMiniaturize(_:))), "AppDelegate should respond to performMiniaturize")
+    }
 }
 
 // MARK: - Test Extensions

@@ -174,6 +174,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppearanceMenuUpdateDelegate
         appMenuItem.submenu = appMenu
         mainMenu.addItem(appMenuItem)
         
+        // Add Window menu
+        let windowMenuItem = NSMenuItem()
+        let windowMenu = NSMenu(title: "Window")
+        
+        let bringToFrontItem = NSMenuItem(title: "Bring to Front", action: #selector(bringToFront), keyEquivalent: "")
+        bringToFrontItem.target = self
+        windowMenu.addItem(bringToFrontItem)
+        
+        windowMenu.addItem(NSMenuItem.separator())
+        
+        let minimizeItem = NSMenuItem(title: "Minimize", action: #selector(performMiniaturize(_:)), keyEquivalent: "m")
+        windowMenu.addItem(minimizeItem)
+        
+        windowMenuItem.submenu = windowMenu
+        mainMenu.addItem(windowMenuItem)
+        
         NSApp.mainMenu = mainMenu
         updateAppearanceMenu()
     }
@@ -181,6 +197,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppearanceMenuUpdateDelegate
     @objc private func switchMode(_ sender: NSMenuItem) {
         guard let mode = sender.representedObject as? AppMode else { return }
         switchToMode(mode)
+    }
+    
+    @objc func bringToFront() {
+        mainWindowController?.showWindow(nil)
+        NSApp.activate(ignoringOtherApps: true)
+    }
+    
+    @objc func performMiniaturize(_ sender: Any?) {
+        mainWindowController?.window?.miniaturize(sender)
     }
     
     @objc private func showAbout() {
