@@ -1,5 +1,8 @@
 import Cocoa
 
+// Protocol for custom/third-party controls to opt out of dragging
+@objc protocol DraggableExclusion {}
+
 class DraggableView: NSView {
     private var initialLocation: NSPoint = NSZeroPoint
     private var isDragging: Bool = false
@@ -78,12 +81,18 @@ class DraggableView: NSView {
             NSScrollView.self
         ]
         
-        if let hitView = hitView {
+        // Check if the hit view or any of its superviews should be excluded from dragging
+        var view: NSView? = hitView
+        while let currentView = view {
             for type in interactiveTypes {
-                if hitView.isKind(of: type) {
+                if currentView.isKind(of: type) {
                     return false
                 }
             }
+            if currentView.conforms(to: DraggableExclusion.self) {
+                return false
+            }
+            view = currentView.superview
         }
         
         // Allow dragging from any non-interactive subview

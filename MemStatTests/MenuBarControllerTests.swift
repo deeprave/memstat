@@ -145,7 +145,7 @@ class MenuBarControllerTests: XCTestCase {
     // MARK: - Draggable Window Feature Tests
     
     func testStatsWindowHasDraggableView() {
-        let statsWindowController = menuBarController.testableStatsWindowController
+        let statsWindowController = menuBarController.statsWindowController
         
         XCTAssertNotNil(statsWindowController, "MenuBarController should have a statsWindowController")
         

@@ -183,8 +183,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppearanceMenuUpdateDelegate
     }
     
     @objc func bringToFront() {
-        mainWindowController?.showWindow(nil)
-        NSApp.activate(ignoringOtherApps: true)
+        WindowUtils.bringWindowToFront(mainWindowController?.window)
     }
     
     @objc func performMiniaturize(_ sender: Any?) {
