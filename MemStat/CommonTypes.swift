@@ -1,6 +1,17 @@
 import Foundation
 import Cocoa
 
+// MARK: - Application Constants
+
+public enum AppConstants {
+    private static let bundleIdentifier = "io.uniquode.MemStat"
+    
+    /// Returns the current application's bundle identifier, with a fallback to the default
+    public static func currentBundleIdentifier() -> String {
+        return Bundle.main.bundleIdentifier ?? bundleIdentifier
+    }
+}
+
 public enum ProcessSortColumn {
     case pid, memoryPercent, memoryBytes, virtualMemory, virtualMemoryBytes, cpuPercent, command
 }

@@ -195,6 +195,28 @@ class AppDelegateTests: XCTestCase {
         XCTAssertTrue(appDelegate.responds(to: #selector(AppDelegate.bringToFront)), "AppDelegate should respond to bringToFront")
         XCTAssertTrue(appDelegate.responds(to: #selector(AppDelegate.performMiniaturize(_:))), "AppDelegate should respond to performMiniaturize")
     }
+    
+    // MARK: - Mode Switching Menu Tests
+    
+    func testSwitchToMenuBarModeMenuCreation() {
+        // Simulate the menu setup that would happen in window mode
+        let appMenu = NSMenu()
+        
+        let switchModeItem = NSMenuItem(title: "Switch to Menu Bar", action: #selector(AppDelegate.switchToMenuBarMode), keyEquivalent: "")
+        switchModeItem.target = appDelegate
+        appMenu.addItem(switchModeItem)
+        
+        // Verify menu item
+        XCTAssertEqual(switchModeItem.title, "Switch to Menu Bar", "Menu item should have correct title")
+        XCTAssertEqual(switchModeItem.action, #selector(AppDelegate.switchToMenuBarMode), "Menu item should have correct action")
+        XCTAssertEqual(switchModeItem.target as? AppDelegate, appDelegate, "Menu item should target AppDelegate")
+        XCTAssertEqual(switchModeItem.keyEquivalent, "", "Menu item should have no keyboard shortcut")
+    }
+    
+    func testSwitchToMenuBarModeMethodExists() {
+        // Verify the method exists and is accessible
+        XCTAssertTrue(appDelegate.responds(to: #selector(AppDelegate.switchToMenuBarMode)), "AppDelegate should respond to switchToMenuBarMode")
+    }
 }
 
 // MARK: - Test Extensions

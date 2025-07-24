@@ -117,19 +117,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppearanceMenuUpdateDelegate
     }
     
     private func restartApplication() {
-        // Get the app bundle path
         let bundlePath = Bundle.main.bundlePath
-        
-        // Create a command that waits after termination and then reopens the app
         let command = "sleep 1.5; /usr/bin/open -n \"\(bundlePath)\""
         
-        // Execute the command in the background
         let task = Process()
         task.launchPath = "/bin/bash"
         task.arguments = ["-c", command]
         task.launch()
         
-        // Terminate current instance
         NSApp.terminate(nil)
     }
     
@@ -152,19 +147,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppearanceMenuUpdateDelegate
         
         appMenu.addItem(NSMenuItem.separator())
         
-        let modeItem = NSMenuItem(title: "Mode", action: nil, keyEquivalent: "")
-        let modeSubmenu = NSMenu()
-        
-        for mode in AppMode.allCases {
-            let item = NSMenuItem(title: mode.displayName, action: #selector(switchMode(_:)), keyEquivalent: "")
-            item.target = self
-            item.representedObject = mode
-            item.state = mode == currentMode ? .on : .off
-            modeSubmenu.addItem(item)
-        }
-        
-        modeItem.submenu = modeSubmenu
-        appMenu.addItem(modeItem)
+        let switchModeItem = NSMenuItem(title: "Switch to Menu Bar", action: #selector(switchToMenuBarMode), keyEquivalent: "")
+        switchModeItem.target = self
+        appMenu.addItem(switchModeItem)
         
         appMenu.addItem(NSMenuItem.separator())
         
@@ -194,9 +179,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, AppearanceMenuUpdateDelegate
         updateAppearanceMenu()
     }
     
-    @objc private func switchMode(_ sender: NSMenuItem) {
-        guard let mode = sender.representedObject as? AppMode else { return }
-        switchToMode(mode)
+    @objc func switchToMenuBarMode() {
+        switchToMode(.menubar)
     }
     
     @objc func bringToFront() {

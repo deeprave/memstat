@@ -22,8 +22,21 @@ class MainTests: XCTestCase {
     
     // MARK: - Bundle Identifier Tests
     
+    func testAppConstantsBundleIdentifier() {
+        // Test that currentBundleIdentifier returns a non-empty string
+        let currentBundleId = AppConstants.currentBundleIdentifier()
+        XCTAssertFalse(currentBundleId.isEmpty)
+        
+        // If we have a bundle identifier, it should match, otherwise it should fall back to our expected value
+        if let bundleId = Bundle.main.bundleIdentifier {
+            XCTAssertEqual(currentBundleId, bundleId)
+        } else {
+            XCTAssertEqual(currentBundleId, "io.uniquode.MemStat")
+        }
+    }
+    
     func testBundleIdentifierFallback() {
-        let bundleId = Bundle.main.bundleIdentifier ?? "io.uniquode.MemStat"
+        let bundleId = AppConstants.currentBundleIdentifier()
         
         XCTAssertFalse(bundleId.isEmpty)
         
@@ -33,8 +46,8 @@ class MainTests: XCTestCase {
     }
     
     func testBundleIdentifierConsistency() {
-        let bundleId1 = Bundle.main.bundleIdentifier ?? "io.uniquode.MemStat"
-        let bundleId2 = Bundle.main.bundleIdentifier ?? "io.uniquode.MemStat"
+        let bundleId1 = AppConstants.currentBundleIdentifier()
+        let bundleId2 = AppConstants.currentBundleIdentifier()
         
         XCTAssertEqual(bundleId1, bundleId2, "Bundle identifier should be consistent")
     }
@@ -69,20 +82,22 @@ class MainTests: XCTestCase {
     
     func testInstanceDetectionLogic() {
         let runningApps = NSWorkspace.shared.runningApplications
-        let currentBundleId = Bundle.main.bundleIdentifier ?? "io.uniquode.MemStat"
         let currentApp = NSRunningApplication.current
+        let currentBundleId = currentApp.bundleIdentifier ?? AppConstants.currentBundleIdentifier()
         
         let otherInstances = runningApps.filter { app in
             return app.bundleIdentifier == currentBundleId && app != currentApp
         }
         
+        // During testing, the bundle identifier might be from the test runner
+        // We expect no other instances with the same bundle ID
         XCTAssertEqual(otherInstances.count, 0, "Should not find other instances during test run")
     }
     
     func testInstanceFilteringLogic() {
         let runningApps = NSWorkspace.shared.runningApplications
-        let currentBundleId = Bundle.main.bundleIdentifier ?? "io.uniquode.MemStat"
         let currentApp = NSRunningApplication.current
+        let currentBundleId = currentApp.bundleIdentifier ?? AppConstants.currentBundleIdentifier()
         
         let sameBundle = runningApps.filter { app in
             return app.bundleIdentifier == currentBundleId
@@ -129,14 +144,14 @@ class MainTests: XCTestCase {
     }
     
     func testBundleIdentifierComparison() {
-        let bundleId = "io.uniquode.MemStat"
-        let sameBundleId = "io.uniquode.MemStat"
+        let bundleId = AppConstants.currentBundleIdentifier()
+        let sameBundleId = AppConstants.currentBundleIdentifier()
         let differentBundleId = "com.apple.finder"
         
         XCTAssertEqual(bundleId, sameBundleId)
         XCTAssertNotEqual(bundleId, differentBundleId)
         
-        let upperCaseBundleId = "IO.UNIQUODE.MEMSTAT"
+        let upperCaseBundleId = bundleId.uppercased()
         XCTAssertNotEqual(bundleId, upperCaseBundleId, "Bundle ID comparison should be case sensitive")
     }
     
@@ -174,8 +189,8 @@ class MainTests: XCTestCase {
     
     func testMultipleInstanceSimulation() {
         let runningApps = NSWorkspace.shared.runningApplications
-        let currentBundleId = Bundle.main.bundleIdentifier ?? "io.uniquode.MemStat"
         let currentApp = NSRunningApplication.current
+        let currentBundleId = currentApp.bundleIdentifier ?? AppConstants.currentBundleIdentifier()
         
         let allInstances = runningApps.filter { app in
             return app.bundleIdentifier == currentBundleId
@@ -196,8 +211,8 @@ class MainTests: XCTestCase {
     func testInstanceDetectionPerformance() {
         measure {
             let runningApps = NSWorkspace.shared.runningApplications
-            let currentBundleId = Bundle.main.bundleIdentifier ?? "io.uniquode.MemStat"
             let currentApp = NSRunningApplication.current
+            let currentBundleId = currentApp.bundleIdentifier ?? AppConstants.currentBundleIdentifier()
             
             let _ = runningApps.filter { app in
                 return app.bundleIdentifier == currentBundleId && app != currentApp
@@ -208,7 +223,7 @@ class MainTests: XCTestCase {
     func testBundleIdentifierPerformance() {
         measure {
             for _ in 0..<1000 {
-                let _ = Bundle.main.bundleIdentifier ?? "io.uniquode.MemStat"
+                let _ = AppConstants.currentBundleIdentifier()
             }
         }
     }
@@ -263,13 +278,13 @@ extension MainTests {
         let isTestEnv = NSClassFromString("XCTestCase") != nil
         XCTAssertTrue(isTestEnv, "Should be in test environment")
         
-        let bundleId = Bundle.main.bundleIdentifier ?? "io.uniquode.MemStat"
+        let currentApp = NSRunningApplication.current
+        let bundleId = currentApp.bundleIdentifier ?? AppConstants.currentBundleIdentifier()
         XCTAssertFalse(bundleId.isEmpty)
         
         let runningApps = NSWorkspace.shared.runningApplications
         XCTAssertGreaterThan(runningApps.count, 0)
         
-        let currentApp = NSRunningApplication.current
         XCTAssertNotNil(currentApp)
         
         let otherInstances = runningApps.filter { app in

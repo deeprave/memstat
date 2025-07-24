@@ -6,7 +6,9 @@ class LoginItemsManager {
     
     private init() {}
     
-    private let bundleIdentifier = "io.uniquode.MemStat"
+    private var bundleIdentifier: String {
+        return AppConstants.currentBundleIdentifier()
+    }
     
     func isEnabled() -> Bool {
         if #available(macOS 13.0, *) {

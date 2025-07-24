@@ -6,7 +6,7 @@ func isRunningTests() -> Bool {
 
 if !isRunningTests() {
     let runningApps = NSWorkspace.shared.runningApplications
-    let currentBundleId = Bundle.main.bundleIdentifier ?? "io.uniquode.MemStat"
+    let currentBundleId = AppConstants.currentBundleIdentifier()
     
     let otherInstances = runningApps.filter { app in
         return app.bundleIdentifier == currentBundleId && app != NSRunningApplication.current

@@ -7,15 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Window Menu**: Added standard Window menu to window mode for better macOS integration
+  - "Bring to Front" option to show and activate the memory statistics window
+  - "Minimize" (⌘M) option for standard window management
+  - Menu follows macOS conventions and provides expected window controls
+
+### Changed
+- **Mode Switching UI Consistency**: Made mode selection UI consistent between window and menubar modes
+  - Changed from Mode submenu to single "Switch to Menu Bar" item in window mode
+  - Mirrors how "Switch to Regular Window" works in menubar mode
+  - Provides consistent user experience across both application modes
+
 ### Fixed
 - **Mode Switch Dialog**: Improved clarity of mode switch confirmation dialog
   - Changed "Restart Now" to "Restart App" to clarify it's the app restarting, not the computer
   - Updated message to explicitly state "The app will close and reopen automatically"
   - Dialog title now shows target mode for better context
 - **App Restart Functionality**: Fixed app restart when switching from menubar to window mode
-  - Replaced broken file URL path construction with proper Bundle.main.bundlePath
-  - Added shell script wrapper to ensure app relaunches after termination
+  - Improved timing with 1.5 second delay after app termination for more reliable restart
+  - Using bash command execution with proper shell script wrapper
   - Both mode switches (window→menubar and menubar→window) now work correctly
+
+### Improved
+- **Bundle Identifier Management**: Centralized bundle identifier handling to eliminate code duplication
+  - Created AppConstants.currentBundleIdentifier() function as single source of truth
+  - Replaced hardcoded "io.uniquode.MemStat" strings throughout codebase
+  - Updated main.swift, LoginItemsManager, and all test files to use centralized function
+  - Improved maintainability and reduced risk of inconsistencies
 
 ## [1.3.0] - 2025-07-24
 
