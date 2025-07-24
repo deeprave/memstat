@@ -145,16 +145,7 @@ class MenuBarControllerTests: XCTestCase {
     // MARK: - Draggable Window Feature Tests
     
     func testStatsWindowHasDraggableView() {
-        let mirror = Mirror(reflecting: menuBarController!)
-        var statsWindowController: StatsWindowController?
-        
-        for child in mirror.children {
-            if child.label == "statsWindowController",
-               let controller = child.value as? StatsWindowController {
-                statsWindowController = controller
-                break
-            }
-        }
+        let statsWindowController = menuBarController.testableStatsWindowController
         
         XCTAssertNotNil(statsWindowController, "MenuBarController should have a statsWindowController")
         
